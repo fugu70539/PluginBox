@@ -1,57 +1,48 @@
-"use client";
+@import "tailwindcss";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { SearchInput } from "../ui/SearchInput";
+:root {
+  --glass-blur: blur(25px) saturate(180%);
+  --glass-border: 0.5px solid rgba(255, 255, 255, 0.08);
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+}
 
-export default function Hub() {
-  const [userName, setUserName] = useState("Artem");
+body {
+  margin: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+}
 
-  useEffect(() => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg) {
-      tg.ready();
-      tg.expand();
-      const firstName = tg.initDataUnsafe?.user?.first_name;
-      if (firstName) setUserName(firstName);
-    }
-  }, []);
+.space-bg {
+  position: relative;
+  background: #000;
+  min-height: 100vh;
+}
 
-  return (
-    <div className="space-bg overflow-hidden">
-      <motion.div 
-        initial={{ opacity: 0, y: 10 }} 
-        animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 px-6 pt-24 min-h-screen"
-      >
-        <header className="flex flex-col items-center justify-center text-center mb-10">
-          <h1 className="text-[28px] font-bold tracking-tight text-white">
-            Привет, {userName}!
-          </h1>
-          {/* Вторая строка: теперь светло-серая */}
-          <h2 className="text-[28px] font-bold tracking-tight text-white/60">
-            Что бы ты хотел найти?
-          </h2>
-        </header>
+/* Серый радиальный градиент сверху */
+.space-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 60%;
+  background: radial-gradient(circle at center 0%, rgba(150, 150, 150, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
 
-        <SearchInput />
+.mt-glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+}
 
-        <div className="mt-12">
-          <h2 className="text-white/20 text-[10px] font-bold uppercase tracking-[0.2em] mb-4 ml-4">
-            Suggested
-          </h2>
-          <div className="grid grid-cols-2 gap-4 pb-10">
-            <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-5 transition-all active:scale-95">
-              <div className="w-10 h-10 bg-white/10 rounded-2xl mb-2" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Plug anc</span>
-            </div>
-            <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-5 transition-all active:scale-95">
-              <div className="w-10 h-10 bg-white/10 rounded-2xl mb-2" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Teather</span>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
+.btn-send-white {
+  background: #FFFFFF;
+  border-radius: 1.3rem;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
