@@ -1,10 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  /* Новая физика стекла: максимальная прозрачность */
-  --glass-blur: blur(35px) saturate(160%);
-  --glass-border: 0.5px solid rgba(255, 255, 255, 0.08); /* Тончайшая нить */
-  --glass-bg: rgba(255, 255, 255, 0.03); /* Чистая матовость */
+  --glass-blur: blur(25px) saturate(180%);
+  --glass-border: 0.5px solid rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.03); 
 }
 
 body {
@@ -21,41 +20,38 @@ body {
   min-height: 100vh;
 }
 
-/* ДЕФОРМИРОВАННЫЙ серый радиальный градиент с БЕЛЫМ акцентом */
+/* Насыщенный серый радиальный градиент сверху */
 .space-bg::before {
   content: "";
   position: absolute;
-  top: -15%; /* Сдвигаем центр выше за край */
+  top: 0;
   left: 50%;
-  /* ДЕФОРМАЦИЯ: делаем овал, слегка сдвинутый в сторону */
-  transform: translateX(-48%) scaleY(0.8); 
-  width: 140%; /* Широкий охват */
-  height: 90%; /* Глубокий охват */
-  
-  /* НОВЫЙ ЦВЕТ: чистый Space Gray (160/160/160) с белым акцентом */
-  background: radial-gradient(
-    circle at center 0%, 
-    rgba(255, 255, 255, 0.22) 0%, /* Белый акцент (светлее) */
-    rgba(160, 160, 160, 0.18) 15%, /* Space Gray (насыщенный) */
-    rgba(160, 160, 160, 0.04) 50%, /* Мягкое рассеивание */
-    rgba(0, 0, 0, 0) 75% /* Полный уход в глубокий черный к центру */
-  );
+  transform: translateX(-50%);
+  width: 150%;
+  height: 60%;
+  background: radial-gradient(circle at center 0%, rgba(150, 150, 150, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Ультра-чистый класс "More Than Glass" */
 .mt-glass {
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: var(--glass-border);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
 }
 
-/* Премиальная белая кнопка */
 .btn-send-white {
   background: #FFFFFF;
   border-radius: 1.3rem;
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Класс для звёзд: фиксированные, под наклоном */
+.sparkle {
+  position: absolute;
+  pointer-events: none; /* Не мешают тапать */
+  z-index: 5; /* Над градиентом, но под карточками */
+  transform: rotate(20deg); /* По умолчанию небольшой наклон */
 }
