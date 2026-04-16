@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  /* Новая физика стекла: чистая матовость, без темных градиентов */
-  --glass-blur: blur(30px) saturate(180%);
+  /* Новая физика стекла: максимальная прозрачность, без "грязи" */
+  --glass-blur: blur(35px) saturate(160%); /* Блюр сильнее для "ликвидности" */
   
-  /* Едва заметная, благородная нить контура */
-  --glass-border: 0.5px solid rgba(255, 255, 255, 0.08); 
+  /* Контур: тончайшая благородная нить */
+  --glass-border: 0.5px solid rgba(255, 255, 255, 0.09); 
   
-  /* Чистая, сверхлегкая заливка для эффекта "ликвидности" */
+  /* Чистая, сверхлегкая матовость для премиального вида */
   --glass-bg: rgba(255, 255, 255, 0.03); 
 }
 
@@ -15,7 +15,7 @@ body {
   margin: 0;
   background-color: #000;
   color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
   overflow-x: hidden;
 }
 
@@ -25,19 +25,19 @@ body {
   min-height: 100vh;
 }
 
-/* Насыщенный серый радиальный градиент, рассеивающийся к центру */
+/* Благородный космический радиальный градиент по референсу */
 .space-bg::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 60%; /* Охват до центра экрана */
+  height: 70%; /* Градиент охватывает большую часть экрана */
   background: radial-gradient(
-    circle at center 0%, 
-    rgba(160, 160, 160, 0.16) 0%, /* Более насыщенный серый */
-    rgba(160, 160, 160, 0.03) 50%, /* Мягкое рассеивание */
-    rgba(0, 0, 0, 0) 70% /* Полный уход в черное к центру */
+    circle at 50% -10%, /* Центр круга за верхним краем экрана */
+    rgba(60, 95, 160, 0.20) 0%, /* Насыщенный темно-синий/серый из референса */
+    rgba(60, 95, 160, 0.05) 45%, /* Мягкое рассеивание */
+    rgba(0, 0, 0, 0) 75% /* Полный уход в глубокий черный к центру */
   );
   pointer-events: none;
   z-index: 0;
@@ -49,7 +49,7 @@ body {
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: var(--glass-border);
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15); /* Очень мягкая тень */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); /* Очень мягкая тень */
 }
 
 /* Премиальная белая кнопка */
