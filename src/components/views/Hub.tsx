@@ -28,7 +28,8 @@ export default function Hub() {
           <h1 className="text-[28px] font-bold tracking-tight text-white">
             Привет, {userName}!
           </h1>
-          <h2 className="text-[28px] font-bold tracking-tight text-white">
+          {/* Вторая строка: теперь светло-серая */}
+          <h2 className="text-[28px] font-bold tracking-tight text-white/60">
             Что бы ты хотел найти?
           </h2>
         </header>
