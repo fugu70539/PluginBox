@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --glass-blur: blur(25px) saturate(180%);
+  --glass-blur: blur(35px) saturate(160%);
   --glass-border: 0.5px solid rgba(255, 255, 255, 0.08);
-  --glass-bg: rgba(255, 255, 255, 0.03); 
+  --glass-bg: rgba(255, 255, 255, 0.03);
 }
 
 body {
@@ -20,16 +20,22 @@ body {
   min-height: 100vh;
 }
 
-/* Насыщенный серый радиальный градиент сверху */
+/* Деформированный серый купол света сверху */
 .space-bg::before {
   content: "";
   position: absolute;
-  top: 0;
+  top: -15%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 150%;
-  height: 60%;
-  background: radial-gradient(circle at center 0%, rgba(150, 150, 150, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+  transform: translateX(-48%) scaleY(0.8);
+  width: 140%;
+  height: 90%;
+  background: radial-gradient(
+    circle at center 0%,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(160, 160, 160, 0.18) 15%,
+    rgba(160, 160, 160, 0.04) 50%,
+    rgba(0, 0, 0, 0) 75%
+  );
   pointer-events: none;
   z-index: 0;
 }
@@ -39,19 +45,11 @@ body {
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: var(--glass-border);
-  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
 .btn-send-white {
   background: #FFFFFF;
   border-radius: 1.3rem;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-}
-
-/* Класс для звёзд: фиксированные, под наклоном */
-.sparkle {
-  position: absolute;
-  pointer-events: none; /* Не мешают тапать */
-  z-index: 5; /* Над градиентом, но под карточками */
-  transform: rotate(20deg); /* По умолчанию небольшой наклон */
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.12);
 }
