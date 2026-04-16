@@ -1,39 +1,50 @@
 @import "tailwindcss";
 
-@theme {
-  --color-tg-blue: #4A90E2;
-  --color-glass-fill: rgba(255, 255, 255, 0.06);
-  --color-glass-border: rgba(255, 255, 255, 0.12);
-}
-
 :root {
-  --glass-blur: blur(35px) saturate(160%);
-  --glass-border: 1px solid var(--color-glass-border);
+  /* Переменные для тонкой настройки стекла */
+  --glass-blur: blur(25px) saturate(180%);
+  --glass-border: 0.5px solid rgba(255, 255, 255, 0.08); /* Тоньше и темнее */
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
 }
 
-/* Универсальный класс "More Than Glass" */
+body {
+  margin: 0;
+  background-color: #000;
+  color: #fff; /* Принудительно ставим белый текст */
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+}
+
+/* Возвращаем градиент на фон */
+.space-bg {
+  position: relative;
+  background: #000;
+  min-height: 100vh;
+}
+
+.space-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%; /* Градиент в верхней части */
+  background: radial-gradient(circle at 50% -20%, rgba(74, 144, 226, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Обновленный класс стекла */
 .mt-glass {
-  background: linear-gradient(
-    135deg, 
-    rgba(255, 255, 255, 0.08) 0%, 
-    rgba(255, 255, 255, 0.03) 100%
-  );
+  background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: var(--glass-border);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
 }
 
-/* Вариант для активных элементов (кнопок/табов) как на фото 7 */
-.mt-glass-active {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-/* Внутреннее свечение для кнопок (Inner Glow) как на фото 4 */
+/* Кнопка с внутренним объемом */
 .mt-glow-blue {
-  background: var(--color-tg-blue);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 
-              0 4px 15px rgba(74, 144, 226, 0.3);
+  background: #4A90E2;
+  box-shadow: inset 0 1px 0.5px rgba(255, 255, 255, 0.3);
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
 }
