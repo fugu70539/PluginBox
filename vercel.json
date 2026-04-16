@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "cleanUrls": true,
+  "regions": ["fra1"],
+  "headers": [
+    {
+      "source": "/Icons/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}
