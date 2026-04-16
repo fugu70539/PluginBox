@@ -1,16 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --glass-blur: blur(25px) saturate(180%);
-  --glass-border: 0.5px solid rgba(255, 255, 255, 0.08);
-  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  /* Новая физика стекла: чистая матовость, без темных градиентов */
+  --glass-blur: blur(30px) saturate(180%);
+  
+  /* Едва заметная, благородная нить контура */
+  --glass-border: 0.5px solid rgba(255, 255, 255, 0.08); 
+  
+  /* Чистая, сверхлегкая заливка для эффекта "ликвидности" */
+  --glass-bg: rgba(255, 255, 255, 0.03); 
 }
 
 body {
   margin: 0;
   background-color: #000;
   color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+  overflow-x: hidden;
 }
 
 .space-bg {
@@ -19,30 +25,36 @@ body {
   min-height: 100vh;
 }
 
-/* Серый радиальный градиент сверху */
+/* Насыщенный серый радиальный градиент, рассеивающийся к центру */
 .space-bg::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150%;
-  height: 60%;
-  background: radial-gradient(circle at center 0%, rgba(150, 150, 150, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+  left: 0;
+  right: 0;
+  height: 60%; /* Охват до центра экрана */
+  background: radial-gradient(
+    circle at center 0%, 
+    rgba(160, 160, 160, 0.16) 0%, /* Более насыщенный серый */
+    rgba(160, 160, 160, 0.03) 50%, /* Мягкое рассеивание */
+    rgba(0, 0, 0, 0) 70% /* Полный уход в черное к центру */
+  );
   pointer-events: none;
   z-index: 0;
 }
 
+/* Ультра-чистый класс "More Than Glass" */
 .mt-glass {
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: var(--glass-border);
-  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15); /* Очень мягкая тень */
 }
 
+/* Премиальная белая кнопка */
 .btn-send-white {
   background: #FFFFFF;
   border-radius: 1.3rem;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.12);
 }
