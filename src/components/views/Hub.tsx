@@ -3,8 +3,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { SearchInput } from "../ui/SearchInput";
-import Lottie from "lottie-react";
-import settingsAnim from "../../../public/Icons/Settings.json";
 
 export default function Hub() {
   const [userName, setUserName] = useState("Artem");
@@ -39,10 +37,10 @@ export default function Hub() {
             )}
           </div>
           <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
-            <Lottie 
-              animationData={settingsAnim} 
-              className="size-7 opacity-40" 
-              loop={true} 
+            <img 
+              src="/Icons/Settings.png" 
+              alt="Settings" 
+              className="size-7 opacity-40 object-contain" 
             />
           </button>
         </div>
