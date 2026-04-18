@@ -47,7 +47,7 @@ export default function Hub() {
       <motion.div 
         initial={{ opacity: 0, y: 10 }} 
         animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 px-7 pt-20 pb-12 flex flex-col items-center"
+        className="relative z-10 px-7 pt-20 pb-12"
       >
         <header className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
           <h1 className="text-[28px] font-bold tracking-tight text-white leading-tight">
