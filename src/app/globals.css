@@ -3,13 +3,12 @@
 :root {
   --glass-blur: blur(35px) saturate(160%);
   --glass-border: 0.5px solid rgba(255, 255, 255, 0.08);
-  /* Сделал фон стекла светлее (с 0.03 до 0.06) */
-  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-bg: rgba(255, 255, 255, 0.05); /* Сделал фон чуть светлее (было 0.03) */
 }
 
 body {
   margin: 0;
-  background-color: #000;
+  background-color: #0a0a0a; /* Основной фон стал чуть светлее черного */
   color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
   overflow-x: hidden;
@@ -17,7 +16,7 @@ body {
 
 .space-bg {
   position: relative;
-  background: #000;
+  background: #0a0a0a;
   min-height: 100vh;
 }
 
@@ -50,6 +49,6 @@ body {
 
 .btn-send-white {
   background: #FFFFFF;
-  border-radius: 1.3rem;
+  border-radius: 1rem; /* Чуть уменьшил скругление под стиль новой кнопки */
   box-shadow: 0 4px 15px rgba(255, 255, 255, 0.12);
 }
