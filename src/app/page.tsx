@@ -8,8 +8,8 @@ import { Tabbar } from "@/components/ui/TabBar";
 
 const tabsConfig = [
   { id: "hub", icon: "/Icons/Hub.PNG", label: "Хаб" },
-  { id: "store", icon: "/Icons/Store.PNG", label: "Плагины" },
-  { id: "socket", icon: "/Icons/Socket.PNG", label: "Мастерская" },
+  { id: "store", icon: "/Icons/Plugins.PNG", label: "Плагины" },
+  { id: "socket", icon: "/Icons/Workshop.PNG", label: "Мастерская" },
 ];
 
 export default function Page() {
@@ -25,7 +25,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] select-none overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#0a0a0a] select-none overflow-hidden font-display">
       <div className="pb-32">
         {activeTab === "hub" && <Hub />}
         {activeTab === "store" && <Store />}
