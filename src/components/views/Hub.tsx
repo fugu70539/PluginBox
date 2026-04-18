@@ -9,14 +9,22 @@ export default function Hub() {
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
 
   useEffect(() => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg) {
-      tg.ready();
-      tg.expand();
-      const userData = tg.initDataUnsafe?.user;
-      if (userData?.first_name) setUserName(userData.first_name);
-      if (userData?.photo_url) setUserPhoto(userData.photo_url);
-    }
+    // Функция для инициализации при наличии объекта Telegram
+    const initTg = () => {
+      const tg = (window as any).Telegram?.WebApp;
+      if (tg) {
+        tg.ready();
+        tg.expand();
+        // Включаем подтверждение закрытия, чтобы случайно не свайпнуть вниз
+        tg.enableClosingConfirmation();
+        
+        const userData = tg.initDataUnsafe?.user;
+        if (userData?.first_name) setUserName(userData.first_name);
+        if (userData?.photo_url) setUserPhoto(userData.photo_url);
+      }
+    };
+
+    initTg();
   }, []);
 
   return (
