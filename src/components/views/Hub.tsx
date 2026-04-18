@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { SearchInput } from "../ui/SearchInput";
+import { Tabbar } from "../ui/Tabbar";
 
 export default function Hub() {
   const [userName, setUserName] = useState("Artem");
@@ -26,7 +27,7 @@ export default function Hub() {
 
   return (
     <div className="space-bg">
-      {/* Шапка с аватаром чуть выше */}
+      {/* HEADER: Поднят выше, кнопка настроек теперь PNG */}
       <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-7 pointer-events-none">
         <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
           <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
@@ -48,30 +49,61 @@ export default function Hub() {
         </div>
       </header>
 
-      {/* Весь контент поднят выше, отступы выровнены */}
-      <main className="relative z-10 px-7 pt-20 pb-12 flex flex-col items-center">
-        <div className="w-full flex flex-col items-center justify-center text-center mb-5 gap-y-0.5">
-          <h1 className="text-[28px] font-bold tracking-tight text-white leading-tight">
+      {/* MAIN CONTENT: Скорректированы отступы (pt-20) для симметрии */}
+      <main className="relative z-10 px-7 pt-20 pb-32 flex flex-col items-center">
+        <header className="w-full flex flex-col items-center justify-center text-center mb-5 gap-y-0.5">
+          <motion.h1 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-[28px] font-bold tracking-tight text-white leading-tight"
+          >
             Привет, {userName}!
-          </h1>
-          <h2 className="text-[28px] font-bold tracking-tight text-white/25 leading-tight">
+          </motion.h1>
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="text-[28px] font-bold tracking-tight text-white/25 leading-tight"
+          >
             Что бы ты хотел найти?
-          </h2>
-        </div>
+          </motion.h2>
+        </header>
 
+        {/* Наша "конфетная" строка поиска */}
         <SearchInput />
 
+        {/* Сетка плагинов (пока заглушки) */}
         <div className="mt-12 w-full grid grid-cols-2 gap-4">
-          <motion.div whileTap={{ scale: 0.97 }} className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-6">
-             <div className="w-11 h-11 bg-white/10 rounded-2xl mb-3" />
+          <motion.div 
+            whileTap={{ scale: 0.97 }} 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-6"
+          >
+             <div className="w-11 h-11 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
+                <div className="size-5 bg-white/20 rounded-full blur-[2px]" />
+             </div>
              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Plug anc</span>
           </motion.div>
-          <motion.div whileTap={{ scale: 0.97 }} className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-6">
-             <div className="w-11 h-11 bg-white/10 rounded-2xl mb-3" />
+
+          <motion.div 
+            whileTap={{ scale: 0.97 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-6"
+          >
+             <div className="w-11 h-11 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
+                <div className="size-5 bg-white/20 rounded-full blur-[2px]" />
+             </div>
              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Teather</span>
           </motion.div>
         </div>
       </main>
+
+      {/* Наш новый Tabbar */}
+      <Tabbar />
     </div>
   );
 }
