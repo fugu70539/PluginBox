@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { SearchInput } from "../ui/SearchInput";
-import { Tabbar } from "../ui/Tabbar";
 
 export default function Hub() {
   const [userName, setUserName] = useState("Artem");
@@ -26,7 +25,7 @@ export default function Hub() {
   }, []);
 
   return (
-    <div className="space-bg">
+    <div className="w-full">
       <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-7 pointer-events-none">
         <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
           <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
@@ -48,7 +47,7 @@ export default function Hub() {
         </div>
       </header>
 
-      <main className="relative z-10 px-7 pt-20 pb-32 flex flex-col items-center">
+      <main className="relative z-10 px-7 pt-20 flex flex-col items-center">
         <header className="w-full flex flex-col items-center justify-center text-center mb-5 gap-y-0.5">
           <motion.h1 
             initial={{ opacity: 0, y: 10 }}
@@ -97,8 +96,6 @@ export default function Hub() {
           </motion.div>
         </div>
       </main>
-
-      <Tabbar />
     </div>
   );
 }
