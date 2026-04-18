@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --glass-blur: blur(35px) saturate(160%);
+  --glass-blur: blur(35px) saturate(180%);
   --glass-border: 0.5px solid rgba(255, 255, 255, 0.08);
-  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.08);
 }
 
 html, body {
@@ -11,7 +11,6 @@ html, body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  /* Критически важно для фикса горизонтального скролла */
   overflow-x: hidden; 
   position: fixed;
   overscroll-behavior: none;
@@ -24,13 +23,11 @@ html, body {
   position: absolute;
   inset: 0;
   background: #0a0a0a;
-  /* Разрешаем только вертикальный скролл и скрываем полосу */
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Скрываем полосу прокрутки, чтобы не портила минимализм */
 .space-bg::-webkit-scrollbar {
   display: none;
 }
@@ -42,17 +39,18 @@ html, body {
   border: var(--glass-border);
 }
 
-.btn-send-white {
-  background: #FFFFFF;
-}
 .tabbar-glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(25px) saturate(180%);
   -webkit-backdrop-filter: blur(25px) saturate(180%);
-  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border: var(--glass-border);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 .tab-active-bg {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.btn-send-white {
+  background: #FFFFFF;
 }
