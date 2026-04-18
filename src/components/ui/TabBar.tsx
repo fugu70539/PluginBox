@@ -25,7 +25,7 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
 
   return (
     <div className="fixed bottom-8 left-0 right-0 z-50 flex justify-center px-7 pointer-events-none">
-      <nav className="tabbar-glass h-[64px] w-full max-w-[340px] rounded-full flex items-center justify-between p-1 relative pointer-events-auto">
+      <nav className="tabbar-glass h-[64px] w-full max-w-[340px] rounded-full flex items-center justify-between p-1 relative pointer-events-auto font-sans">
         {tabsConfig.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
@@ -50,7 +50,7 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
                 />
               </div>
               
-              <span className={`text-[9px] mt-1 font-bold uppercase tracking-[0.1em] relative z-10 transition-opacity duration-300 ${isActive ? 'opacity-100 text-white' : 'opacity-30 text-white'}`}>
+              <span className={`text-[9px] mt-1 font-bold uppercase tracking-[0.1em] relative z-10 transition-opacity duration-300 ${isActive ? 'opacity-100 text-white' : 'opacity-40 text-white'}`}>
                 {tab.label}
               </span>
             </button>
