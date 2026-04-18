@@ -50,7 +50,7 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
                 />
               </div>
               
-              <span className={`text-[10px] mt-1 font-bold uppercase tracking-tight relative z-10 transition-opacity duration-300 font-display ${isActive ? 'opacity-100 text-white' : 'opacity-30 text-white'}`}>
+              <span className={`text-[11px] mt-1 font-bold tracking-tight relative z-10 transition-opacity duration-300 font-display ${isActive ? 'opacity-100 text-white' : 'opacity-30 text-white'}`}>
                 {tab.label}
               </span>
             </button>
