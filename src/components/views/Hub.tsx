@@ -9,13 +9,11 @@ export default function Hub() {
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
 
   useEffect(() => {
-    // Функция для инициализации при наличии объекта Telegram
     const initTg = () => {
       const tg = (window as any).Telegram?.WebApp;
       if (tg) {
         tg.ready();
         tg.expand();
-        // Включаем подтверждение закрытия, чтобы случайно не свайпнуть вниз
         tg.enableClosingConfirmation();
         
         const userData = tg.initDataUnsafe?.user;
@@ -41,7 +39,12 @@ export default function Hub() {
             )}
           </div>
           <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
-            <img src="/Icons/Settings.png" alt="Settings" className="size-7 object-contain opacity-40" />
+            {/* Исправлено на .PNG */}
+            <img 
+              src="/Icons/Settings.PNG" 
+              alt="Settings" 
+              className="size-7 object-contain opacity-40" 
+            />
           </button>
         </div>
       </header>
