@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { SearchInput } from "../ui/SearchInput";
+import { SearchInput } from "@/components/ui/SearchInput";
 
 export default function Hub() {
   const [userName, setUserName] = useState("Artem");
