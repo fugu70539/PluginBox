@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 
 export const SearchInput = () => {
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full">
       <motion.div 
         whileTap={{ scale: 0.99 }}
-        className="w-full max-w-[340px] mt-glass rounded-[1.6rem] h-[52px] flex items-center justify-between pl-5 pr-1.5 relative z-10"
+        className="w-full mt-glass rounded-[1.6rem] h-[52px] flex items-center justify-between pl-5 pr-1.5 relative z-10"
       >
         <input 
           type="text"
