@@ -32,7 +32,7 @@ export const SearchInput = () => {
             placeholder={isAiMode ? "Поиск с ИИ..." : "Найти что-нибудь..."}
             className="bg-transparent border-none outline-none text-white text-base w-full placeholder:text-white/20 font-medium"
           />
-          <button className="h-[38px] px-5 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-[1.3rem]">
+          <button className="h-[38px] w-[38px] btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-full">
             <img src="/Icons/SendToAi.png" alt="Send" className="w-[18px] h-[18px]" />
           </button>
         </motion.div>
@@ -65,4 +65,4 @@ export const SearchInput = () => {
       </motion.button>
     </div>
   );
-};
+}
