@@ -11,9 +11,11 @@ html, body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden; 
+  overflow: hidden; 
+  position: fixed;
   background-color: #0a0a0a;
   color: #fff;
+  overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -28,27 +30,24 @@ html, body {
   border: var(--glass-border);
 }
 
-/* Эффект плавного исчезновения контента внизу */
-.bottom-blur-gradient {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 160px; /* Зона от чуть выше таббара до низа */
-  background: linear-gradient(to bottom, transparent, #0a0a0a 70%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  mask-image: linear-gradient(to bottom, transparent, black 50%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 50%);
-  pointer-events: none;
-  z-index: 40;
-}
-
 .btn-send-white {
   background-color: #ffffff !important;
+  opacity: 1 !important;
+  display: flex !important;
+  visibility: visible !important;
   box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
 }
 
 .btn-send-white img {
   filter: brightness(0) !important;
+  opacity: 1 !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
