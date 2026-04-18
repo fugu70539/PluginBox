@@ -18,7 +18,7 @@ export default function Hub() {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full font-sans">
       <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-7 pointer-events-none">
         <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
           <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
@@ -36,7 +36,7 @@ export default function Hub() {
         </div>
 
         <div className="mt-glass h-11 px-4 rounded-full flex items-center gap-2 pointer-events-auto active:scale-95 transition-all">
-          <span className="text-[11px] font-bold uppercase tracking-widest text-white/60">Все</span>
+          <span className="text-[11px] font-bold uppercase tracking-widest text-white/40">Все</span>
           <img src="/Icons/ArrowRight.PNG" alt="All" className="size-4 object-contain opacity-40" />
         </div>
       </header>
@@ -59,7 +59,7 @@ export default function Hub() {
 
         <SearchInput />
 
-        <div className="mt-12 w-full grid grid-cols-2 gap-4">
+        <div className="mt-12 w-full grid grid-cols-2 gap-4 text-sans">
           <motion.div 
             whileTap={{ scale: 0.97 }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
             className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7"
