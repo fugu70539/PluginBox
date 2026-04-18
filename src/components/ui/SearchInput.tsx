@@ -48,13 +48,14 @@ export const SearchInput = () => {
       >
         <AnimatePresence mode="wait">
           <motion.div
-            key={isAiMode ? "ai" : "search"}
+            key={isAiMode ? "ai-wrapper" : "search-wrapper"}
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.5, opacity: 0 }}
             className="size-7"
           >
             <Lottie
+              key={isAiMode ? "ai-anim" : "search-anim"}
               animationData={isAiMode ? searchAiAnim : searchAnim}
               autoplay={true}
               loop={false}
