@@ -15,12 +15,10 @@ html, body {
   position: fixed;
   background-color: #0a0a0a;
   color: #fff;
-  /* Устанавливаем системный шрифт Apple по умолчанию */
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
 }
 
-.font-sans {
+.font-display {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
 }
 
