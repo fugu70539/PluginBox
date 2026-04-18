@@ -20,13 +20,9 @@ export default function Hub() {
   }, []);
 
   return (
-    <div className="space-bg overflow-hidden min-h-screen">
-      <motion.header 
-        initial={{ y: -10, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="fixed top-0 left-0 right-0 z-50 h-20 flex items-center px-7"
-      >
-        <div id="avatar-panel" className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 overflow-hidden">
+    <div className="space-bg">
+      <header className="fixed top-0 left-0 right-0 z-50 h-20 flex items-center px-7 pointer-events-none">
+        <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
           <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
             {userPhoto ? (
               <img src={userPhoto} alt="User" className="size-full rounded-full object-cover" />
@@ -36,29 +32,21 @@ export default function Hub() {
               </div>
             )}
           </div>
-          <button className="size-8 flex items-center justify-center active:scale-90 transition-all overflow-hidden">
-            <img 
-              src="/Icons/Settings.png" 
-              alt="Settings" 
-              className="size-7 object-contain opacity-40" 
-            />
+          <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
+            <img src="/Icons/Settings.png" alt="Settings" className="size-7 object-contain opacity-40" />
           </button>
         </div>
-      </motion.header>
+      </header>
 
-      <motion.div 
-        initial={{ opacity: 0, y: 10 }} 
-        animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 px-7 pt-20 pb-12 flex flex-col items-center"
-      >
-        <header className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
+      <main className="relative z-10 px-7 pt-24 pb-12 flex flex-col items-center">
+        <div className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
           <h1 className="text-[28px] font-bold tracking-tight text-white leading-tight">
             Привет, {userName}!
           </h1>
           <h2 className="text-[28px] font-bold tracking-tight text-white/25 leading-tight">
             Что бы ты хотел найти?
           </h2>
-        </header>
+        </div>
 
         <SearchInput />
 
@@ -72,7 +60,7 @@ export default function Hub() {
              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Teather</span>
           </motion.div>
         </div>
-      </motion.div>
+      </main>
     </div>
   );
 }
