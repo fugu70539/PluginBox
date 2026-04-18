@@ -27,11 +27,6 @@ export default function Hub() {
     setIsFilterOpen(!isFilterOpen);
   };
 
-  const selectFilter = (option: string) => {
-    setActiveFilter(option);
-    setIsFilterOpen(false);
-  };
-
   return (
     <div className="w-full font-display">
       <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-start justify-between px-7 pt-3 pointer-events-none">
@@ -58,10 +53,10 @@ export default function Hub() {
             <span className="text-[14px] font-bold tracking-tight text-white/60">{activeFilter}</span>
             <motion.img 
               src="/Icons/ArrowRight.PNG" 
-              alt="Filter" 
+              alt="Filter icon" 
               animate={{ rotate: isFilterOpen ? 90 : 0 }}
-              className="size-6 object-contain opacity-40" 
-              style={{ filter: "brightness(1)" }}
+              className="size-5 object-contain opacity-40" 
+              style={{ filter: "brightness(1.5) contrast(1.2)" }}
             />
           </button>
 
@@ -71,13 +66,13 @@ export default function Hub() {
                 initial={{ opacity: 0, y: -10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 5, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                className="mt-glass absolute top-full right-0 w-40 rounded-[24px] py-2 z-50 overflow-hidden shadow-2xl"
+                className="mt-glass absolute top-full right-0 w-44 rounded-[24px] py-2 z-50 overflow-hidden shadow-2xl"
               >
                 {filterOptions.map((option) => (
                   <button
                     key={option}
-                    onClick={() => selectFilter(option)}
-                    className={`w-full px-5 py-3 text-left text-[13px] font-bold tracking-tight transition-colors ${
+                    onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
+                    className={`w-full px-5 py-3 text-left text-[14px] font-bold tracking-tight transition-colors ${
                       activeFilter === option ? "text-white bg-white/10" : "text-white/40 active:bg-white/5"
                     }`}
                   >
@@ -90,11 +85,11 @@ export default function Hub() {
         </div>
       </header>
 
-      <main className="relative z-10 px-7 pt-24 flex flex-col items-center">
+      <main className="relative z-10 px-7 pt-24 flex flex-col items-center text-white">
         <header className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
           <motion.h1 
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            className="text-[28px] font-bold tracking-tight text-white leading-tight"
+            className="text-[28px] font-bold tracking-tight leading-tight"
           >
             Привет, {userName}!
           </motion.h1>
@@ -109,25 +104,18 @@ export default function Hub() {
         <SearchInput />
 
         <div className="mt-12 w-full grid grid-cols-2 gap-4">
-          <motion.div 
-            whileTap={{ scale: 0.97 }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
-            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7"
-          >
-             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
-                <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
-             </div>
-             <span className="text-[12px] font-bold tracking-tight text-white/40">Plug anc</span>
-          </motion.div>
-
-          <motion.div 
-            whileTap={{ scale: 0.97 }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}
-            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7"
-          >
-             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
-                <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
-             </div>
-             <span className="text-[12px] font-bold tracking-tight text-white/40">Teather</span>
-          </motion.div>
+          {[1, 2].map((i) => (
+            <motion.div 
+              key={i}
+              whileTap={{ scale: 0.97 }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 * i }}
+              className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7"
+            >
+               <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
+                  <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
+               </div>
+               <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
+            </motion.div>
+          ))}
         </div>
       </main>
     </div>
