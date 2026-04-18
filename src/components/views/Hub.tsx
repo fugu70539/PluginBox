@@ -6,12 +6,12 @@ import { SearchInput } from "@/components/ui/SearchInput";
 
 const filterOptions = ["Все", "По имени", "По дате", "По рейтингу"];
 const demoPlugins = [
-  { id: 1, title: "Elevator Plus" },
-  { id: 2, title: "Script API" },
-  { id: 3, title: "UI Engine" },
-  { id: 4, title: "Logic Box" },
-  { id: 5, title: "Shader Pack" },
-  { id: 6, title: "Anarchy Core" },
+  { id: 1, title: "Plugin One" },
+  { id: 2, title: "Teather Pro" },
+  { id: 3, title: "Socket Tool" },
+  { id: 4, title: "Nexus Core" },
+  { id: 5, title: "Flow Mod" },
+  { id: 6, title: "Vision Kit" },
 ];
 
 export default function Hub() {
@@ -30,15 +30,17 @@ export default function Hub() {
   }, []);
 
   return (
-    <div className="w-full font-display min-h-screen bg-[#0a0a0a] overflow-y-auto no-scrollbar pb-40">
-      {/* HEADER */}
+    <div className="w-full font-display min-h-screen bg-[#0a0a0a] pb-40">
+      {/* Невидимая зона размытия позади таббара */}
+      <div className="bottom-blur-gradient" />
+
       <header className="fixed top-0 left-0 right-0 z-50 h-24 flex items-start justify-between px-7 pt-7 pointer-events-none">
         <div className="h-12 w-24 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
-          <div className="size-9 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5 border border-white/5">
+          <div className="size-9 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
             {userPhoto ? (
               <img src={userPhoto} alt="User" className="size-full rounded-full object-cover" />
             ) : (
-              <div className="size-full flex items-center justify-center text-white/40 text-[11px] font-bold uppercase">
+              <div className="size-full rounded-full flex items-center justify-center text-white/40 text-[11px] font-bold uppercase bg-white/5">
                 {userName[0]}
               </div>
             )}
@@ -51,12 +53,12 @@ export default function Hub() {
           </button>
         </div>
 
-        <div className="relative pointer-events-auto">
+        <div className="relative flex flex-col items-end pointer-events-auto">
           <button 
             onClick={() => setIsFilterOpen(!isFilterOpen)}
-            className="h-12 px-6 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center gap-3.5 active:scale-95 transition-all shadow-lg"
+            className="h-12 px-6 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center gap-3.5 active:scale-95 transition-all"
           >
-            <span className="text-[14px] font-bold text-white/70">{activeFilter}</span>
+            <span className="text-[14px] font-bold tracking-tight text-white/70">{activeFilter}</span>
             <motion.svg 
               viewBox="0 0 24 24" fill="none" 
               animate={{ rotate: isFilterOpen ? 90 : 0 }}
@@ -69,21 +71,19 @@ export default function Hub() {
           <AnimatePresence>
             {isFilterOpen && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                animate={{ opacity: 1, scale: 1, y: 10 }}
-                exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                className="absolute top-full right-0 w-48 bg-[#1a1a1a]/80 backdrop-blur-3xl rounded-[28px] p-1.5 z-50 border border-white/[0.08] shadow-2xl"
+                initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 10 }} exit={{ opacity: 0, y: -10 }}
+                className="absolute top-full right-0 w-48 bg-[#1a1a1a]/80 backdrop-blur-3xl rounded-[32px] p-2 z-50 border border-white/[0.06]"
               >
                 {filterOptions.map((option) => (
                   <button
                     key={option}
                     onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
-                    className="relative w-full px-5 py-3 text-left rounded-[20px] overflow-hidden group"
+                    className="relative w-full px-5 py-3.5 text-left rounded-[20px] overflow-hidden group"
                   >
                     {activeFilter === option && (
-                      <motion.div layoutId="f-bg" className="absolute inset-0 bg-white/10 backdrop-blur-md" />
+                      <motion.div layoutId="f-bg" className="absolute inset-0 bg-white/10" />
                     )}
-                    <span className={`relative z-10 text-[14px] font-bold ${activeFilter === option ? "text-white" : "text-white/30 group-active:text-white/60"}`}>
+                    <span className={`relative z-10 text-[14px] font-bold ${activeFilter === option ? "text-white" : "text-white/30"}`}>
                       {option}
                     </span>
                   </button>
@@ -94,40 +94,38 @@ export default function Hub() {
         </div>
       </header>
 
-      {/* MAIN CONTENT */}
-      <main className="px-7 pt-32 flex flex-col">
-        <header className="w-full flex flex-col items-center text-center mb-10 gap-y-1">
-          <h1 className="text-[32px] font-extrabold tracking-tight">Привет, {userName}!</h1>
-          <h2 className="text-[32px] font-extrabold tracking-tight text-white/25">Что бы ты хотел найти?</h2>
-        </header>
+      <main className="relative z-10 px-7 pt-32 flex flex-col items-start">
+        <div className="w-full text-center mb-10">
+          <h1 className="text-[32px] font-extrabold tracking-tight text-white">Привет, {userName}!</h1>
+          <h2 className="text-[32px] font-extrabold tracking-tight text-white/30">Что бы ты хотел найти?</h2>
+        </div>
 
         <SearchInput />
 
-        {/* SECTION: РЕКОМЕНДУЕМ */}
-        <div className="mt-10 mb-5 ml-1">
-           <h3 className="text-[11px] font-black tracking-[0.2em] text-white/30 uppercase">Рекомендуем</h3>
+        {/* Подзаголовок РЕКОМЕНДУЕМ */}
+        <div className="mt-12 mb-5">
+          <h3 className="text-[11px] font-black tracking-[0.15em] text-white/20 uppercase">Рекомендуем</h3>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 pb-10">
+        {/* Сетка из 6 демо плагинов */}
+        <div className="w-full grid grid-cols-2 gap-5">
           {demoPlugins.map((item, i) => (
             <motion.div 
               key={item.id}
+              whileTap={{ scale: 0.97 }}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              whileTap={{ scale: 0.96 }}
-              className="mt-glass rounded-[2.5rem] p-7 flex flex-col items-center py-9 shadow-lg"
+              className="mt-glass rounded-[2.5rem] p-7 flex flex-col items-center py-9 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
             >
-               <div className="w-14 h-14 bg-white/[0.06] rounded-[1.4rem] mb-4.5 border border-white/5" />
-               <span className="text-[12px] font-bold text-white/40 uppercase tracking-widest">{item.title}</span>
+               <div className="w-14 h-14 bg-white/[0.06] rounded-3xl mb-4.5" />
+               <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase tracking-widest text-center">
+                 {item.title}
+               </span>
             </motion.div>
           ))}
         </div>
       </main>
-
-      {/* BLUR OVERLAY (Невидимая зона размытия) */}
-      <div className="bottom-blur-mask" />
     </div>
   );
 }
