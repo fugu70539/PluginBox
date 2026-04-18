@@ -36,7 +36,6 @@ export const Tabbar = () => {
               onClick={() => handleTabClick(tab.id)}
               className="relative flex flex-col items-center justify-center w-20 h-12 transition-all active:scale-90"
             >
-              {/* Фоновая подложка, которая перелетает */}
               {isActive && (
                 <motion.div
                   layoutId="tab-highlight"
