@@ -3,7 +3,8 @@
 :root {
   --glass-blur: blur(35px) saturate(160%);
   --glass-border: 0.5px solid rgba(255, 255, 255, 0.08);
-  --glass-bg: rgba(255, 255, 255, 0.03);
+  /* Сделал фон стекла светлее (с 0.03 до 0.06) */
+  --glass-bg: rgba(255, 255, 255, 0.06);
 }
 
 body {
@@ -20,7 +21,6 @@ body {
   min-height: 100vh;
 }
 
-/* Деформированный серый купол света сверху */
 .space-bg::before {
   content: "";
   position: absolute;
