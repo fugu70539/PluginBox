@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 
-import hubAnim from "../../../public/Icons/Hub.json";
-import storeAnim from "../../../public/Icons/Store.json";
-import socketAnim from "../../../public/Icons/Socket.json";
+import hubAnim from "@/../public/Icons/Hub.json";
+import storeAnim from "@/../public/Icons/Store.json";
+import socketAnim from "@/../public/Icons/Socket.json";
 
 interface TabbarProps {
   activeTab: string;
