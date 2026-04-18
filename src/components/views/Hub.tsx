@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { SearchInput } from "../ui/SearchInput";
-import { SettingsIcon } from "../ui/SettingsIcon";
+import Lottie from "lottie-react";
+import settingsData from "@/assets/Settings.json";
 
 export default function Hub() {
   const [userName, setUserName] = useState("Artem");
@@ -27,18 +28,18 @@ export default function Hub() {
         animate={{ y: 0, opacity: 1 }}
         className="fixed top-0 left-0 right-0 z-50 h-20 flex items-center px-7"
       >
-        <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 overflow-hidden">
-          <div className="size-8 rounded-full flex items-center justify-center p-[1px] overflow-hidden bg-white/5">
+        <div id="avatar-panel" className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 overflow-hidden">
+          <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
             {userPhoto ? (
               <img src={userPhoto} alt="User" className="size-full rounded-full object-cover" />
             ) : (
-              <div className="size-full rounded-full flex items-center justify-center text-white/40 text-xs font-bold uppercase">
+              <div className="size-full rounded-full flex items-center justify-center text-white/40 text-[10px] font-bold uppercase">
                 {userName[0]}
               </div>
             )}
           </div>
-          <button className="size-8 flex items-center justify-center text-white/40 active:text-white/80 active:scale-90 transition-all">
-            <SettingsIcon className="size-5" />
+          <button className="size-8 flex items-center justify-center mr-1 active:scale-90 transition-all">
+            <Lottie animationData={settingsData} loop={true} className="size-5 opacity-40" />
           </button>
         </div>
       </motion.header>
@@ -46,9 +47,9 @@ export default function Hub() {
       <motion.div 
         initial={{ opacity: 0, y: 10 }} 
         animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 px-7 pt-20 pb-12 flex flex-col items-center"
+        className="relative z-10 px-7 pt-20 pb-12 flex flex-col items-start"
       >
-        <header className="flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
+        <header className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
           <h1 className="text-[28px] font-bold tracking-tight text-white leading-tight">
             Привет, {userName}!
           </h1>
@@ -57,7 +58,9 @@ export default function Hub() {
           </h2>
         </header>
 
-        <SearchInput />
+        <div className="w-full flex justify-start">
+          <SearchInput />
+        </div>
 
         <div className="mt-14 w-full grid grid-cols-2 gap-4">
           <motion.div whileTap={{ scale: 0.97 }} className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-6">
