@@ -9,24 +9,17 @@ export default function Hub() {
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
 
   useEffect(() => {
-    const initTg = () => {
-      const tg = (window as any).Telegram?.WebApp;
-      if (tg) {
-        tg.ready();
-        tg.expand();
-        tg.enableClosingConfirmation();
-        
-        const userData = tg.initDataUnsafe?.user;
-        if (userData?.first_name) setUserName(userData.first_name);
-        if (userData?.photo_url) setUserPhoto(userData.photo_url);
-      }
-    };
-    initTg();
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg) {
+      const userData = tg.initDataUnsafe?.user;
+      if (userData?.first_name) setUserName(userData.first_name);
+      if (userData?.photo_url) setUserPhoto(userData.photo_url);
+    }
   }, []);
 
   return (
     <div className="w-full">
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-7 pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-7 pointer-events-none">
         <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
           <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
             {userPhoto ? (
@@ -38,28 +31,26 @@ export default function Hub() {
             )}
           </div>
           <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
-            <img 
-              src="/Icons/Settings.PNG" 
-              alt="Settings" 
-              className="size-7 object-contain opacity-40" 
-            />
+            <img src="/Icons/Settings.PNG" alt="Settings" className="size-7 object-contain opacity-40" />
           </button>
+        </div>
+
+        <div className="mt-glass h-11 px-4 rounded-full flex items-center gap-2 pointer-events-auto active:scale-95 transition-all">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-white/60">Все</span>
+          <img src="/Icons/ArrowRight.PNG" alt="All" className="size-4 object-contain opacity-40" />
         </div>
       </header>
 
-      <main className="relative z-10 px-7 pt-20 flex flex-col items-center">
-        <header className="w-full flex flex-col items-center justify-center text-center mb-5 gap-y-0.5">
+      <main className="relative z-10 px-7 pt-24 flex flex-col items-center">
+        <header className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
           <motion.h1 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             className="text-[28px] font-bold tracking-tight text-white leading-tight"
           >
             Привет, {userName}!
           </motion.h1>
           <motion.h2 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
             className="text-[28px] font-bold tracking-tight text-white/25 leading-tight"
           >
             Что бы ты хотел найти?
@@ -70,27 +61,21 @@ export default function Hub() {
 
         <div className="mt-12 w-full grid grid-cols-2 gap-4">
           <motion.div 
-            whileTap={{ scale: 0.97 }} 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-6"
+            whileTap={{ scale: 0.97 }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
+            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7"
           >
-             <div className="w-11 h-11 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
-                <div className="size-5 bg-white/20 rounded-full blur-[2px]" />
+             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
+                <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
              </div>
              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Plug anc</span>
           </motion.div>
 
           <motion.div 
-            whileTap={{ scale: 0.97 }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-6"
+            whileTap={{ scale: 0.97 }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}
+            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7"
           >
-             <div className="w-11 h-11 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
-                <div className="size-5 bg-white/20 rounded-full blur-[2px]" />
+             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
+                <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
              </div>
              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Teather</span>
           </motion.div>
