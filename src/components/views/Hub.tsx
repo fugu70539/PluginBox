@@ -41,7 +41,7 @@ export default function Hub() {
             )}
           </div>
           <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
-            <img src="/Icons/Settings.PNG?v=2" alt="Settings" className="size-7 object-contain opacity-40" />
+            <img src="/Icons/Settings.PNG?v=3" alt="Settings" className="size-7 object-contain opacity-40" />
           </button>
         </div>
 
@@ -52,7 +52,7 @@ export default function Hub() {
           >
             <span className="text-[14px] font-bold tracking-tight text-white/60">{activeFilter}</span>
             <motion.img 
-              src="/Icons/ArrowRight.PNG?v=2" 
+              src="/Icons/ArrowRight.PNG?v=3" 
               alt="Filter" 
               animate={{ rotate: isFilterOpen ? 90 : 0 }}
               className="size-5 object-contain invert brightness-200 opacity-40" 
@@ -65,6 +65,7 @@ export default function Hub() {
                 initial={{ opacity: 0, scale: 0.9, y: -20 }}
                 animate={{ opacity: 1, scale: 1, y: 8 }}
                 exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                transition={{ type: "spring", stiffness: 350, damping: 28 }}
                 className="mt-glass absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl"
               >
                 <div className="flex flex-col gap-1">
@@ -95,10 +96,10 @@ export default function Hub() {
       </header>
 
       <main className="relative z-10 px-7 pt-28 flex flex-col items-center">
-        <header className="w-full flex flex-col items-center justify-center text-center mb-8 gap-y-1">
+        <header className="w-full flex flex-col items-center justify-center text-center mb-8 gap-y-1 text-white font-display">
           <motion.h1 
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            className="text-[30px] font-bold tracking-tight text-white leading-tight"
+            className="text-[30px] font-bold tracking-tight leading-tight"
           >
             Привет, {userName}!
           </motion.h1>
@@ -113,14 +114,12 @@ export default function Hub() {
         <SearchInput />
 
         <div className="mt-14 w-full grid grid-cols-2 gap-4">
-          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8">
-             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-4" />
-             <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
-          </div>
-          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8">
-             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-4" />
-             <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Teather</span>
-          </div>
+          {[1, 2].map((i) => (
+            <div key={i} className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8">
+               <div className="w-12 h-12 bg-white/10 rounded-2xl mb-4" />
+               <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
+            </div>
+          ))}
         </div>
       </main>
     </div>
