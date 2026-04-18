@@ -1,12 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 
-import hubAnim from "../../../public/Icons/Hub.json";
-import storeAnim from "../../../public/Icons/Store.json";
-import socketAnim from "../../../public/Icons/Socket.json";
+import hubAnim from "@/../public/Icons/Hub.json";
+import storeAnim from "@/../public/Icons/Store.json";
+import socketAnim from "@/../public/Icons/Socket.json";
+
+interface TabbarProps {
+  activeTab: string;
+  setActiveTab: (id: string) => void;
+}
 
 const tabs = [
   { id: "hub", icon: hubAnim, label: "Hub" },
@@ -14,9 +18,7 @@ const tabs = [
   { id: "socket", icon: socketAnim, label: "Socket" },
 ];
 
-export const Tabbar = () => {
-  const [activeTab, setActiveTab] = useState("hub");
-
+export const Tabbar = ({ activeTab, setActiveTab }: TabbarProps) => {
   const handleTabClick = (id: string) => {
     const tg = (window as any).Telegram?.WebApp;
     if (tg?.HapticFeedback) {
@@ -26,8 +28,8 @@ export const Tabbar = () => {
   };
 
   return (
-    <div className="fixed bottom-8 left-0 right-0 z-50 flex justify-center px-7">
-      <nav className="tabbar-glass h-[64px] w-full max-w-[320px] rounded-[32px] flex items-center justify-around px-2 relative">
+    <div className="fixed bottom-8 left-0 right-0 z-50 flex justify-center px-7 pointer-events-none">
+      <nav className="tabbar-glass h-[64px] w-full max-w-[320px] rounded-[32px] flex items-center justify-around px-2 relative pointer-events-auto">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
