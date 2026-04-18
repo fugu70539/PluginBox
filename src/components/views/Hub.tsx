@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "zramer-motion"; // Исправлено на framer-motion (была опечатка выше)
+import { motion } from "framer-motion";
 import { SearchInput } from "../ui/SearchInput";
 
 export default function Hub() {
@@ -44,7 +44,7 @@ export default function Hub() {
         animate={{ opacity: 1, y: 0 }}
         className="relative z-10 px-7 pt-20 pb-12 flex flex-col items-center"
       >
-        {/* Текстовый блок (прижат плотнее) */}
+        {/* Текстовый блок */}
         <header className="flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
           <h1 className="text-[28px] font-bold tracking-tight text-white leading-tight">
             Привет, {userName}!
