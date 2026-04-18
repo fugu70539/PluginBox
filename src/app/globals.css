@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --glass-blur: blur(35px) saturate(180%);
-  --glass-border: 0.5px solid rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(40px) saturate(180%);
+  --glass-border: 0.5px solid rgba(255, 255, 255, 0.1);
   --glass-bg: rgba(255, 255, 255, 0.12);
 }
 
@@ -11,9 +11,8 @@ html, body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  overflow-x: hidden; 
+  overflow: hidden; 
   position: fixed;
-  overscroll-behavior: none;
   background-color: #0a0a0a;
   color: #fff;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
@@ -27,18 +26,10 @@ html, body {
 }
 
 .tabbar-glass {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(25px) saturate(200%);
-  -webkit-backdrop-filter: blur(25px) saturate(200%);
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-}
-
-.tab-active-bg {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
 }
 
 .btn-send-white {
