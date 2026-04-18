@@ -36,8 +36,20 @@ export default function Hub() {
               </div>
             )}
           </div>
-          <button className="size-8 flex items-center justify-center mr-2 active:scale-90 transition-all">
-            <img src="/Icons/Settings.json" alt="Settings" className="size-5 opacity-40" />
+          <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
+            <div 
+              style={{
+                backgroundColor: 'white',
+                opacity: 0.4,
+                width: '20px',
+                height: '20px',
+                maskImage: 'url("/Icons/Settings.json")',
+                WebkitMaskImage: 'url("/Icons/Settings.json")',
+                maskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                maskPosition: 'center'
+              }}
+            />
           </button>
         </div>
       </motion.header>
@@ -45,7 +57,7 @@ export default function Hub() {
       <motion.div 
         initial={{ opacity: 0, y: 10 }} 
         animate={{ opacity: 1, y: 0 }}
-        className="relative z-10 px-7 pt-20 pb-12 flex flex-col items-start"
+        className="relative z-10 px-7 pt-20 pb-12 flex flex-col items-center"
       >
         <header className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
           <h1 className="text-[28px] font-bold tracking-tight text-white leading-tight">
@@ -56,9 +68,7 @@ export default function Hub() {
           </h2>
         </header>
 
-        <div className="w-full flex justify-start">
-          <SearchInput />
-        </div>
+        <SearchInput />
 
         <div className="mt-14 w-full grid grid-cols-2 gap-4">
           <motion.div whileTap={{ scale: 0.97 }} className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-6">
