@@ -11,11 +11,9 @@ html, body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  overflow: hidden; 
-  position: fixed;
+  overflow-x: hidden; 
   background-color: #0a0a0a;
   color: #fff;
-  overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -30,19 +28,20 @@ html, body {
   border: var(--glass-border);
 }
 
-/* Эффект плавного размытия к низу */
-.bottom-blur-mask {
+/* Эффект плавного исчезновения контента внизу */
+.bottom-blur-gradient {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 160px; /* Высота зоны размытия */
-  z-index: 40;
+  height: 160px; /* Зона от чуть выше таббара до низа */
+  background: linear-gradient(to bottom, transparent, #0a0a0a 70%);
   backdrop-filter: blur(20px);
-  /* Маска, которая делает блюр плавным */
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 70%);
-  mask-image: linear-gradient(to bottom, transparent, black 70%);
+  -webkit-backdrop-filter: blur(20px);
+  mask-image: linear-gradient(to bottom, transparent, black 50%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 50%);
   pointer-events: none;
+  z-index: 40;
 }
 
 .btn-send-white {
@@ -53,6 +52,3 @@ html, body {
 .btn-send-white img {
   filter: brightness(0) !important;
 }
-
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
