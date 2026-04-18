@@ -8,8 +8,8 @@ import { Tabbar } from "@/components/ui/TabBar";
 
 const tabsConfig = [
   { id: "hub", icon: "/Icons/Hub.PNG", label: "Хаб" },
-  { id: "store", icon: "/Icons/Plugins.PNG", label: "Плагины" },
-  { id: "socket", icon: "/Icons/Workshop.PNG", label: "Мастерская" },
+  { id: "store", icon: "/Icons/Store.PNG", label: "Плагины" },
+  { id: "socket", icon: "/Icons/Socket.PNG", label: "Мастерская" },
 ];
 
 export default function Page() {
