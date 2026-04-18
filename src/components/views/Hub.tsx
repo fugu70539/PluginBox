@@ -36,11 +36,11 @@ export default function Hub() {
               </div>
             )}
           </div>
-          <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
+          <button className="size-8 flex items-center justify-center active:scale-90 transition-all overflow-hidden">
             <img 
               src="/Icons/Settings.png" 
               alt="Settings" 
-              className="size-7 opacity-40 object-contain" 
+              className="size-7 object-contain opacity-40" 
             />
           </button>
         </div>
