@@ -25,11 +25,10 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
 
   return (
     <div className="fixed bottom-8 left-0 right-0 z-50 flex justify-center px-7 pointer-events-none">
-      <nav className="tabbar-glass h-[64px] w-full max-w-[340px] rounded-full flex items-center justify-between p-1 relative pointer-events-auto">
+      <nav className="tabbar-glass h-[64px] w-full max-w-[340px] rounded-full flex items-center justify-between p-1 relative pointer-events-auto shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
         {tabsConfig.map((tab) => {
           const isActive = activeTab === tab.id;
-          // Добавляем v=1 чтобы сбросить кеш Vercel/браузера
-          const iconPath = `${tab.icon}?v=1`;
+          const iconPath = `${tab.icon}?v=2`;
 
           return (
             <button
@@ -41,7 +40,7 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
                 <motion.div
                   layoutId="tab-highlight"
                   className="absolute inset-0 bg-white/10 backdrop-blur-md border border-white/10 rounded-full z-0"
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  transition={{ type: "spring", stiffness: 450, damping: 30 }}
                 />
               )}
 
