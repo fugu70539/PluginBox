@@ -28,10 +28,10 @@ export default function Hub() {
   };
 
   return (
-    <div className="w-full font-display">
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-start justify-between px-7 pt-3 pointer-events-none">
+    <div className="w-full font-display min-h-screen bg-[#0a0a0a]">
+      <header className="fixed top-0 left-0 right-0 z-50 h-20 flex items-start justify-between px-7 pt-5 pointer-events-none">
         <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
-          <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
+          <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
             {userPhoto ? (
               <img src={userPhoto} alt="User" className="size-full rounded-full object-cover" />
             ) : (
@@ -65,8 +65,8 @@ export default function Hub() {
                 initial={{ opacity: 0, scale: 0.9, y: -20 }}
                 animate={{ opacity: 1, scale: 1, y: 8 }}
                 exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                className="mt-glass absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl overflow-hidden"
+                transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                className="mt-glass absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl"
               >
                 <div className="flex flex-col gap-1">
                   {filterOptions.map((option) => (
@@ -78,7 +78,7 @@ export default function Hub() {
                       {activeFilter === option && (
                         <motion.div 
                           layoutId="filter-bg"
-                          className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-[20px] z-0 border border-white/5"
+                          className="absolute inset-0 bg-white/15 backdrop-blur-xl rounded-[20px] z-0 border border-white/10"
                         />
                       )}
                       <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${
@@ -95,27 +95,39 @@ export default function Hub() {
         </div>
       </header>
 
-      <main className="relative z-10 px-7 pt-24 flex flex-col items-center">
-        <header className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
-          <motion.h1 className="text-[28px] font-bold tracking-tight text-white leading-tight">
+      <main className="relative z-10 px-7 pt-28 flex flex-col items-center">
+        <header className="w-full flex flex-col items-center justify-center text-center mb-8 gap-y-1">
+          <motion.h1 
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+            className="text-[30px] font-bold tracking-tight text-white leading-tight"
+          >
             Привет, {userName}!
           </motion.h1>
-          <motion.h2 className="text-[28px] font-bold tracking-tight text-white/25 leading-tight">
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+            className="text-[30px] font-bold tracking-tight text-white/25 leading-tight"
+          >
             Что бы ты хотел найти?
           </motion.h2>
         </header>
 
         <SearchInput />
 
-        <div className="mt-12 w-full grid grid-cols-2 gap-4">
-          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7">
-             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3" />
+        <div className="mt-14 w-full grid grid-cols-2 gap-4">
+          <motion.div 
+            whileTap={{ scale: 0.97 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8"
+          >
+             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-4" />
              <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
-          </div>
-          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7">
-             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3" />
+          </motion.div>
+          <motion.div 
+            whileTap={{ scale: 0.97 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8"
+          >
+             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-4" />
              <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Teather</span>
-          </div>
+          </motion.div>
         </div>
       </main>
     </div>
