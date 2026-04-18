@@ -15,9 +15,7 @@ export const SearchInput = () => {
         />
         
         <button className="h-[38px] px-5 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0">
-           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 19V5M5 12l7-7 7 7"/>
-           </svg>
+           <img src="/Icons/SendToAi.png" alt="Send" className="w-[18px] h-[18px] brightness-0" />
         </button>
       </motion.div>
     </div>
