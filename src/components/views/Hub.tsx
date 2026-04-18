@@ -5,6 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SearchInput } from "@/components/ui/SearchInput";
 
 const filterOptions = ["Все", "По имени", "По дате", "По рейтингу"];
+const demoPlugins = [
+  { id: 1, title: "Elevator Plus" },
+  { id: 2, title: "Script API" },
+  { id: 3, title: "UI Engine" },
+  { id: 4, title: "Logic Box" },
+  { id: 5, title: "Shader Pack" },
+  { id: 6, title: "Anarchy Core" },
+];
 
 export default function Hub() {
   const [userName, setUserName] = useState("Artem");
@@ -21,21 +29,16 @@ export default function Hub() {
     }
   }, []);
 
-  const toggleFilter = () => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
-    setIsFilterOpen(!isFilterOpen);
-  };
-
   return (
-    <div className="w-full font-display min-h-screen bg-[#0a0a0a]">
+    <div className="w-full font-display min-h-screen bg-[#0a0a0a] overflow-y-auto no-scrollbar pb-40">
+      {/* HEADER */}
       <header className="fixed top-0 left-0 right-0 z-50 h-24 flex items-start justify-between px-7 pt-7 pointer-events-none">
         <div className="h-12 w-24 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
-          <div className="size-9 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
+          <div className="size-9 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5 border border-white/5">
             {userPhoto ? (
               <img src={userPhoto} alt="User" className="size-full rounded-full object-cover" />
             ) : (
-              <div className="size-full rounded-full flex items-center justify-center text-white/40 text-[11px] font-bold uppercase bg-white/5">
+              <div className="size-full flex items-center justify-center text-white/40 text-[11px] font-bold uppercase">
                 {userName[0]}
               </div>
             )}
@@ -48,19 +51,16 @@ export default function Hub() {
           </button>
         </div>
 
-        <div className="relative flex flex-col items-end pointer-events-auto">
+        <div className="relative pointer-events-auto">
           <button 
-            onClick={toggleFilter}
-            className="h-12 px-6 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center gap-3.5 active:scale-95 transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            className="h-12 px-6 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center gap-3.5 active:scale-95 transition-all shadow-lg"
           >
-            <span className="text-[14px] font-bold tracking-tight text-white/70">{activeFilter}</span>
-            {/* Заменили PNG на SVG стрелку и покрасили в белый */}
+            <span className="text-[14px] font-bold text-white/70">{activeFilter}</span>
             <motion.svg 
-              viewBox="0 0 24 24" 
-              fill="none" 
+              viewBox="0 0 24 24" fill="none" 
               animate={{ rotate: isFilterOpen ? 90 : 0 }}
-              className="size-5 stroke-white opacity-40 transition-opacity"
-              strokeWidth="2.5"
+              className="size-5 stroke-white opacity-40" strokeWidth="2.5"
             >
               <path d="m9 18 6-6-6-6" strokeLinecap="round" strokeLinejoin="round"/>
             </motion.svg>
@@ -69,71 +69,65 @@ export default function Hub() {
           <AnimatePresence>
             {isFilterOpen && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: -20 }}
+                initial={{ opacity: 0, scale: 0.95, y: -10 }}
                 animate={{ opacity: 1, scale: 1, y: 10 }}
-                exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                className="absolute top-full right-0 w-48 bg-[#1a1a1a]/70 backdrop-blur-3xl rounded-[32px] p-2 z-50 shadow-[0_16px_48px_rgba(0,0,0,0.6)] border border-white/[0.06]"
+                exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                className="absolute top-full right-0 w-48 bg-[#1a1a1a]/80 backdrop-blur-3xl rounded-[28px] p-1.5 z-50 border border-white/[0.08] shadow-2xl"
               >
-                <div className="flex flex-col gap-1.5 overflow-hidden">
-                  {filterOptions.map((option) => (
-                    <button
-                      key={option}
-                      onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
-                      className="relative w-full px-5 py-3.5 text-left group overflow-hidden rounded-[20px]"
-                    >
-                      {activeFilter === option && (
-                        <motion.div 
-                          layoutId="filter-bg"
-                          className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-xl z-0 border border-white/[0.08]"
-                        />
-                      )}
-                      <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${
-                        activeFilter === option ? "text-white" : "text-white/40 group-active:text-white/70"
-                      }`}>
-                        {option}
-                      </span>
-                    </button>
-                  ))}
-                </div>
+                {filterOptions.map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
+                    className="relative w-full px-5 py-3 text-left rounded-[20px] overflow-hidden group"
+                  >
+                    {activeFilter === option && (
+                      <motion.div layoutId="f-bg" className="absolute inset-0 bg-white/10 backdrop-blur-md" />
+                    )}
+                    <span className={`relative z-10 text-[14px] font-bold ${activeFilter === option ? "text-white" : "text-white/30 group-active:text-white/60"}`}>
+                      {option}
+                    </span>
+                  </button>
+                ))}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </header>
 
-      <main className="relative z-10 px-7 pt-32 flex flex-col items-center">
-        <header className="w-full flex flex-col items-center justify-center text-center mb-10 gap-y-1.5 text-white font-display">
-          {/* Текст с градиентом и правильной жирностью */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            className="text-[32px] font-extrabold tracking-tight leading-tight"
-          >
-            <span className="bg-gradient-to-b from-white to-white/90 bg-clip-text">Привет, {userName}!</span>
-          </motion.h1>
-          <motion.h2 
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-[32px] font-extrabold tracking-tight text-white/30 leading-tight"
-          >
-            Что бы ты хотел найти?
-          </motion.h2>
+      {/* MAIN CONTENT */}
+      <main className="px-7 pt-32 flex flex-col">
+        <header className="w-full flex flex-col items-center text-center mb-10 gap-y-1">
+          <h1 className="text-[32px] font-extrabold tracking-tight">Привет, {userName}!</h1>
+          <h2 className="text-[32px] font-extrabold tracking-tight text-white/25">Что бы ты хотел найти?</h2>
         </header>
 
         <SearchInput />
 
-        <div className="mt-16 w-full grid grid-cols-2 gap-5">
-          {[{title: "Plugin", sub: ""}, {title: "Teather", sub: ""},].map((item, i) => (
+        {/* SECTION: РЕКОМЕНДУЕМ */}
+        <div className="mt-10 mb-5 ml-1">
+           <h3 className="text-[11px] font-black tracking-[0.2em] text-white/30 uppercase">Рекомендуем</h3>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 pb-10">
+          {demoPlugins.map((item, i) => (
             <motion.div 
-              key={item.title}
-              whileTap={{ scale: 0.97 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + (i*0.1) }}
-              className="mt-glass rounded-[2.5rem] p-7 flex flex-col items-center py-9 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+              whileTap={{ scale: 0.96 }}
+              className="mt-glass rounded-[2.5rem] p-7 flex flex-col items-center py-9 shadow-lg"
             >
-               <div className="w-14 h-14 bg-white/[0.06] rounded-3xl mb-4.5" />
-               <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase tracking-widest">{item.title}</span>
+               <div className="w-14 h-14 bg-white/[0.06] rounded-[1.4rem] mb-4.5 border border-white/5" />
+               <span className="text-[12px] font-bold text-white/40 uppercase tracking-widest">{item.title}</span>
             </motion.div>
           ))}
         </div>
       </main>
+
+      {/* BLUR OVERLAY (Невидимая зона размытия) */}
+      <div className="bottom-blur-mask" />
     </div>
   );
 }
