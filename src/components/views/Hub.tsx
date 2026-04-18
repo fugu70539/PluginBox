@@ -41,7 +41,7 @@ export default function Hub() {
             )}
           </div>
           <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
-            <img src="/Icons/Settings.PNG?v=1" alt="Settings" className="size-7 object-contain opacity-40" />
+            <img src="/Icons/Settings.PNG?v=2" alt="Settings" className="size-7 object-contain opacity-40" />
           </button>
         </div>
 
@@ -52,7 +52,7 @@ export default function Hub() {
           >
             <span className="text-[14px] font-bold tracking-tight text-white/60">{activeFilter}</span>
             <motion.img 
-              src="/Icons/ArrowRight.PNG?v=1" 
+              src="/Icons/ArrowRight.PNG?v=2" 
               alt="Filter" 
               animate={{ rotate: isFilterOpen ? 90 : 0 }}
               className="size-5 object-contain invert brightness-200 opacity-40" 
@@ -65,7 +65,6 @@ export default function Hub() {
                 initial={{ opacity: 0, scale: 0.9, y: -20 }}
                 animate={{ opacity: 1, scale: 1, y: 8 }}
                 exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                transition={{ type: "spring", stiffness: 350, damping: 28 }}
                 className="mt-glass absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl"
               >
                 <div className="flex flex-col gap-1">
@@ -78,7 +77,7 @@ export default function Hub() {
                       {activeFilter === option && (
                         <motion.div 
                           layoutId="filter-bg"
-                          className="absolute inset-0 bg-white/15 backdrop-blur-xl rounded-[20px] z-0 border border-white/10"
+                          className="absolute inset-0 bg-white/15 backdrop-blur-xl rounded-[20px] z-0"
                         />
                       )}
                       <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${
@@ -114,20 +113,14 @@ export default function Hub() {
         <SearchInput />
 
         <div className="mt-14 w-full grid grid-cols-2 gap-4">
-          <motion.div 
-            whileTap={{ scale: 0.97 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8"
-          >
+          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8">
              <div className="w-12 h-12 bg-white/10 rounded-2xl mb-4" />
              <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
-          </motion.div>
-          <motion.div 
-            whileTap={{ scale: 0.97 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-            className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8"
-          >
+          </div>
+          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8">
              <div className="w-12 h-12 bg-white/10 rounded-2xl mb-4" />
              <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Teather</span>
-          </motion.div>
+          </div>
         </div>
       </main>
     </div>
