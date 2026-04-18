@@ -17,7 +17,9 @@ interface TabbarProps {
 export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => {
   const handleTabClick = (id: string) => {
     const tg = (window as any).Telegram?.WebApp;
-    if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.selectionChanged();
+    }
     setActiveTab(id);
   };
 
@@ -26,6 +28,9 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
       <nav className="tabbar-glass h-[64px] w-full max-w-[340px] rounded-full flex items-center justify-between p-1 relative pointer-events-auto">
         {tabsConfig.map((tab) => {
           const isActive = activeTab === tab.id;
+          // Добавляем v=1 чтобы сбросить кеш Vercel/браузера
+          const iconPath = `${tab.icon}?v=1`;
+
           return (
             <button
               key={tab.id}
@@ -42,13 +47,13 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
 
               <div className="relative z-10 size-7 flex items-center justify-center">
                 <img
-                  src={`${tab.icon}?v=${Date.now()}`}
+                  src={iconPath}
                   alt={tab.label}
                   className={`size-full object-contain transition-all duration-300 ${isActive ? 'opacity-100 scale-110' : 'opacity-40 scale-100'}`}
                 />
               </div>
               
-              <span className={`text-[11px] mt-1 font-bold tracking-tight relative z-10 transition-opacity duration-300 font-display ${isActive ? 'opacity-100 text-white' : 'opacity-30 text-white'}`}>
+              <span className={`text-[10px] mt-1 font-bold uppercase tracking-tight relative z-10 transition-opacity duration-300 font-display ${isActive ? 'opacity-100 text-white' : 'opacity-30 text-white'}`}>
                 {tab.label}
               </span>
             </button>
