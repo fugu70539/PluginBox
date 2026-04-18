@@ -41,7 +41,7 @@ export default function Hub() {
           <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
             <Lottie 
               animationData={settingsAnim} 
-              className="size-5 opacity-40" 
+              className="size-7 opacity-40" 
               loop={true} 
             />
           </button>
