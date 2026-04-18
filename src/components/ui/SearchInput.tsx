@@ -29,10 +29,10 @@ export const SearchInput = () => {
         >
           <input
             type="text"
-            placeholder="Спросить что-нибудь..."
+            placeholder={isAiMode ? "Поиск с ИИ..." : "Найти что-нибудь..."}
             className="bg-transparent border-none outline-none text-white text-base w-full placeholder:text-white/20 font-medium"
           />
-          <button className="h-[38px] px-5 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-[1.1rem]">
+          <button className="h-[38px] px-5 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-[1.3rem]">
             <img src="/Icons/SendToAi.png" alt="Send" className="w-[18px] h-[18px]" />
           </button>
         </motion.div>
@@ -48,15 +48,14 @@ export const SearchInput = () => {
       >
         <AnimatePresence mode="wait">
           <motion.div
-            key={isAiMode ? "ai-wrapper" : "search-wrapper"}
+            key={isAiMode ? "ai-mode" : "search-mode"}
             initial={{ scale: 0.5, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            animate={{ scale: 1, opacity: 1, transition: { delay: 0.1 } }}
             exit={{ scale: 0.5, opacity: 0 }}
             className="size-7"
           >
             <Lottie
-              key={isAiMode ? "ai-anim" : "search-anim"}
-              animationData={isAiMode ? searchAiAnim : searchAnim}
+              animationData={isAiMode ? searchAnim : searchAiAnim}
               autoplay={true}
               loop={false}
               style={{ width: '100%', height: '100%' }}
