@@ -7,9 +7,9 @@ import Socket from "@/components/views/Socket";
 import { Tabbar } from "@/components/ui/TabBar";
 
 const tabsConfig = [
-  { id: "hub", icon: "/Icons/Hub.PNG", label: "Hub" },
-  { id: "store", icon: "/Icons/Store.PNG", label: "Store" },
-  { id: "socket", icon: "/Icons/Socket.PNG", label: "Socket" },
+  { id: "hub", icon: "/Icons/Hub.PNG", label: "Хаб" },
+  { id: "store", icon: "/Icons/Store.PNG", label: "Маркет" },
+  { id: "socket", icon: "/Icons/Socket.PNG", label: "Воркплейс" },
 ];
 
 export default function Page() {
