@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SearchInput } from "@/components/ui/SearchInput";
+
+const filterOptions = ["Все", "По имени", "По дате", "По рейтингу"];
 
 export default function Hub() {
   const [userName, setUserName] = useState("Artem");
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState("Все");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
@@ -17,9 +21,20 @@ export default function Hub() {
     }
   }, []);
 
+  const toggleFilter = () => {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
+    setIsFilterOpen(!isFilterOpen);
+  };
+
+  const selectFilter = (option: string) => {
+    setActiveFilter(option);
+    setIsFilterOpen(false);
+  };
+
   return (
     <div className="w-full font-display">
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-7 pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-start justify-between px-7 pt-3 pointer-events-none">
         <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
           <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
             {userPhoto ? (
@@ -35,9 +50,43 @@ export default function Hub() {
           </button>
         </div>
 
-        <div className="mt-glass h-11 px-5 rounded-full flex items-center gap-3 pointer-events-auto active:scale-95 transition-all">
-          <span className="text-[14px] font-bold tracking-tight text-white/60">Все</span>
-          <img src="/Icons/ArrowRight.PNG" alt="All" className="size-5 object-contain opacity-40" />
+        <div className="relative flex flex-col items-end pointer-events-auto">
+          <button 
+            onClick={toggleFilter}
+            className="mt-glass h-11 px-5 rounded-full flex items-center gap-3 active:scale-95 transition-all"
+          >
+            <span className="text-[14px] font-bold tracking-tight text-white/60">{activeFilter}</span>
+            <motion.img 
+              src="/Icons/ArrowRight.PNG" 
+              alt="Filter" 
+              animate={{ rotate: isFilterOpen ? 90 : 0 }}
+              className="size-6 object-contain opacity-40" 
+              style={{ filter: "brightness(1)" }}
+            />
+          </button>
+
+          <AnimatePresence>
+            {isFilterOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 5, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                className="mt-glass absolute top-full right-0 w-40 rounded-[24px] py-2 z-50 overflow-hidden shadow-2xl"
+              >
+                {filterOptions.map((option) => (
+                  <button
+                    key={option}
+                    onClick={() => selectFilter(option)}
+                    className={`w-full px-5 py-3 text-left text-[13px] font-bold tracking-tight transition-colors ${
+                      activeFilter === option ? "text-white bg-white/10" : "text-white/40 active:bg-white/5"
+                    }`}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </header>
 
