@@ -3,23 +3,23 @@
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 
-// Прямой относительный путь от src/components/ui/ до корня public/
-import hubAnim from "../../../public/Icons/Hub.json";
-import storeAnim from "../../../public/Icons/Store.json";
-import socketAnim from "../../../public/Icons/Socket.json";
-
 interface TabbarProps {
   activeTab: string;
   setActiveTab: (id: string) => void;
+  animations: {
+    hub: any;
+    store: any;
+    socket: any;
+  };
 }
 
-const tabs = [
-  { id: "hub", icon: hubAnim, label: "Hub" },
-  { id: "store", icon: storeAnim, label: "Store" },
-  { id: "socket", icon: socketAnim, label: "Socket" },
-];
+export const Tabbar = ({ activeTab, setActiveTab, animations }: TabbarProps) => {
+  const tabs = [
+    { id: "hub", icon: animations.hub, label: "Hub" },
+    { id: "store", icon: animations.store, label: "Store" },
+    { id: "socket", icon: animations.socket, label: "Socket" },
+  ];
 
-export const Tabbar = ({ activeTab, setActiveTab }: TabbarProps) => {
   const handleTabClick = (id: string) => {
     const tg = (window as any).Telegram?.WebApp;
     if (tg?.HapticFeedback) {
@@ -52,7 +52,7 @@ export const Tabbar = ({ activeTab, setActiveTab }: TabbarProps) => {
                   animationData={tab.icon}
                   loop={isActive}
                   autoplay={isActive}
-                  style={{ width: '100%', height: '100%', opacity: isActive ? 1 : 0.4 }}
+                  style={{ width: '100%', height: '100%', opacity: isActive ? 1 : 0.3 }}
                 />
               </div>
               
