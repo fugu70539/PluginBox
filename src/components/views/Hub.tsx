@@ -18,7 +18,7 @@ export default function Hub() {
   }, []);
 
   return (
-    <div className="w-full font-sans">
+    <div className="w-full font-display">
       <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-7 pointer-events-none">
         <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
           <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
@@ -35,9 +35,9 @@ export default function Hub() {
           </button>
         </div>
 
-        <div className="mt-glass h-11 px-4 rounded-full flex items-center gap-2 pointer-events-auto active:scale-95 transition-all">
-          <span className="text-[11px] font-bold uppercase tracking-widest text-white/40">Все</span>
-          <img src="/Icons/ArrowRight.PNG" alt="All" className="size-4 object-contain opacity-40" />
+        <div className="mt-glass h-11 px-5 rounded-full flex items-center gap-3 pointer-events-auto active:scale-95 transition-all">
+          <span className="text-[14px] font-bold tracking-tight text-white/60">Все</span>
+          <img src="/Icons/ArrowRight.PNG" alt="All" className="size-5 object-contain opacity-40" />
         </div>
       </header>
 
@@ -59,7 +59,7 @@ export default function Hub() {
 
         <SearchInput />
 
-        <div className="mt-12 w-full grid grid-cols-2 gap-4 text-sans">
+        <div className="mt-12 w-full grid grid-cols-2 gap-4">
           <motion.div 
             whileTap={{ scale: 0.97 }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
             className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7"
@@ -67,7 +67,7 @@ export default function Hub() {
              <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
                 <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
              </div>
-             <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Plug anc</span>
+             <span className="text-[12px] font-bold tracking-tight text-white/40">Plug anc</span>
           </motion.div>
 
           <motion.div 
@@ -77,7 +77,7 @@ export default function Hub() {
              <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
                 <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
              </div>
-             <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40">Teather</span>
+             <span className="text-[12px] font-bold tracking-tight text-white/40">Teather</span>
           </motion.div>
         </div>
       </main>
