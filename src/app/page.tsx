@@ -25,7 +25,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] select-none overflow-hidden">
+    <div className="min-h-screen bg-[#0a0a0a] select-none overflow-hidden font-sans">
       <div className="pb-32">
         {activeTab === "hub" && <Hub />}
         {activeTab === "store" && <Store />}
