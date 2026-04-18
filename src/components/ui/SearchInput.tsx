@@ -1,14 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Lottie from "lottie-react";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
 
 import searchAnim from "../../../public/Icons/Search.json";
 import searchAiAnim from "../../../public/Icons/SearchAI.json";
 
+const textVariants = {
+  initial: (isAi: boolean) => ({
+    opacity: 0,
+    y: isAi ? 15 : -15,
+  }),
+  animate: {
+    opacity: 1,
+    y: 0,
+  },
+  exit: (isAi: boolean) => ({
+    opacity: 0,
+    y: isAi ? -15 : 15,
+  }),
+};
+
 export const SearchInput = () => {
   const [isAiMode, setIsAiMode] = useState(false);
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const handleToggle = () => {
     const tg = (window as any).Telegram?.WebApp;
@@ -19,23 +35,15 @@ export const SearchInput = () => {
     setIsAiMode(!isAiMode);
   };
 
-  const currentPlaceholder = isAiMode ? "Поиск с ИИ..." : "Найти что-нибудь...";
+  // Принудительный запуск анимации при смене режима
+  useEffect(() => {
+    if (lottieRef.current) {
+      lottieRef.current.stop(); // Сбрасываем текущую
+      lottieRef.current.play(); // Запускаем заново
+    }
+  }, [isAiMode]);
 
-  // Настройка разных направлений для текста
-  const textVariants = {
-    initial: (isAi: boolean) => ({
-      opacity: 0,
-      y: isAi ? 15 : -15, // Приходит снизу для ИИ, сверху для классики
-    }),
-    animate: {
-      opacity: 1,
-      y: 0,
-    },
-    exit: (isAi: boolean) => ({
-      opacity: 0,
-      y: isAi ? -15 : 15, // Уходит вверх для ИИ, вниз для классики
-    }),
-  };
+  const currentPlaceholder = isAiMode ? "Поиск с ИИ..." : "Найти что-нибудь...";
 
   return (
     <div className="w-full flex items-center gap-2 relative h-[52px]">
@@ -88,8 +96,8 @@ export const SearchInput = () => {
             transition={{ duration: 0.2 }}
             className="size-7 flex items-center justify-center"
           >
-            {/* Lottie проиграет TGS-анимацию один раз при монтировании */}
             <Lottie
+              lottieRef={lottieRef}
               animationData={isAiMode ? searchAnim : searchAiAnim}
               loop={false}
               autoplay={true}
