@@ -13,6 +13,7 @@
     "react": "latest",
     "react-dom": "latest",
     "framer-motion": "latest",
+    "lottie-react": "^2.4.0",
     "clsx": "latest",
     "tailwind-merge": "latest",
     "lucide-react": "latest"
