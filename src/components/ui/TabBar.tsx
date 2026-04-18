@@ -42,11 +42,11 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
                 />
               )}
 
-              <div className="relative z-10 size-8 flex items-center justify-center">
+              <div className="relative z-10 size-7 flex items-center justify-center">
                 <img
                   src={tab.icon}
                   alt={tab.label}
-                  className={`size-full object-contain transition-all duration-300 ${isActive ? 'opacity-100 scale-110' : 'opacity-40 scale-100'}`}
+                  className={`size-full object-contain transition-all duration-300 ${isActive ? 'opacity-100' : 'opacity-40'}`}
                 />
               </div>
               
