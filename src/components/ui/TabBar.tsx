@@ -1,123 +1,65 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { SearchInput } from "@/components/ui/SearchInput";
+import { motion } from "framer-motion";
 
-const filterOptions = ["Все", "По имени", "По дате", "По рейтингу"];
+interface TabConfig {
+  id: string;
+  icon: string;
+  label: string;
+}
 
-export default function Hub() {
-  const [userName, setUserName] = useState("Artem");
-  const [userPhoto, setUserPhoto] = useState<string | null>(null);
-  const [activeFilter, setActiveFilter] = useState("Все");
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+interface TabbarProps {
+  activeTab: string;
+  setActiveTab: (id: string) => void;
+  tabsConfig: TabConfig[];
+}
 
-  useEffect(() => {
+export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => {
+  const handleTabClick = (id: string) => {
     const tg = (window as any).Telegram?.WebApp;
-    if (tg) {
-      const userData = tg.initDataUnsafe?.user;
-      if (userData?.first_name) setUserName(userData.first_name);
-      if (userData?.photo_url) setUserPhoto(userData.photo_url);
+    if (tg?.HapticFeedback) {
+      tg.HapticFeedback.selectionChanged();
     }
-  }, []);
-
-  const toggleFilter = () => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
-    setIsFilterOpen(!isFilterOpen);
+    setActiveTab(id);
   };
 
   return (
-    <div className="w-full font-display">
-      <header className="fixed top-0 left-0 right-0 z-50 h-16 flex items-start justify-between px-7 pt-3 pointer-events-none">
-        <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
-          <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/5 ml-0.5">
-            {userPhoto ? (
-              <img src={userPhoto} alt="User" className="size-full rounded-full object-cover" />
-            ) : (
-              <div className="size-full rounded-full flex items-center justify-center text-white/40 text-[10px] font-bold uppercase">
-                {userName[0]}
+    <div className="fixed bottom-8 left-0 right-0 z-50 flex justify-center px-7 pointer-events-none">
+      <nav className="tabbar-glass h-[64px] w-full max-w-[340px] rounded-full flex items-center justify-between p-1 relative pointer-events-auto">
+        {tabsConfig.map((tab) => {
+          const isActive = activeTab === tab.id;
+          // Добавляем v=1 чтобы сбросить кеш Vercel/браузера
+          const iconPath = `${tab.icon}?v=1`;
+
+          return (
+            <button
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
+              className="relative flex-1 h-full flex flex-col items-center justify-center transition-all active:scale-95"
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="tab-highlight"
+                  className="absolute inset-0 bg-white/10 backdrop-blur-md border border-white/10 rounded-full z-0"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+
+              <div className="relative z-10 size-7 flex items-center justify-center">
+                <img
+                  src={iconPath}
+                  alt={tab.label}
+                  className={`size-full object-contain transition-all duration-300 ${isActive ? 'opacity-100 scale-110' : 'opacity-40 scale-100'}`}
+                />
               </div>
-            )}
-          </div>
-          <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
-            <img src="/Icons/Settings.PNG?v=1" alt="Settings" className="size-7 object-contain opacity-40" />
-          </button>
-        </div>
-
-        <div className="relative flex flex-col items-end pointer-events-auto">
-          <button 
-            onClick={toggleFilter}
-            className="mt-glass h-11 px-5 rounded-full flex items-center gap-3 active:scale-95 transition-all"
-          >
-            <span className="text-[14px] font-bold tracking-tight text-white/60">{activeFilter}</span>
-            <motion.img 
-              src="/Icons/ArrowRight.PNG?v=1" 
-              alt="Filter" 
-              animate={{ rotate: isFilterOpen ? 90 : 0 }}
-              className="size-5 object-contain invert brightness-200 opacity-40" 
-            />
-          </button>
-
-          <AnimatePresence>
-            {isFilterOpen && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: -20 }}
-                animate={{ opacity: 1, scale: 1, y: 8 }}
-                exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                className="mt-glass absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl overflow-hidden"
-              >
-                <div className="flex flex-col gap-1">
-                  {filterOptions.map((option) => (
-                    <button
-                      key={option}
-                      onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
-                      className="relative w-full px-4 py-3 text-left group"
-                    >
-                      {activeFilter === option && (
-                        <motion.div 
-                          layoutId="filter-bg"
-                          className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-[20px] z-0 border border-white/5"
-                        />
-                      )}
-                      <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${
-                        activeFilter === option ? "text-white" : "text-white/30 group-active:text-white/60"
-                      }`}>
-                        {option}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </header>
-
-      <main className="relative z-10 px-7 pt-24 flex flex-col items-center">
-        <header className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
-          <motion.h1 className="text-[28px] font-bold tracking-tight text-white leading-tight">
-            Привет, {userName}!
-          </motion.h1>
-          <motion.h2 className="text-[28px] font-bold tracking-tight text-white/25 leading-tight">
-            Что бы ты хотел найти?
-          </motion.h2>
-        </header>
-
-        <SearchInput />
-
-        <div className="mt-12 w-full grid grid-cols-2 gap-4">
-          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7">
-             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3" />
-             <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
-          </div>
-          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7">
-             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3" />
-             <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Teather</span>
-          </div>
-        </div>
-      </main>
+              
+              <span className={`text-[10px] mt-1 font-bold uppercase tracking-tight relative z-10 transition-opacity duration-300 font-display ${isActive ? 'opacity-100 text-white' : 'opacity-30 text-white'}`}>
+                {tab.label}
+              </span>
+            </button>
+          );
+        })}
+      </nav>
     </div>
   );
-}
+};
