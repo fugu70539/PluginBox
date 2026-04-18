@@ -36,29 +36,17 @@ html, body {
   border: 0.5px solid rgba(255, 255, 255, 0.12);
 }
 
-/* Кнопка отправки (белый фон) */
+/* Стили для твоей кнопки в инпуте */
 .btn-send-white {
   background-color: #ffffff !important;
-  border-radius: 9999px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-  transition: all 0.2s ease;
   opacity: 1 !important;
+  display: flex !important;
   visibility: visible !important;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
 
-.btn-send-white:active {
-  transform: scale(0.9);
-  background-color: #eeeeee !important;
-}
-
-/* Иконка внутри белой кнопки (черная/темная) */
-.btn-send-white img, 
-.btn-send-white svg {
-  filter: invert(1) !important;
-  width: 18px !important;
-  height: 18px !important;
+/* Чтобы иконка внутри была видна (черная на белом) */
+.btn-send-white img {
+  filter: brightness(0) !important;
   opacity: 1 !important;
 }
