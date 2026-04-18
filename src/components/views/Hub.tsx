@@ -41,7 +41,7 @@ export default function Hub() {
             )}
           </div>
           <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
-            <img src="/Icons/Settings.PNG" alt="Settings" className="size-7 object-contain opacity-40" />
+            <img src={`/Icons/Settings.PNG?v=${Date.now()}`} alt="Settings" className="size-7 object-contain opacity-40" />
           </button>
         </div>
 
@@ -52,70 +52,73 @@ export default function Hub() {
           >
             <span className="text-[14px] font-bold tracking-tight text-white/60">{activeFilter}</span>
             <motion.img 
-              src="/Icons/ArrowRight.PNG" 
-              alt="Filter icon" 
+              src={`/Icons/ArrowRight.PNG?v=${Date.now()}`} 
+              alt="Filter" 
               animate={{ rotate: isFilterOpen ? 90 : 0 }}
-              className="size-5 object-contain opacity-40" 
-              style={{ filter: "brightness(1.5) contrast(1.2)" }}
+              className="size-5 object-contain brightness-0 invert opacity-40" 
             />
           </button>
 
           <AnimatePresence>
             {isFilterOpen && (
               <motion.div
-                initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 5, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                className="mt-glass absolute top-full right-0 w-44 rounded-[24px] py-2 z-50 overflow-hidden shadow-2xl"
+                initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                animate={{ opacity: 1, scale: 1, y: 8 }}
+                exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                className="mt-glass absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl overflow-hidden"
               >
-                {filterOptions.map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
-                    className={`w-full px-5 py-3 text-left text-[14px] font-bold tracking-tight transition-colors ${
-                      activeFilter === option ? "text-white bg-white/10" : "text-white/40 active:bg-white/5"
-                    }`}
-                  >
-                    {option}
-                  </button>
-                ))}
+                <div className="flex flex-col gap-1">
+                  {filterOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
+                      className="relative w-full px-4 py-3 text-left group overflow-hidden"
+                    >
+                      {activeFilter === option && (
+                        <motion.div 
+                          layoutId="filter-bg"
+                          className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-[20px] border border-white/10"
+                        />
+                      )}
+                      <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors ${
+                        activeFilter === option ? "text-white" : "text-white/30"
+                      }`}>
+                        {option}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </header>
 
-      <main className="relative z-10 px-7 pt-24 flex flex-col items-center text-white">
+      <main className="relative z-10 px-7 pt-24 flex flex-col items-center">
         <header className="w-full flex flex-col items-center justify-center text-center mb-6 gap-y-0.5">
-          <motion.h1 
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            className="text-[28px] font-bold tracking-tight leading-tight"
-          >
+          <motion.h1 className="text-[28px] font-bold tracking-tight text-white leading-tight">
             Привет, {userName}!
           </motion.h1>
-          <motion.h2 
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-[28px] font-bold tracking-tight text-white/25 leading-tight"
-          >
+          <motion.h2 className="text-[28px] font-bold tracking-tight text-white/25 leading-tight">
             Что бы ты хотел найти?
           </motion.h2>
         </header>
 
         <SearchInput />
 
-        <div className="mt-12 w-full grid grid-cols-2 gap-4">
-          {[1, 2].map((i) => (
-            <motion.div 
-              key={i}
-              whileTap={{ scale: 0.97 }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 * i }}
-              className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7"
-            >
-               <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
-                  <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
-               </div>
-               <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
-            </motion.div>
-          ))}
+        <div className="mt-12 w-full grid grid-cols-2 gap-4 text-white">
+          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7">
+             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
+                <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
+             </div>
+             <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
+          </div>
+          <div className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-7">
+             <div className="w-12 h-12 bg-white/10 rounded-2xl mb-3 flex items-center justify-center">
+                <div className="size-6 bg-white/20 rounded-full blur-[3px]" />
+             </div>
+             <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Teather</span>
+          </div>
         </div>
       </main>
     </div>
