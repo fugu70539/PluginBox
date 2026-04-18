@@ -17,9 +17,7 @@ interface TabbarProps {
 export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => {
   const handleTabClick = (id: string) => {
     const tg = (window as any).Telegram?.WebApp;
-    if (tg?.HapticFeedback) {
-      tg.HapticFeedback.selectionChanged();
-    }
+    if (tg?.HapticFeedback) tg.HapticFeedback.selectionChanged();
     setActiveTab(id);
   };
 
@@ -44,7 +42,7 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
 
               <div className="relative z-10 size-7 flex items-center justify-center">
                 <img
-                  src={tab.icon}
+                  src={`${tab.icon}?v=${Date.now()}`}
                   alt={tab.label}
                   className={`size-full object-contain transition-all duration-300 ${isActive ? 'opacity-100 scale-110' : 'opacity-40 scale-100'}`}
                 />
