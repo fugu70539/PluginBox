@@ -15,11 +15,11 @@ html, body {
   position: fixed;
   background-color: #0a0a0a;
   color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 .font-display {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
 }
 
 .mt-glass {
@@ -34,8 +34,4 @@ html, body {
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
   border: 0.5px solid rgba(255, 255, 255, 0.12);
-}
-
-.btn-send-white {
-  background: #FFFFFF;
 }
