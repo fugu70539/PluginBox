@@ -39,8 +39,13 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
               className="absolute inset-y-1 left-1 w-[calc(50%-4px)] bg-white/[0.08] backdrop-blur-xl border border-white/[0.06] rounded-full z-0"
             />
-            <button onClick={() => setView("plugins")} className={`flex-1 relative z-10 text-[13px] font-bold uppercase tracking-[0.15em] transition-all ${view === "plugins" ? "text-white" : "text-white/30"}`}>Плагины</button>
-            <button onClick={() => setView("developers")} className={`flex-1 relative z-10 text-[13px] font-bold uppercase tracking-[0.15em] transition-all ${view === "developers" ? "text-white" : "text-white/30"}`}>Девелоперы</button>
+            {/* Текст теперь не капсом, а с большой буквы */}
+            <button onClick={() => setView("plugins")} className={`flex-1 relative z-10 text-[14px] font-semibold tracking-tight transition-all ${view === "plugins" ? "text-white" : "text-white/30"}`}>
+              Плагины
+            </button>
+            <button onClick={() => setView("developers")} className={`flex-1 relative z-10 text-[14px] font-semibold tracking-tight transition-all ${view === "developers" ? "text-white" : "text-white/30"}`}>
+              Девелоперы
+            </button>
           </div>
         </div>
 
@@ -52,7 +57,6 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
             >
               {filtersConfig.map((filter, index) => (
                 <div key={filter.id} className="relative flex flex-col gap-1.5">
-                  {/* Заголовок теперь начинается ровно там же, где и плашка */}
                   <span className="text-[10px] font-black uppercase tracking-[0.1em] text-white/15 pl-1">
                     {filter.label}
                   </span>
@@ -91,7 +95,7 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
                               {selectedFilters[filter.id] === option && (
                                 <motion.div layoutId={`bg-${filter.id}`} className="absolute inset-0 bg-white/15 backdrop-blur-xl rounded-[20px] z-0" />
                               )}
-                              <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${selectedFilters[filter.id] === option ? "text-white" : "text-white/30 group-active:text-white/60"}`}>
+                              <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${selectedFilters[filter.id] === option ? "text-white" : "text-white/30"}`}>
                                 {option}
                               </span>
                             </button>
