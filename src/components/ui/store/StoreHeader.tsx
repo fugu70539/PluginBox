@@ -41,31 +41,19 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
         <AnimatePresence>
           {view === "plugins" && (
             <motion.div 
-              initial={{ opacity: 0, y: -5 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              exit={{ opacity: 0, y: -5 }}
-              // Подняли выше: pt-5 вместо pt-8
+              initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
               className="flex px-7 justify-between items-end pt-5" 
             >
               {filtersConfig.map((filter, index) => (
                 <div key={filter.id} className="relative flex flex-col">
-                  {/* Сохраняем шаг в 6px (mb-1.5) для идеальной посадки */}
-                  <span className="text-[10px] font-black uppercase tracking-[0.1em] text-white/15 pl-1 mb-1.5">
-                    {filter.label}
-                  </span>
-
+                  <span className="text-[10px] font-black uppercase tracking-[0.1em] text-white/15 pl-1 mb-1.5">{filter.label}</span>
                   <button
                     onClick={() => setOpenFilter(openFilter === filter.id ? null : filter.id)}
                     className={`h-11 ${getMinWidth(filter.id)} mt-glass rounded-full flex items-center justify-between px-5 active:scale-95 transition-all`}
                   >
                     <span className="text-[14px] font-bold text-white/60 tracking-tight truncate mr-2">{selectedFilters[filter.id]}</span>
-                    <motion.img 
-                      src="/Icons/ArrowRight.PNG?v=3" 
-                      animate={{ rotate: openFilter === filter.id ? 90 : 0 }} 
-                      className="size-3.5 object-contain invert brightness-200 opacity-20 shrink-0" 
-                    />
+                    <motion.img src="/Icons/ArrowRight.PNG?v=3" animate={{ rotate: openFilter === filter.id ? 90 : 0 }} className="size-3.5 object-contain invert brightness-200 opacity-20 shrink-0" />
                   </button>
-
                   <AnimatePresence>
                     {openFilter === filter.id && (
                       <motion.div
@@ -77,17 +65,11 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
                       >
                         <div className={`flex flex-col gap-1 no-scrollbar ${filter.options.length > 5 ? 'max-h-[240px] overflow-y-auto px-0.5' : ''}`}>
                           {filter.options.map((option) => (
-                            <button 
-                              key={option} 
-                              onClick={() => { setSelectedFilters(prev => ({ ...prev, [filter.id]: option })); setOpenFilter(null); }} 
-                              className="relative w-full px-4 py-3 text-left group"
-                            >
+                            <button key={option} onClick={() => { setSelectedFilters(prev => ({ ...prev, [filter.id]: option })); setOpenFilter(null); }} className="relative w-full px-4 py-3 text-left group">
                               {selectedFilters[filter.id] === option && (
                                 <motion.div layoutId={`bg-${filter.id}`} className="absolute inset-0 bg-white/10 backdrop-blur-xl rounded-[20px] z-0" />
                               )}
-                              <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${selectedFilters[filter.id] === option ? "text-white" : "text-white/30"}`}>
-                                {option}
-                              </span>
+                              <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${selectedFilters[filter.id] === option ? "text-white" : "text-white/30"}`}>{option}</span>
                             </button>
                           ))}
                         </div>
