@@ -5,6 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SearchInput } from "@/components/ui/SearchInput";
 
 const filterOptions = ["Все", "По имени", "По дате", "По рейтингу"];
+const demoPlugins = [
+  { title: "Plugin One" },
+  { title: "Plugin Two" },
+  { title: "Plugin Three" },
+  { title: "Plugin Four" },
+  { title: "Plugin Five" },
+  { title: "Plugin Six" },
+];
 
 export default function Hub() {
   const [userName, setUserName] = useState("Artem");
@@ -28,7 +36,7 @@ export default function Hub() {
   };
 
   return (
-    <div className="w-full font-display min-h-screen bg-[#0a0a0a]">
+    <div className="w-full font-display min-h-screen bg-[#0a0a0a] relative">
       <header className="fixed top-0 left-0 right-0 z-50 h-24 flex items-start justify-between px-7 pt-7 pointer-events-none">
         <div className="h-12 w-24 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
           <div className="size-9 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
@@ -54,7 +62,6 @@ export default function Hub() {
             className="h-12 px-6 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center gap-3.5 active:scale-95 transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
           >
             <span className="text-[14px] font-bold tracking-tight text-white/70">{activeFilter}</span>
-            {/* Заменили PNG на SVG стрелку и покрасили в белый */}
             <motion.svg 
               viewBox="0 0 24 24" 
               fill="none" 
@@ -104,7 +111,6 @@ export default function Hub() {
 
       <main className="relative z-10 px-7 pt-32 flex flex-col items-center">
         <header className="w-full flex flex-col items-center justify-center text-center mb-10 gap-y-1.5 text-white font-display">
-          {/* Текст с градиентом и правильной жирностью */}
           <motion.h1 
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             className="text-[32px] font-extrabold tracking-tight leading-tight"
@@ -121,19 +127,25 @@ export default function Hub() {
 
         <SearchInput />
 
-        <div className="mt-16 w-full grid grid-cols-2 gap-5">
-          {[{title: "Plugin", sub: ""}, {title: "Teather", sub: ""},].map((item, i) => (
-            <motion.div 
-              key={item.title}
-              whileTap={{ scale: 0.97 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + (i*0.1) }}
-              className="mt-glass rounded-[2.5rem] p-7 flex flex-col items-center py-9 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
-            >
-               <div className="w-14 h-14 bg-white/[0.06] rounded-3xl mb-4.5" />
-               <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase tracking-widest">{item.title}</span>
-            </motion.div>
-          ))}
+        <div className="w-full mt-10">
+          <h3 className="text-[11px] font-bold text-white/20 uppercase tracking-[0.15em] ml-2 mb-5">Рекомендуем</h3>
+          
+          <div className="grid grid-cols-2 gap-5 pb-40">
+            {demoPlugins.map((item, i) => (
+              <motion.div 
+                key={i}
+                whileTap={{ scale: 0.97 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }}
+                className="mt-glass rounded-[2.5rem] p-7 flex flex-col items-center py-9 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
+              >
+                 <div className="w-14 h-14 bg-white/[0.06] rounded-3xl mb-4.5" />
+                 <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase tracking-widest text-center">{item.title}</span>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </main>
+
+      <div className="fixed bottom-0 left-0 right-0 h-[180px] pointer-events-none z-40 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent backdrop-blur-[12px] [mask-image:linear-gradient(to_top,black_60%,transparent)]" />
     </div>
   );
 }
