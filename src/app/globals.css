@@ -6,6 +6,16 @@
   --glass-bg: rgba(255, 255, 255, 0.1);
 }
 
+/* Скрываем скроллбары глобально */
+* {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none;             /* Chrome/Safari/Webkit */
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -36,7 +46,6 @@ html, body {
   border: 0.5px solid rgba(255, 255, 255, 0.12);
 }
 
-/* Стили для твоей кнопки в инпуте */
 .btn-send-white {
   background-color: #ffffff !important;
   opacity: 1 !important;
@@ -45,7 +54,6 @@ html, body {
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
 
-/* Чтобы иконка внутри была видна (черная на белом) */
 .btn-send-white img {
   filter: brightness(0) !important;
   opacity: 1 !important;
