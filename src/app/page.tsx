@@ -6,10 +6,11 @@ import Store from "@/components/views/Store";
 import Socket from "@/components/views/Socket";
 import { Tabbar } from "@/components/ui/TabBar";
 
+// Конфиг теперь содержит только ID и лэйблы, иконки в Таббаре
 const tabsConfig = [
-  { id: "hub", icon: "/Icons/Hub.PNG", label: "Хаб" },
-  { id: "store", icon: "/Icons/Store.PNG", label: "Плагины" },
-  { id: "socket", icon: "/Icons/Socket.PNG", label: "Мастерская" },
+  { id: "hub", label: "Хаб" },
+  { id: "store", label: "Плагины" },
+  { id: "socket", label: "Мастерская" },
 ];
 
 export default function Page() {
@@ -25,8 +26,8 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] select-none overflow-hidden font-display">
-      <div className="pb-32">
+    <div className="min-h-screen bg-[#0a0a0a] select-none overflow-hidden font-display text-white">
+      <div className="pb-36">
         {activeTab === "hub" && <Hub />}
         {activeTab === "store" && <Store />}
         {activeTab === "socket" && <Socket />}
