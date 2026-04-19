@@ -5,8 +5,28 @@ import { motion, AnimatePresence } from "framer-motion";
 import Lottie from "lottie-react";
 import loadingAnim from "../../../public/Icons/Loading.json";
 
-export default function Developers({ onBack }: { onBack: () => void }) {
-  const [isLoading, setIsLoading] = useState(true);
+interface DevelopersProps {
+  onBack: () => void;
+  onLoadingState: (loading: boolean) => void;
+}
+
+export default function Developers({ onBack, onLoadingState }: DevelopersProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const hasLoaded = sessionStorage.getItem("devs_loaded");
+    
+    if (!hasLoaded) {
+      setIsLoading(true);
+      onLoadingState(true);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+        onLoadingState(false);
+        sessionStorage.setItem("devs_loaded", "true");
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [onLoadingState]);
 
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
@@ -17,15 +37,7 @@ export default function Developers({ onBack }: { onBack: () => void }) {
         tg.BackButton.hide();
       });
     }
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-
-    return () => {
-      if (tg?.BackButton) tg.BackButton.hide();
-      clearTimeout(timer);
-    };
+    return () => tg?.BackButton?.hide();
   }, [onBack]);
 
   return (
