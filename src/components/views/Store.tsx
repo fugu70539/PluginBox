@@ -20,16 +20,17 @@ export default function Store() {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-[#0a0a0a]">
+    <div className="w-full min-h-screen bg-[#0a0a0a] font-display">
       <AnimatePresence mode="wait">
         {isLoading ? (
-          <motion.div key="loader" exit={{ opacity: 0 }} className="fixed inset-0 flex items-center justify-center z-[100] bg-[#0a0a0a]">
+          <motion.div key="loader" exit={{ opacity: 0 }} className="fixed inset-0 flex items-center justify-center z-[200] bg-[#0a0a0a]">
             <div className="size-14 opacity-50"><Lottie animationData={loadingAnim} loop={true} /></div>
           </motion.div>
         ) : (
-          <motion.div key="content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative pt-44">
+          <motion.div key="content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative">
             <StoreHeader view={view} setView={setView} />
-            <main className="px-7">
+            
+            <main className={`px-7 transition-all duration-500 ${view === "plugins" ? "pt-48" : "pt-32"}`}>
               {view === "plugins" ? <EmptyState /> : <Developers />}
             </main>
           </motion.div>
