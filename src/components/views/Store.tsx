@@ -1,46 +1,30 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 
 import loadingAnim from "../../../public/Icons/Loading.json";
 
-// Варианты анимации для контейнера точек
-const containerVariants = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2, // Задержка между появлением каждой точки
-    },
-  },
-};
-
-// Варианты анимации для каждой отдельной точки
-const dotVariants = {
-  initial: { opacity: 0, y: 0 },
-  animate: {
-    opacity: [0, 1, 0],
-    y: [0, -2, 0],
-    transition: {
-      duration: 1.2,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  },
-};
-
 export default function Store() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Варианты анимации для плавного появления каждой точки
+  const dotVariants = {
+    initial: { opacity: 0.2 },
+    animate: { opacity: 1 },
+  };
+
   return (
     <div className="w-full h-screen bg-[#0a0a0a] flex flex-col items-center justify-center font-display">
       <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="flex flex-col items-center gap-4"
+        initial={{ opacity: 0, y: 5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="flex flex-col items-center"
       >
-        {/* Маленькая иконка загрузки */}
-        <div className="size-12 opacity-60"> 
+        {/* Иконка теперь мелкая и аккуратная (size-16 вместо size-40) */}
+        <div className="size-16 mb-8 opacity-80">
           <Lottie 
             animationData={loadingAnim} 
             loop={true} 
@@ -48,26 +32,30 @@ export default function Store() {
           />
         </div>
 
-        {/* Текст с умной анимацией точек */}
+        {/* Текст «Секундочку…» с плавной анимацией точек */}
         <div className="flex items-center gap-0.5">
-          <span className="text-white/40 text-[15px] font-medium tracking-tight">
+          <p className="text-white/25 text-[14px] font-bold tracking-tight">
             Секундочку
-          </span>
-          
-          <motion.div 
-            variants={containerVariants}
-            initial="initial"
-            animate="animate"
-            className="flex gap-0.5 mt-1"
-          >
+          </p>
+          <div className="flex gap-0.5 ml-0.5">
             {[0, 1, 2].map((index) => (
               <motion.span
                 key={index}
                 variants={dotVariants}
-                className="size-1 bg-white/40 rounded-full"
-              />
+                initial="initial"
+                animate="animate"
+                transition={{
+                  duration: 0.6,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  delay: index * 0.2, // Задержка создает эффект «волны»
+                }}
+                className="text-white/25 text-[14px] font-bold"
+              >
+                .
+              </motion.span>
             ))}
-          </motion.div>
+          </div>
         </div>
       </motion.div>
     </div>
