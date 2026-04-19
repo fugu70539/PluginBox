@@ -65,6 +65,15 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
           <motion.h2 className="text-[30px] font-bold tracking-tight text-white/25">Что бы ты хотел найти?</motion.h2>
         </header>
         <SearchInput />
+
+        <div className="mt-14 w-full grid grid-cols-2 gap-4">
+          {[1, 2].map((i) => (
+            <div key={i} className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8">
+               <div className="w-12 h-12 bg-white/10 rounded-2xl mb-4" />
+               <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
+            </div>
+          ))}
+        </div>
       </main>
     </div>
   );
