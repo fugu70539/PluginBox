@@ -4,8 +4,7 @@ import { motion } from "framer-motion";
 
 export const EmptyState = () => {
   return (
-    // Расстояние теперь считается от нижней границы шапки до верхней границы таббара
-    <div className="w-full h-[calc(100vh-280px)] flex flex-col items-center justify-center text-center">
+    <div className="flex-1 w-full flex flex-col items-center justify-center text-center pb-20">
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -22,6 +21,7 @@ export const EmptyState = () => {
         <motion.h3 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
           className="text-[17px] font-bold text-white/30 tracking-tight"
         >
           Сейчас плагинов нет...
@@ -30,7 +30,7 @@ export const EmptyState = () => {
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: 0.2 }}
           className="text-[14px] font-medium text-white/10 mt-1 max-w-[220px]"
         >
           Загляните позже, мы уже готовим что-то новое
