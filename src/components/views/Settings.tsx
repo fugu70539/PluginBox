@@ -34,7 +34,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
     <div className="flex items-center gap-2">
       {value && <span className="text-[17px] font-medium text-white/30">{value}</span>}
       {children}
-      {hasArrow && <img src="/Icons/ArrowRight.PNG" className="size-4 opacity-20 invert grayscale" alt="" />}
+      {hasArrow && <img src="/Icons/ArrowRight.webp" className="size-4 opacity-20 invert grayscale" alt="" />}
     </div>
   </div>
 );
@@ -76,18 +76,18 @@ export default function Settings({ onBack }: { onBack: () => void }) {
               <section>
                 <h3 className="text-[11px] font-black text-white/20 uppercase tracking-[0.15em] ml-4 mb-3">Аккаунт</h3>
                 <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-                  <SettingRow icon="Badge.PNG" title="Бейдж" value={badge} onClick={() => setView("badge")} />
-                  <SettingRow icon="Language.PNG" title="Язык" value="Русский" />
+                  <SettingRow icon="Badge.webp" title="Бейдж" value={badge} onClick={() => setView("badge")} />
+                  <SettingRow icon="Language.webp" title="Язык" value="Русский" />
                 </div>
               </section>
 
               <section>
                 <h3 className="text-[11px] font-black text-white/20 uppercase tracking-[0.15em] ml-4 mb-3">Система</h3>
                 <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-                  <SettingRow icon="Animations.PNG" title="Анимации" hasArrow={false}>
+                  <SettingRow icon="Animations.webp" title="Анимации" hasArrow={false}>
                     <AppleSwitch isOn={isAnimOn} onToggle={() => setIsAnimOn(!isAnimOn)} />
                   </SettingRow>
-                  <SettingRow icon="Tech.PNG" title="Поддержка" value="Перейти" />
+                  <SettingRow icon="Tech.webp" title="Поддержка" value="Перейти" />
                 </div>
               </section>
             </div>
