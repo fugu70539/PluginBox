@@ -11,6 +11,7 @@ interface StoreProps {
   onViewChange: (isDev: boolean) => void;
 }
 
+// Сессионная переменная
 let hasLoadedOnce = false;
 
 export default function Store({ onBack, onViewChange }: StoreProps) {
@@ -35,6 +36,8 @@ export default function Store({ onBack, onViewChange }: StoreProps) {
   return (
     <div className="w-full h-screen bg-[#0a0a0a] flex flex-col">
       <div className="relative pt-44 flex-1 flex flex-col overflow-hidden">
+        
+        {/* Скрываем шапку на время загрузки */}
         <AnimatePresence>
           {!isDataLoading && (
             <motion.div
@@ -55,7 +58,9 @@ export default function Store({ onBack, onViewChange }: StoreProps) {
               <motion.div 
                 key="plugins" 
                 className="flex-1 flex flex-col"
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                exit={{ opacity: 0 }}
               >
                 <EmptyState />
               </motion.div>
@@ -63,7 +68,9 @@ export default function Store({ onBack, onViewChange }: StoreProps) {
               <motion.div 
                 key="developers" 
                 className="flex-1 flex flex-col"
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                exit={{ opacity: 0 }}
               >
                 <Developers isLoading={isDataLoading} />
               </motion.div>
