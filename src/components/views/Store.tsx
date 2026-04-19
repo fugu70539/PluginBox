@@ -1,33 +1,46 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 
 import loadingAnim from "../../../public/Icons/Loading.json";
 
+// Варианты анимации для контейнера точек
+const containerVariants = {
+  initial: { opacity: 0 },
+  animate: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Задержка между появлением каждой точки
+    },
+  },
+};
+
+// Варианты анимации для каждой отдельной точки
+const dotVariants = {
+  initial: { opacity: 0, y: 0 },
+  animate: {
+    opacity: [0, 1, 0],
+    y: [0, -2, 0],
+    transition: {
+      duration: 1.2,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  },
+};
+
 export default function Store() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [dots, setDots] = useState("");
-
-  // Анимация троеточия
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((prev) => (prev.length >= 3 ? "" : prev + "."));
-    }, 450);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="w-full h-screen bg-[#0a0a0a] flex flex-col items-center justify-center font-display">
       <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className="flex flex-col items-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="flex flex-col items-center gap-4"
       >
-        {/* Lottie анимация в центре */}
-        <div className="size-40 mb-4">
+        {/* Маленькая иконка загрузки */}
+        <div className="size-12 opacity-60"> 
           <Lottie 
             animationData={loadingAnim} 
             loop={true} 
@@ -35,11 +48,26 @@ export default function Store() {
           />
         </div>
 
-        {/* Текст загрузки с анимированными точками */}
-        <div className="text-center">
-          <p className="text-white/20 text-[13px] font-bold uppercase tracking-[0.2em] ml-[1ch]">
-            Загрузка маркетплейса<span className="inline-block w-[20px] text-left">{dots}</span>
-          </p>
+        {/* Текст с умной анимацией точек */}
+        <div className="flex items-center gap-0.5">
+          <span className="text-white/40 text-[15px] font-medium tracking-tight">
+            Секундочку
+          </span>
+          
+          <motion.div 
+            variants={containerVariants}
+            initial="initial"
+            animate="animate"
+            className="flex gap-0.5 mt-1"
+          >
+            {[0, 1, 2].map((index) => (
+              <motion.span
+                key={index}
+                variants={dotVariants}
+                className="size-1 bg-white/40 rounded-full"
+              />
+            ))}
+          </motion.div>
         </div>
       </motion.div>
     </div>
