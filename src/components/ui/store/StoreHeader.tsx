@@ -35,21 +35,28 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
               className="absolute inset-y-1 left-1 w-[calc(50%-4px)] bg-white/[0.08] backdrop-blur-xl border border-white/[0.06] rounded-full z-0"
             />
-            <button onClick={() => setView("plugins")} className={`flex-1 relative z-10 text-[14px] font-semibold tracking-tight transition-all ${view === "plugins" ? "text-white" : "text-white/30"}`}>Плагины</button>
-            <button onClick={() => setView("developers")} className={`flex-1 relative z-10 text-[14px] font-semibold tracking-tight transition-all ${view === "developers" ? "text-white" : "text-white/30"}`}>Девелоперы</button>
+            <button onClick={() => setView("plugins")} className={`flex-1 relative z-10 text-[14px] font-semibold tracking-tight transition-all ${view === "plugins" ? "text-white" : "text-white/30"}`}>
+              Плагины
+            </button>
+            <button onClick={() => setView("developers")} className={`flex-1 relative z-10 text-[14px] font-semibold tracking-tight transition-all ${view === "developers" ? "text-white" : "text-white/30"}`}>
+              Девелоперы
+            </button>
           </div>
         </div>
 
-        {/* Контейнер фильтров с выверенными отступами */}
+        {/* Контейнер фильтров */}
         <AnimatePresence>
           {view === "plugins" && (
             <motion.div 
-              initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
-              className="flex px-7 justify-between items-end pt-5" // pt-5 создает то самое расстояние
+              initial={{ opacity: 0, y: -5 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              exit={{ opacity: 0, y: -5 }}
+              className="flex px-7 justify-between items-end pt-[6px]" // Теперь расстояние сверху ровно 6px
             >
               {filtersConfig.map((filter, index) => (
-                <div key={filter.id} className="relative flex flex-col gap-1.5">
-                  <span className="text-[10px] font-black uppercase tracking-[0.1em] text-white/15 pl-1">
+                <div key={filter.id} className="relative flex flex-col">
+                  {/* Заголовок с mb-1.5 (тоже 6px) */}
+                  <span className="text-[10px] font-black uppercase tracking-[0.1em] text-white/15 pl-1 mb-[6px]">
                     {filter.label}
                   </span>
 
@@ -61,7 +68,9 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
                     }}
                     className={`h-11 ${getMinWidth(filter.id)} mt-glass rounded-full flex items-center justify-between px-5 active:scale-95 transition-all`}
                   >
-                    <span className="text-[14px] font-bold text-white/60 tracking-tight truncate mr-2">{selectedFilters[filter.id]}</span>
+                    <span className="text-[14px] font-bold text-white/60 tracking-tight truncate mr-2">
+                      {selectedFilters[filter.id]}
+                    </span>
                     <motion.img 
                       src="/Icons/ArrowRight.PNG?v=3" 
                       animate={{ rotate: openFilter === filter.id ? 90 : 0 }}
