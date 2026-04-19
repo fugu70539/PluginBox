@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 const filtersConfig = [
   { id: 'sort', label: 'Все', options: ['Все', 'Новые', 'Старые'] },
   { id: 'cat', label: 'Категории', options: ['Все', 'Работа', 'Развлечения', 'Упрощение', 'Кодинг', 'Дизайн'] },
-  { id: 'rate', label: 'Рейтинг', options: ['5 звезд', '4 звезды', '3 звезды'] },
   { id: 'type', label: 'Тип', options: ['Инлайн', 'Аппер'] },
 ];
 
@@ -14,14 +13,16 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [menuPos, setMenuPos] = useState({ x: 0, isLast: false });
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({
-    sort: 'Все', cat: 'Категории', rate: 'Рейтинг', type: 'Тип'
+    sort: 'Все', cat: 'Категории', type: 'Тип'
   });
 
   const handleToggle = (e: React.MouseEvent, id: string, index: number) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    // Если это последний элемент (index === length - 1), помечаем его
     const isLast = index === filtersConfig.length - 1;
-    setMenuPos({ x: isLast ? rect.right - 176 : rect.left, isLast }); // 176px - это w-44
+    // Для последнего элемента выравниваем меню по правому краю кнопки
+    const xPos = isLast ? rect.right - 176 : rect.left;
+    
+    setMenuPos({ x: xPos, isLast });
     
     const tg = (window as any).Telegram?.WebApp;
     if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
@@ -30,7 +31,6 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
 
   return (
     <>
-      {/* Подложка для закрытия */}
       <AnimatePresence>
         {openFilter && (
           <div className="fixed inset-0 z-[150]" onClick={() => setOpenFilter(null)} />
@@ -55,18 +55,18 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
             </div>
           </div>
 
-          {/* Фильтры */}
+          {/* Фильтры без скроллбара */}
           <AnimatePresence>
             {view === "plugins" && (
               <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="flex overflow-x-auto gap-2 px-7 no-scrollbar"
+                className="flex justify-between px-7 gap-2"
               >
                 {filtersConfig.map((filter, index) => (
                   <button
                     key={filter.id}
                     onClick={(e) => handleToggle(e, filter.id, index)}
-                    className="h-11 px-5 mt-glass rounded-full flex items-center gap-2.5 shrink-0 active:scale-95 transition-all"
+                    className="h-11 px-5 mt-glass rounded-full flex items-center justify-center gap-2.5 flex-1 active:scale-95 transition-all max-w-[fit-content]"
                   >
                     <span className="text-[14px] font-bold text-white/60 tracking-tight whitespace-nowrap">
                       {selectedFilters[filter.id]}
@@ -78,13 +78,12 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
                     />
                   </button>
                 ))}
-                <div className="min-w-[28px] h-1" />
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Выпадающее меню (Портал) */}
+        {/* Выпадающее меню */}
         <AnimatePresence>
           {openFilter && (
             <motion.div
@@ -94,7 +93,7 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
               transition={{ type: "spring", stiffness: 350, damping: 28 }}
               style={{ 
                 left: menuPos.x,
-                top: '128px', // Точный отступ под рядом кнопок
+                top: '128px',
                 position: 'fixed'
               }}
               className="mt-glass w-44 rounded-[28px] p-1.5 z-[200] shadow-2xl pointer-events-auto"
