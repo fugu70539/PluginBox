@@ -15,7 +15,7 @@ const getMinWidth = (id: string) => {
   return 'w-[95px]';
 };
 
-// Исправили интерфейс пропсов: убрали лишний isDevLoading, который ломал билд
+// Исправили типизацию: оставили только нужные view и setView
 export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any) => void }) => {
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({
@@ -42,7 +42,9 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
         <AnimatePresence>
           {view === "plugins" && (
             <motion.div 
-              initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}
+              initial={{ opacity: 0, y: -5 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              exit={{ opacity: 0, y: -5 }}
               className="flex px-7 justify-between items-end pt-5" 
             >
               {filtersConfig.map((filter, index) => (
