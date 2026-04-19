@@ -15,6 +15,7 @@ const getMinWidth = (id: string) => {
   return 'w-[95px]';
 };
 
+// Никаких лишних обязательных пропсов вроде isDevLoading. Строгий и чистый интерфейс.
 export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any) => void }) => {
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({
@@ -48,7 +49,11 @@ export const StoreHeader = ({ view, setView }: { view: string, setView: (v: any)
                 <div key={filter.id} className="relative flex flex-col">
                   <span className="text-[10px] font-black uppercase tracking-[0.1em] text-white/15 pl-1 mb-1.5">{filter.label}</span>
                   <button
-                    onClick={() => setOpenFilter(openFilter === filter.id ? null : filter.id)}
+                    onClick={() => {
+                      const tg = (window as any).Telegram?.WebApp;
+                      if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
+                      setOpenFilter(openFilter === filter.id ? null : filter.id);
+                    }}
                     className={`h-11 ${getMinWidth(filter.id)} mt-glass rounded-full flex items-center justify-between px-5 active:scale-95 transition-all`}
                   >
                     <span className="text-[14px] font-bold text-white/60 tracking-tight truncate mr-2">{selectedFilters[filter.id]}</span>
