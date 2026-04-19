@@ -62,3 +62,4 @@ export const Tabbar = ({ activeTab, setActiveTab, tabsConfig }: TabbarProps) => 
     </div>
   );
 };
+ю
