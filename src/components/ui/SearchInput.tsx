@@ -45,11 +45,11 @@ export const SearchInput = () => {
   const currentPlaceholder = isAiMode ? "Поиск с ИИ..." : "Найти что-нибудь...";
 
   return (
-    <div className="w-full flex items-center gap-2 relative h-[52px]">
+    <div className="w-full flex items-center gap-3 relative h-[56px]">
       <motion.div
         layout
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className="flex-1 h-full mt-glass rounded-full flex items-center justify-between pr-1.5 pl-6 relative z-10 overflow-hidden"
+        className="flex-1 h-full mt-glass rounded-full flex items-center justify-between pr-2 pl-6 relative z-10 overflow-hidden"
       >
         <div className="relative flex-1 h-full flex items-center mr-2">
           <AnimatePresence mode="wait" custom={isAiMode}>
@@ -73,18 +73,20 @@ export const SearchInput = () => {
           />
         </div>
 
-        <button className="h-[38px] px-5 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-full">
-          <img src="/Icons/SendToAi.png?v=3" alt="Send" className="w-[18px] h-[18px]" />
+        {/* Кнопка отправки стала чуть больше (h-10) для баланса */}
+        <button className="h-10 px-6 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-full shadow-lg">
+          <img src="/Icons/SendToAi.png?v=4" alt="Send" className="w-[18px] h-[18px]" />
         </button>
       </motion.div>
 
+      {/* Кнопка переключения режима теперь точно 56px, как и вся строка */}
       <motion.button
         layout
         onClick={handleToggle}
         whileTap={{ scale: 0.9 }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
         style={{ order: isAiMode ? -1 : 1 }}
-        className="h-[52px] w-[52px] mt-glass rounded-full flex items-center justify-center shrink-0 z-20 overflow-hidden"
+        className="h-[56px] w-[56px] mt-glass rounded-full flex items-center justify-center shrink-0 z-20 overflow-hidden shadow-xl"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -93,7 +95,7 @@ export const SearchInput = () => {
             animate={{ scale: 1, opacity: 1, rotate: 0 }}
             exit={{ scale: 0.4, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="size-7 flex items-center justify-center"
+            className="size-8 flex items-center justify-center"
           >
             <Lottie
               lottieRef={lottieRef}
