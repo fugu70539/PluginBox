@@ -23,16 +23,10 @@ export default function Page() {
       tg.ready();
       tg.setHeaderColor("#0a0a0a");
       tg.setBackgroundColor("#0a0a0a");
-      tg.enableClosingConfirmation();
-      
-      // На всякий случай явно скрываем кнопку назад, чтобы всегда была Close
-      if (tg.BackButton) {
-        tg.BackButton.hide();
-      }
+      if (tg.BackButton) tg.BackButton.hide();
     }
   }, []);
 
-  // Таббар скрывается только если мы на вкладке магазина И внутри включен экран девелоперов
   const isTabbarVisible = !(activeTab === "store" && isDevView);
 
   return (
