@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// --- Вспомогательный компонент: Apple Switch ---
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
     onClick={onToggle} 
@@ -20,7 +19,6 @@ const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }
   </button>
 );
 
-// --- Вспомогательный компонент: Плашка (Строка) ---
 const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: any) => (
   <div 
     onClick={onClick} 
@@ -51,7 +49,6 @@ export default function Settings({ onBack }: { onBack: () => void }) {
     const tg = (window as any).Telegram?.WebApp;
     if (tg?.BackButton) {
       tg.BackButton.show();
-      // Если мы в списке - кнопка Back закрывает настройки, если в редакторе бейджа - возвращает к списку
       const handleBack = () => {
         if (view === "badge") {
           setView("list");
