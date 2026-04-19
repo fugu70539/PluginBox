@@ -11,12 +11,11 @@ interface StoreProps {
   onViewChange: (isDev: boolean) => void;
 }
 
-// Переменная вне компонента для отслеживания загрузки в рамках одной сессии
 let hasLoadedOnce = false;
 
 export default function Store({ onBack, onViewChange }: StoreProps) {
   const [view, setView] = useState<"plugins" | "developers">("plugins");
-  const [isDataLoading, setIsDataLoading] = useState(!hasLoadedOnce);
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
   useEffect(() => {
     onViewChange(view === "developers");
@@ -24,20 +23,18 @@ export default function Store({ onBack, onViewChange }: StoreProps) {
 
   useEffect(() => {
     if (view === "developers" && !hasLoadedOnce) {
+      setIsDataLoading(true);
       const timer = setTimeout(() => {
         setIsDataLoading(false);
         hasLoadedOnce = true;
       }, 1500);
       return () => clearTimeout(timer);
-    } else if (view === "developers" && hasLoadedOnce) {
-      setIsDataLoading(false);
     }
   }, [view]);
 
   return (
-    <div className="w-full min-h-screen bg-[#0a0a0a]">
-      <div className="relative pt-44 h-screen flex flex-col">
-        {/* Шапка скрывается при загрузке */}
+    <div className="w-full h-screen bg-[#0a0a0a] flex flex-col">
+      <div className="relative pt-44 flex-1 flex flex-col overflow-hidden">
         <AnimatePresence>
           {!isDataLoading && (
             <motion.div
@@ -52,15 +49,13 @@ export default function Store({ onBack, onViewChange }: StoreProps) {
           )}
         </AnimatePresence>
 
-        <main className="flex-1 flex flex-col px-7">
+        <main className="flex-1 flex flex-col px-7 overflow-hidden">
           <AnimatePresence mode="wait">
             {view === "plugins" ? (
               <motion.div 
                 key="plugins" 
                 className="flex-1 flex flex-col"
-                initial={{ opacity: 0 }} 
-                animate={{ opacity: 1 }} 
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               >
                 <EmptyState />
               </motion.div>
@@ -68,9 +63,7 @@ export default function Store({ onBack, onViewChange }: StoreProps) {
               <motion.div 
                 key="developers" 
                 className="flex-1 flex flex-col"
-                initial={{ opacity: 0 }} 
-                animate={{ opacity: 1 }} 
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               >
                 <Developers isLoading={isDataLoading} />
               </motion.div>
