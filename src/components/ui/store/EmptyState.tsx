@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export const EmptyState = () => {
   return (
-    <div className="flex-1 w-full flex flex-col items-center justify-center text-center pb-20">
+    <div className="flex-1 w-full flex flex-col items-center justify-center text-center pb-24">
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -12,7 +12,7 @@ export const EmptyState = () => {
       >
         <img 
           src="/Icons/None.PNG?v=3" 
-          alt="Nothing found" 
+          alt="Nothing" 
           className="size-28 object-contain opacity-20 grayscale brightness-150"
         />
       </motion.div>
