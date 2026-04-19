@@ -29,67 +29,60 @@ export default function Hub() {
 
   return (
     <div className="w-full font-display min-h-screen bg-[#0a0a0a]">
-      <header className="fixed top-0 left-0 right-0 z-50 h-24 flex items-start justify-between px-7 pt-7 pointer-events-none">
-        <div className="h-12 w-24 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
-          <div className="size-9 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
+      <header className="fixed top-0 left-0 right-0 z-50 h-20 flex items-start justify-between px-7 pt-5 pointer-events-none">
+        <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 pointer-events-auto">
+          <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
             {userPhoto ? (
               <img src={userPhoto} alt="User" className="size-full rounded-full object-cover" />
             ) : (
-              <div className="size-full rounded-full flex items-center justify-center text-white/40 text-[11px] font-bold uppercase bg-white/5">
+              <div className="size-full rounded-full flex items-center justify-center text-white/40 text-[10px] font-bold uppercase">
                 {userName[0]}
               </div>
             )}
           </div>
-          <button className="size-9 flex items-center justify-center active:scale-90 transition-all opacity-40">
-            <svg viewBox="0 0 24 24" fill="none" className="size-7 stroke-white" strokeWidth="1.5">
-              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.1a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" strokeLinecap="round"/>
-              <circle cx="12" cy="12" r="3" strokeLinecap="round"/>
-            </svg>
+          <button className="size-8 flex items-center justify-center active:scale-90 transition-all">
+            <img src="/Icons/Settings.PNG?v=3" alt="Settings" className="size-7 object-contain opacity-40" />
           </button>
         </div>
 
         <div className="relative flex flex-col items-end pointer-events-auto">
           <button 
             onClick={toggleFilter}
-            className="h-12 px-6 bg-white/[0.08] backdrop-blur-xl border border-white/10 rounded-full flex items-center gap-3.5 active:scale-95 transition-all shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+            className="mt-glass h-11 px-5 rounded-full flex items-center gap-3 active:scale-95 transition-all"
           >
-            <span className="text-[14px] font-bold tracking-tight text-white/70">{activeFilter}</span>
-            {/* Заменили PNG на SVG стрелку и покрасили в белый */}
-            <motion.svg 
-              viewBox="0 0 24 24" 
-              fill="none" 
+            <span className="text-[14px] font-bold tracking-tight text-white/60">{activeFilter}</span>
+            <motion.img 
+              src="/Icons/ArrowRight.PNG?v=3" 
+              alt="Filter" 
               animate={{ rotate: isFilterOpen ? 90 : 0 }}
-              className="size-5 stroke-white opacity-40 transition-opacity"
-              strokeWidth="2.5"
-            >
-              <path d="m9 18 6-6-6-6" strokeLinecap="round" strokeLinejoin="round"/>
-            </motion.svg>
+              className="size-5 object-contain invert brightness-200 opacity-40" 
+            />
           </button>
 
           <AnimatePresence>
             {isFilterOpen && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: -20 }}
-                animate={{ opacity: 1, scale: 1, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 8 }}
                 exit={{ opacity: 0, scale: 0.9, y: -20 }}
                 transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                className="absolute top-full right-0 w-48 bg-[#1a1a1a]/70 backdrop-blur-3xl rounded-[32px] p-2 z-50 shadow-[0_16px_48px_rgba(0,0,0,0.6)] border border-white/[0.06]"
+                className="mt-glass absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl"
               >
-                <div className="flex flex-col gap-1.5 overflow-hidden">
+                <div className="flex flex-col gap-1">
                   {filterOptions.map((option) => (
                     <button
                       key={option}
                       onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
-                      className="relative w-full px-5 py-3.5 text-left group overflow-hidden rounded-[20px]"
+                      className="relative w-full px-4 py-3 text-left group"
                     >
                       {activeFilter === option && (
                         <motion.div 
                           layoutId="filter-bg"
-                          className="absolute inset-0 bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-xl z-0 border border-white/[0.08]"
+                          className="absolute inset-0 bg-white/15 backdrop-blur-xl rounded-[20px] z-0"
                         />
                       )}
                       <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${
-                        activeFilter === option ? "text-white" : "text-white/40 group-active:text-white/70"
+                        activeFilter === option ? "text-white" : "text-white/30 group-active:text-white/60"
                       }`}>
                         {option}
                       </span>
@@ -102,18 +95,17 @@ export default function Hub() {
         </div>
       </header>
 
-      <main className="relative z-10 px-7 pt-32 flex flex-col items-center">
-        <header className="w-full flex flex-col items-center justify-center text-center mb-10 gap-y-1.5 text-white font-display">
-          {/* Текст с градиентом и правильной жирностью */}
+      <main className="relative z-10 px-7 pt-28 flex flex-col items-center">
+        <header className="w-full flex flex-col items-center justify-center text-center mb-8 gap-y-1 text-white font-display">
           <motion.h1 
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            className="text-[32px] font-extrabold tracking-tight leading-tight"
+            className="text-[30px] font-bold tracking-tight leading-tight"
           >
-            <span className="bg-gradient-to-b from-white to-white/90 bg-clip-text">Привет, {userName}!</span>
+            Привет, {userName}!
           </motion.h1>
           <motion.h2 
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-[32px] font-extrabold tracking-tight text-white/30 leading-tight"
+            className="text-[30px] font-bold tracking-tight text-white/25 leading-tight"
           >
             Что бы ты хотел найти?
           </motion.h2>
@@ -121,16 +113,12 @@ export default function Hub() {
 
         <SearchInput />
 
-        <div className="mt-16 w-full grid grid-cols-2 gap-5">
-          {[{title: "Plugin", sub: ""}, {title: "Teather", sub: ""},].map((item, i) => (
-            <motion.div 
-              key={item.title}
-              whileTap={{ scale: 0.97 }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + (i*0.1) }}
-              className="mt-glass rounded-[2.5rem] p-7 flex flex-col items-center py-9 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
-            >
-               <div className="w-14 h-14 bg-white/[0.06] rounded-3xl mb-4.5" />
-               <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase tracking-widest">{item.title}</span>
-            </motion.div>
+        <div className="mt-14 w-full grid grid-cols-2 gap-4">
+          {[1, 2].map((i) => (
+            <div key={i} className="mt-glass rounded-[2.2rem] p-6 flex flex-col items-center py-8">
+               <div className="w-12 h-12 bg-white/10 rounded-2xl mb-4" />
+               <span className="text-[12px] font-bold tracking-tight text-white/40 uppercase">Plugin</span>
+            </div>
           ))}
         </div>
       </main>
