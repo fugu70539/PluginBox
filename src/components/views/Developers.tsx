@@ -11,9 +11,7 @@ export default function Developers({ isLoading }: { isLoading: boolean }) {
         {isLoading ? (
           <motion.div
             key="loader"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="flex items-center justify-center"
           >
             <div className="size-14 opacity-50">
@@ -23,12 +21,13 @@ export default function Developers({ isLoading }: { isLoading: boolean }) {
         ) : (
           <motion.div
             key="content"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center"
           >
             <h2 className="text-[24px] font-bold tracking-tight text-white/40">Лидерборд</h2>
-            <p className="text-white/10 text-[14px] mt-2">Рейтинг скоро появится</p>
+            <p className="text-white/10 text-[14px] mt-2 text-center max-w-[200px]">
+              Рейтинг лучших разработчиков скоро появится
+            </p>
           </motion.div>
         )}
       </AnimatePresence>
