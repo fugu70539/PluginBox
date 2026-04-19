@@ -29,7 +29,6 @@ export default function Page() {
     }
   }, []);
 
-  // Таббар скрыт, если мы в настройках или в глубоком просмотре девелоперов
   const isTabbarVisible = !showSettings && !(activeTab === "store" && isDevView);
 
   return (
@@ -37,7 +36,13 @@ export default function Page() {
       <div className={isTabbarVisible ? "pb-32" : ""}>
         <AnimatePresence mode="wait">
           {showSettings ? (
-            <motion.div key="settings" initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "spring", damping: 25, stiffness: 200 }}>
+            <motion.div 
+              key="settings" 
+              initial={{ x: "100%" }} 
+              animate={{ x: 0 }} 
+              exit={{ x: "100%" }} 
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            >
               <Settings onBack={() => setShowSettings(false)} />
             </motion.div>
           ) : (
