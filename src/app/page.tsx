@@ -15,6 +15,7 @@ const tabsConfig = [
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState("hub");
+  const [isDevView, setIsDevView] = useState(false);
 
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
@@ -22,56 +23,36 @@ export default function Page() {
       tg.ready();
       tg.setHeaderColor("#0a0a0a");
       tg.setBackgroundColor("#0a0a0a");
-      // Предотвращаем случайное закрытие свайпом вниз
       tg.enableClosingConfirmation();
     }
   }, []);
 
-  // Таббар скрыт только в магазине
-  const isTabbarVisible = activeTab !== "store";
+  const isTabbarVisible = !isDevView;
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] select-none overflow-hidden font-display text-white">
-      {/* Контентный слой */}
       <div className={isTabbarVisible ? "pb-32" : ""}>
         <AnimatePresence mode="wait">
           {activeTab === "hub" && (
-            <motion.div 
-              key="hub" 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-            >
+            <motion.div key="hub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <Hub />
             </motion.div>
           )}
 
           {activeTab === "store" && (
-            <motion.div 
-              key="store" 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-            >
-              {/* Исправлено: передаем onBack для работы кнопки "Назад" в Telegram */}
-              <Store onBack={() => setActiveTab("hub")} />
+            <motion.div key="store" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+              <Store onBack={() => setActiveTab("hub")} onViewChange={setIsDevView} />
             </motion.div>
           )}
 
           {activeTab === "socket" && (
-            <motion.div 
-              key="socket" 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }}
-            >
+            <motion.div key="socket" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <Socket />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* Слой Таббара */}
       <AnimatePresence>
         {isTabbarVisible && (
           <motion.div
@@ -81,11 +62,7 @@ export default function Page() {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="fixed bottom-0 left-0 right-0 z-[100]"
           >
-            <Tabbar 
-              activeTab={activeTab} 
-              setActiveTab={setActiveTab} 
-              tabsConfig={tabsConfig} 
-            />
+            <Tabbar activeTab={activeTab} setActiveTab={setActiveTab} tabsConfig={tabsConfig} />
           </motion.div>
         )}
       </AnimatePresence>
