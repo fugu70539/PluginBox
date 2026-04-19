@@ -35,11 +35,10 @@ export const SearchInput = () => {
     setIsAiMode(!isAiMode);
   };
 
-  // Принудительный запуск анимации при смене режима
   useEffect(() => {
     if (lottieRef.current) {
-      lottieRef.current.stop(); // Сбрасываем текущую
-      lottieRef.current.play(); // Запускаем заново
+      lottieRef.current.stop();
+      lottieRef.current.play();
     }
   }, [isAiMode]);
 
@@ -75,7 +74,7 @@ export const SearchInput = () => {
         </div>
 
         <button className="h-[38px] px-5 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-full">
-          <img src="/Icons/SendToAi.png" alt="Send" className="w-[18px] h-[18px]" />
+          <img src="/Icons/SendToAi.png?v=3" alt="Send" className="w-[18px] h-[18px]" />
         </button>
       </motion.div>
 
