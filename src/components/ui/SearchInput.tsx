@@ -45,11 +45,11 @@ export const SearchInput = () => {
   const currentPlaceholder = isAiMode ? "Поиск с ИИ..." : "Найти что-нибудь...";
 
   return (
-    <div className="w-full flex items-center gap-3 relative h-[56px]">
+    <div className="w-full flex items-center gap-2 relative h-12"> {/* Высота h-12 (48px) как у фильтра */}
       <motion.div
         layout
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className="flex-1 h-full mt-glass rounded-full flex items-center justify-between pr-2 pl-6 relative z-10 overflow-hidden"
+        className="flex-1 h-full mt-glass rounded-full flex items-center justify-between pr-1 pl-6 relative z-10 overflow-hidden"
       >
         <div className="relative flex-1 h-full flex items-center mr-2">
           <AnimatePresence mode="wait" custom={isAiMode}>
@@ -61,7 +61,7 @@ export const SearchInput = () => {
               animate="animate"
               exit="exit"
               transition={{ duration: 0.2, ease: "backOut" }}
-              className="absolute left-0 text-white/20 font-medium text-base pointer-events-none whitespace-nowrap"
+              className="absolute left-0 text-white/20 font-medium text-[15px] pointer-events-none whitespace-nowrap"
             >
               {currentPlaceholder}
             </motion.span>
@@ -69,24 +69,24 @@ export const SearchInput = () => {
 
           <input
             type="text"
-            className="bg-transparent border-none outline-none text-white text-base w-full font-medium relative z-10"
+            className="bg-transparent border-none outline-none text-white text-[15px] w-full font-medium relative z-10"
           />
         </div>
 
-        {/* Кнопка отправки стала чуть больше (h-10) для баланса */}
-        <button className="h-10 px-6 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-full shadow-lg">
-          <img src="/Icons/SendToAi.png?v=4" alt="Send" className="w-[18px] h-[18px]" />
+        {/* Кнопка отправки внутри строки: высота чуть меньше h-full для отступов */}
+        <button className="h-[40px] px-5 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-full">
+          <img src="/Icons/SendToAi.png?v=5" alt="Send" className="w-[16px] h-[16px]" />
         </button>
       </motion.div>
 
-      {/* Кнопка переключения режима теперь точно 56px, как и вся строка */}
+      {/* Кнопка переключения режима: строго 48x48px (h-12 w-12) */}
       <motion.button
         layout
         onClick={handleToggle}
         whileTap={{ scale: 0.9 }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
         style={{ order: isAiMode ? -1 : 1 }}
-        className="h-[56px] w-[56px] mt-glass rounded-full flex items-center justify-center shrink-0 z-20 overflow-hidden shadow-xl"
+        className="h-12 w-12 mt-glass rounded-full flex items-center justify-center shrink-0 z-20 overflow-hidden"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -95,7 +95,7 @@ export const SearchInput = () => {
             animate={{ scale: 1, opacity: 1, rotate: 0 }}
             exit={{ scale: 0.4, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="size-8 flex items-center justify-center"
+            className="size-7 flex items-center justify-center"
           >
             <Lottie
               lottieRef={lottieRef}
