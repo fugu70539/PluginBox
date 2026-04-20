@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SearchInput } from "@/components/ui/SearchInput";
+
+const filterOptions = ["Все", "По имени", "По дате", "По рейтингу"];
 
 export default function Hub({ onSettings }: { onSettings: () => void }) {
   const [userName, setUserName] = useState("Artem");
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState("Все");
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
@@ -17,11 +21,15 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
     }
   }, []);
 
+  const toggleFilter = () => {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
+    setIsFilterOpen(!isFilterOpen);
+  };
+
   return (
     <div className="w-full font-display min-h-screen bg-[#0a0a0a] overflow-x-hidden">
-      {/* Верхняя плашка: фиксированный цвет, без стекла, только нижние углы */}
       <div className="w-full bg-[#131313] rounded-b-[45px] px-7 pt-5 pb-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-b border-white/[0.02]">
-        
         <header className="flex items-center justify-between mb-6">
           <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 border-white/5">
             <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
@@ -42,7 +50,6 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
           </div>
         </header>
 
-        {/* Текст: снова по центру */}
         <div className="flex flex-col items-center justify-center text-center mb-8 gap-y-0.5 text-white">
           <motion.h1 
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
@@ -61,19 +68,59 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
         <SearchInput />
       </div>
 
-      {/* Секция под плашкой */}
       <main className="px-7 pt-8">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 relative">
           <h3 className="text-[17px] font-bold text-white/90 tracking-tight">Рекомендуем</h3>
           
-          {/* Компактный фильтр справа */}
-          <button className="flex items-center gap-2 active:opacity-60 transition-opacity">
-            <span className="text-[14px] font-bold text-white/20">Все</span>
-            <img src="/Icons/ArrowRight.PNG" className="size-3.5 opacity-10 invert rotate-90" alt="" />
-          </button>
-        </div>
+          <div className="relative">
+            <button 
+              onClick={toggleFilter}
+              className="mt-glass h-11 px-5 rounded-full flex items-center gap-3 active:scale-95 transition-all border-white/5"
+            >
+              <span className="text-[14px] font-bold tracking-tight text-white/60">{activeFilter}</span>
+              <motion.img 
+                src="/Icons/ArrowRight.PNG?v=3" 
+                alt="Filter" 
+                animate={{ rotate: isFilterOpen ? 90 : 0 }}
+                className="size-4 object-contain invert brightness-200 opacity-20" 
+              />
+            </button>
 
-        {/* Тут будет контент (сетка или список) */}
+            <AnimatePresence>
+              {isFilterOpen && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                  animate={{ opacity: 1, scale: 1, y: 8 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                  className="mt-glass absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl border-white/5"
+                >
+                  <div className="flex flex-col gap-1">
+                    {filterOptions.map((option) => (
+                      <button
+                        key={option}
+                        onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
+                        className="relative w-full px-4 py-3 text-left group"
+                      >
+                        {activeFilter === option && (
+                          <motion.div 
+                            layoutId="filter-bg"
+                            className="absolute inset-0 bg-white/10 backdrop-blur-xl rounded-[20px] z-0"
+                          />
+                        )}
+                        <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${
+                          activeFilter === option ? "text-white" : "text-white/20 group-active:text-white/60"
+                        }`}>
+                          {option}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
       </main>
     </div>
   );
