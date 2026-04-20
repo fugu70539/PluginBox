@@ -6,12 +6,12 @@ import { motion } from "framer-motion";
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
     onClick={onToggle} 
-    className={`relative w-[72px] h-[36px] rounded-[14px] transition-colors duration-300 flex items-center px-[4px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
+    className={`relative w-[51px] h-[31px] rounded-full transition-colors duration-300 flex items-center px-[2px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
   >
     <motion.div 
       animate={{ x: isOn ? 20 : 0 }} 
-      transition={{ type: "spring", stiffness: 500, damping: 35 }} 
-      className="h-[28px] w-[44px] bg-white rounded-[11px] shadow-sm"
+      transition={{ type: "spring", stiffness: 500, damping: 30 }} 
+      className="h-[27px] w-[27px] bg-white rounded-full shadow-lg"
     />
   </button>
 );
@@ -23,17 +23,13 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
   >
     <div className="flex items-center gap-3">
       {/* Путь строго с большой буквы Icons */}
-      <img 
-        src={`/Icons/${icon}`} 
-        alt="" 
-        className="size-6 object-contain opacity-70"
-      />
+      <img src={`/Icons/${icon}`} alt="" className="size-6 object-contain opacity-70" />
       <span className="text-[17px] font-semibold tracking-tight text-white/90">{title}</span>
     </div>
     <div className="flex items-center gap-2">
       {value && <span className="text-[17px] font-medium text-white/30">{value}</span>}
       {children}
-      {hasArrow && <img src="/Icons/ArrowRight.PNG" className="size-4 opacity-20 invert" alt="" />}
+      {hasArrow && <img src="/Icons/ArrowRight.PNG" className="size-4 opacity-20 invert grayscale" alt="" />}
     </div>
   </div>
 );
