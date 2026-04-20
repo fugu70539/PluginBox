@@ -18,7 +18,7 @@ const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }
 );
 
 const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, isOpen, options, onSelect }: any) => (
-  <motion.div layout className="flex flex-col w-full overflow-hidden">
+  <div className="flex flex-col w-full overflow-hidden">
     <div 
       onClick={onClick} 
       className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer z-10"
@@ -35,7 +35,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
         {hasArrow && (
           <motion.img 
             animate={{ rotate: isOpen ? 90 : 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
             src="/Icons/ArrowRight.PNG" 
             className="size-4 opacity-20 invert" 
             alt="" 
@@ -44,7 +44,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
       </div>
     </div>
 
-    <AnimatePresence initial={false} mode="popLayout">
+    <AnimatePresence initial={false}>
       {isOpen && (
         <motion.div
           initial={{ height: 0, opacity: 0 }}
@@ -52,8 +52,8 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
             height: "auto", 
             opacity: 1,
             transition: {
-              height: { type: "spring", stiffness: 400, damping: 40, restDelta: 0.01 },
-              opacity: { duration: 0.15 }
+              height: { type: "spring", stiffness: 450, damping: 40 },
+              opacity: { duration: 0.1 }
             }
           }}
           exit={{ 
@@ -76,7 +76,6 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
                 {value === opt && (
                   <motion.div 
                     layoutId={`bg-${title}`}
-                    transition={{ type: "spring", stiffness: 500, damping: 40 }}
                     className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-[16px]"
                   />
                 )}
@@ -89,7 +88,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
         </motion.div>
       )}
     </AnimatePresence>
-  </motion.div>
+  </div>
 );
 
 export default function Settings({ onBack }: { onBack: () => void }) {
@@ -102,9 +101,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
 
   const toggleDropdown = (name: string) => setOpenDropdown(openDropdown === name ? null : name);
   
-  const openSupport = () => {
-    window.open("https://t.me/PluginBoxRequest_bot", "_blank");
-  };
+  const openSupport = () => window.open("https://t.me/PluginBoxRequest_bot", "_blank");
 
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
@@ -130,7 +127,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
             <div className="space-y-6">
               <section>
                 <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Аккаунт</h3>
-                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5 shadow-xl">
+                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
                   <SettingRow icon="Badge.WEBP" title="Бейдж" value={badge} onClick={() => setCurrentWindow('badge')} />
                   <SettingRow 
                     icon="Language .WEBP" title="Язык" value={lang} 
@@ -144,7 +141,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
 
               <section>
                 <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Оформление</h3>
-                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5 shadow-xl">
+                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
                   <SettingRow 
                     icon="AccentColor.WEBP" title="Акцент" value={accent} 
                     isOpen={openDropdown === 'accent'}
@@ -160,7 +157,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
 
               <section>
                 <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Система</h3>
-                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5 shadow-xl">
+                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
                   <SettingRow icon="Tech.WEBP" title="Поддержка" value="Перейти" onClick={openSupport} />
                 </div>
               </section>
