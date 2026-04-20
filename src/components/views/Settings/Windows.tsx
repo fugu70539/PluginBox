@@ -25,7 +25,7 @@ export const BadgeWindow = ({ currentBadge, onSave }: BadgeWindowProps) => {
       transition={{ duration: 0.2, ease: "easeInOut" }}
       className="fixed inset-0 z-[100] w-full min-h-screen bg-[#0a0a0a] pt-4 px-7 font-display select-none"
     >
-      <div className="flex flex-col items-start gap-4">
+      <div className="flex flex-col items-center gap-4">
         
         <div className="relative w-full h-11 mt-glass rounded-full flex items-center px-5 border border-white/5 shadow-2xl">
           <input
@@ -41,8 +41,8 @@ export const BadgeWindow = ({ currentBadge, onSave }: BadgeWindowProps) => {
           </span>
         </div>
 
-        {/* Описание: теперь шрифт не жирный (font-medium) */}
-        <p className="px-5 pr-10 text-[12px] font-medium text-white/30 leading-[1.4] text-left">
+        {/* Описание: центрирование "столбиком" с ограничением ширины */}
+        <p className="max-w-[280px] text-[12px] font-medium text-white/30 leading-[1.4] text-center">
           Бейдж будет показан возле вашего имени в профиле разработчика, комментариях и созданных вами плагинах
         </p>
 
