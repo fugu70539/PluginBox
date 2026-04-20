@@ -3,21 +3,19 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-// --- Вспомогательный компонент: Каноничный Apple Switch ---
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
     onClick={onToggle} 
-    // Компактные размеры и полностью круглые углы
-    className={`relative w-[51px] h-[31px] rounded-full transition-colors duration-300 flex items-center px-[2px] ${
-      isOn ? "bg-[#34C759]" : "bg-[#39393d]"
-    }`}
+    className={`relative w-[66px] h-[32px] rounded-[16px] transition-colors duration-300 flex items-center px-[3.5px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
   >
     <motion.div 
-      animate={{ x: isOn ? 20 : 0 }} 
-      transition={{ type: "spring", stiffness: 500, damping: 30 }} 
-      // Полностью круглый пузырек
-      className="w-[27px] h-[27px] bg-white rounded-full shadow-lg"
-    />
+      animate={{ x: isOn ? 18.5 : 0 }} 
+      transition={{ type: "spring", stiffness: 500, damping: 35 }} 
+      className="h-[25px] w-[40.5px] bg-white rounded-[12px] shadow-sm flex items-center justify-center"
+    >
+        {/* Добавляем полоску 'I' внутри каретки, когда включено, для полного соответствия референсу */}
+        {isOn && <div className="h-3 w-[1.5px] bg-black/15 rounded-full" />}
+    </motion.div>
   </button>
 );
 
@@ -27,13 +25,18 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
     className="w-full h-[56px] flex items-center justify-between px-5 active:bg-white/5 transition-colors cursor-pointer"
   >
     <div className="flex items-center gap-3">
-      <img src={`/Icons/${icon}`} alt="" className="size-6 object-contain opacity-70" />
+      {/* Путь строго с большой буквы Icons */}
+      <img 
+        src={`/Icons/${icon}`} 
+        alt="" 
+        className="size-6 object-contain opacity-70"
+      />
       <span className="text-[17px] font-semibold tracking-tight text-white/90">{title}</span>
     </div>
     <div className="flex items-center gap-2">
       {value && <span className="text-[17px] font-medium text-white/30">{value}</span>}
       {children}
-      {hasArrow && <img src="/Icons/ArrowRight.PNG" className="size-4 opacity-20 invert grayscale" alt="" />}
+      {hasArrow && <img src="/Icons/ArrowRight.PNG" className="size-4 opacity-20 invert" alt="" />}
     </div>
   </div>
 );
@@ -55,7 +58,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
   }, [onBack]);
 
   return (
-    <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-7 font-display pb-10">
+    <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-7 font-display pb-10 select-none">
       <div className="space-y-8">
         <section>
           <h3 className="text-[11px] font-black text-white/20 uppercase tracking-[0.15em] ml-4 mb-3">Аккаунт</h3>
@@ -84,7 +87,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
 
         <footer className="w-full pt-6 flex flex-col items-center gap-1 opacity-20">
           <span className="text-[13px] font-bold tracking-[0.2em] uppercase">PluginBox v1.0.4</span>
-          <span className="text-[11px] font-medium text-center uppercase tracking-widest">by @temkazavr</span>
+          <span className="text-[11px] font-medium text-center uppercase tracking-widest leading-tight">by @temkazavr</span>
         </footer>
       </div>
     </div>
