@@ -57,7 +57,8 @@ export default function Settings({ onBack }: { onBack: () => void }) {
     <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-7 font-display pb-10 select-none">
       <div className="space-y-8">
         <section>
-          <h3 className="text-[11px] font-black text-white/20 uppercase tracking-[0.15em] ml-4 mb-3">Аккаунт</h3>
+          {/* Заголовки без капса, выравнивание ml-0, чтобы быть на уровне начала плашки */}
+          <h3 className="text-[13px] font-semibold text-white/30 ml-0 mb-2.5">Аккаунт</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
             <SettingRow icon="Badge.webp" title="Бейдж" value={badge} />
             <SettingRow icon="Language.webp" title="Язык" value="Русский" />
@@ -65,7 +66,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
         </section>
 
         <section>
-          <h3 className="text-[11px] font-black text-white/20 uppercase tracking-[0.15em] ml-4 mb-3">Оформление</h3>
+          <h3 className="text-[13px] font-semibold text-white/30 ml-0 mb-2.5">Оформление</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
             <SettingRow icon="AccentColor.webp" title="Акцент" value="Ч/Б" />
             <SettingRow icon="Animations.webp" title="Анимации" hasArrow={false}>
@@ -75,15 +76,15 @@ export default function Settings({ onBack }: { onBack: () => void }) {
         </section>
 
         <section>
-          <h3 className="text-[11px] font-black text-white/20 uppercase tracking-[0.15em] ml-4 mb-3">Система</h3>
+          <h3 className="text-[13px] font-semibold text-white/30 ml-0 mb-2.5">Система</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
             <SettingRow icon="Tech.webp" title="Поддержка" value="Перейти" />
           </div>
         </section>
 
-        <footer className="w-full pt-6 flex flex-col items-center gap-1 opacity-20">
-          <span className="text-[13px] font-bold tracking-[0.2em] uppercase">PluginBox v1.0.4</span>
-          <span className="text-[11px] font-medium text-center uppercase tracking-widest leading-tight">by @temkazavr</span>
+        <footer className="w-full pt-6 flex flex-col items-center gap-0.5 opacity-20">
+          <span className="text-[13px] font-bold tracking-tight">PluginBox v1.0.4</span>
+          <span className="text-[11px] font-medium tracking-tight">by @temkazavr</span>
         </footer>
       </div>
     </div>
