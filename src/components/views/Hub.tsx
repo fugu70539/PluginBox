@@ -18,6 +18,9 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
       const userData = tg.initDataUnsafe?.user;
       if (userData?.first_name) setUserName(userData.first_name);
       if (userData?.photo_url) setUserPhoto(userData.photo_url);
+
+      tg.setHeaderColor("#131313");
+      tg.setBackgroundColor("#0a0a0a");
     }
   }, []);
 
