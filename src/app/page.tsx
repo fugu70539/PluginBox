@@ -23,10 +23,19 @@ export default function Page() {
     const tg = (window as any).Telegram?.WebApp;
     if (tg) {
       tg.ready();
-      tg.setHeaderColor("#0a0a0a");
+      
+      // Логика смены цвета шапки
+      if (showSettings) {
+        tg.setHeaderColor("#0a0a0a"); // Цвет для настроек
+      } else if (activeTab === "hub") {
+        tg.setHeaderColor("#131313"); // Наш новый цвет для Хаба
+      } else {
+        tg.setHeaderColor("#0a0a0a"); // Стандартный цвет для других вкладок
+      }
+
       tg.setBackgroundColor("#0a0a0a");
     }
-  }, []);
+  }, [activeTab, showSettings]); // Массив зависимостей: следим за табами и настройками
 
   const isTabbarVisible = !showSettings && !(activeTab === "store" && isDevView);
 
