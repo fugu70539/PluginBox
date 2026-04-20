@@ -9,12 +9,13 @@ export const SettingsBanner = () => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="relative w-full min-h-[120px] py-6 mt-glass overflow-hidden rounded-[32px] flex items-center border-white/[0.08] shrink-0"
+      // Уменьшили высоту до 90px и py до 3
+      className="relative w-full h-[90px] mt-glass overflow-hidden rounded-[26px] flex items-center border-white/[0.08] shrink-0"
       style={{ backgroundColor: "#7549F2" }}
     >
-      {/* Левая часть: Контейнер для иконки */}
-      <div className="pl-6 flex shrink-0 items-center justify-center">
-        <div className="size-16 opacity-90 pointer-events-none mix-blend-screen">
+      {/* Контейнер иконки: чуть уменьшили, чтобы влезла в 90px */}
+      <div className="pl-5 flex shrink-0 items-center justify-center">
+        <div className="size-12 opacity-90 pointer-events-none mix-blend-screen">
           <Lottie 
             animationData={sparklesAnimation} 
             loop={true} 
@@ -27,13 +28,13 @@ export const SettingsBanner = () => {
         </div>
       </div>
 
-      {/* Правая часть: Весь текст */}
-      <div className="flex flex-col pl-5 pr-8 justify-center gap-y-1">
-        <h3 className="text-[15px] font-bold text-white tracking-tight leading-tight uppercase opacity-90">
+      {/* Текст: убрали капс, сделали компактнее */}
+      <div className="flex flex-col pl-4 pr-6 justify-center">
+        <h3 className="text-[15px] font-bold text-white tracking-tight leading-tight">
           Настрой это!
         </h3>
-        <p className="text-[12px] font-medium text-white/80 leading-[1.4] tracking-tight">
-          Здесь вы можете настроить приложение так, как удобно вам, чтобы скачивать плагины стало не только удобно, но и приятно!
+        <p className="text-[11px] font-medium text-white/70 mt-0.5 leading-[1.3] tracking-tight">
+          Здесь вы можете настроить приложение так, как удобно вам, чтобы всё стало приятно!
         </p>
       </div>
     </motion.div>
