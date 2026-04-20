@@ -19,15 +19,17 @@ const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }
 const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: any) => (
   <div 
     onClick={onClick} 
-    className="w-full h-[56px] flex items-center justify-between px-5 active:bg-white/5 transition-colors cursor-pointer"
+    className="w-full h-[64px] flex items-center justify-between px-5 active:bg-white/5 transition-colors cursor-pointer"
   >
-    <div className="flex items-center gap-3">
-      {/* Используем Icons и расширение WEBP строго в верхнем регистре */}
-      <img 
-        src={`/Icons/${icon}`} 
-        alt="" 
-        className="size-6 object-contain opacity-70"
-      />
+    <div className="flex items-center gap-4">
+      {/* Крупные иконки с закругленными углами */}
+      <div className="size-9 rounded-[10px] overflow-hidden flex items-center justify-center">
+        <img 
+          src={`/Icons/${icon}`} 
+          alt="" 
+          className="size-full object-contain opacity-90"
+        />
+      </div>
       <span className="text-[17px] font-semibold tracking-tight text-white/90">{title}</span>
     </div>
     <div className="flex items-center gap-2">
