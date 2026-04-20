@@ -12,8 +12,6 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState("Все");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  
-  // Состояние плагинов (пока пустой массив)
   const [plugins, setPlugins] = useState([]);
 
   useEffect(() => {
@@ -72,7 +70,8 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
         <SearchInput />
       </div>
 
-      <main className="px-7 pt-8 flex-1 flex flex-col">
+      {/* Изменили pt-8 на pt-4, чтобы поднять заголовок выше */}
+      <main className="px-7 pt-4 flex-1 flex flex-col">
         <div className="flex items-center justify-between mb-6 relative">
           <h3 className="text-[17px] font-bold text-white/90 tracking-tight">Рекомендуем</h3>
           
@@ -126,10 +125,9 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
           </div>
         </div>
 
-        {/* Условный рендеринг: плагины или Empty State */}
         {plugins.length > 0 ? (
           <div className="grid grid-cols-1 gap-4 pb-10">
-             {/* Список плагинов будет здесь */}
+             {/* Плагины */}
           </div>
         ) : (
           <EmptyHub />
