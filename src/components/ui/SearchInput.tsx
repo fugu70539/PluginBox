@@ -24,6 +24,7 @@ const textVariants = {
 
 export const SearchInput = () => {
   const [isAiMode, setIsAiMode] = useState(false);
+  const [value, setValue] = useState("");
   const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const handleToggle = () => {
@@ -45,7 +46,7 @@ export const SearchInput = () => {
   const currentPlaceholder = isAiMode ? "Поиск с ИИ..." : "Найти что-нибудь...";
 
   return (
-    <div className="w-full flex items-center gap-2 relative h-12"> {/* Высота h-12 (48px) как у фильтра */}
+    <div className="w-full flex items-center gap-2 relative h-12">
       <motion.div
         layout
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
@@ -53,33 +54,35 @@ export const SearchInput = () => {
       >
         <div className="relative flex-1 h-full flex items-center mr-2">
           <AnimatePresence mode="wait" custom={isAiMode}>
-            <motion.span
-              key={currentPlaceholder}
-              custom={isAiMode}
-              variants={textVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              transition={{ duration: 0.2, ease: "backOut" }}
-              className="absolute left-0 text-white/20 font-medium text-[15px] pointer-events-none whitespace-nowrap"
-            >
-              {currentPlaceholder}
-            </motion.span>
+            {value === "" && (
+              <motion.span
+                key={currentPlaceholder}
+                custom={isAiMode}
+                variants={textVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.2, ease: "backOut" }}
+                className="absolute left-0 text-white/20 font-medium text-[15px] pointer-events-none whitespace-nowrap"
+              >
+                {currentPlaceholder}
+              </motion.span>
+            )}
           </AnimatePresence>
 
           <input
             type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
             className="bg-transparent border-none outline-none text-white text-[15px] w-full font-medium relative z-10"
           />
         </div>
 
-        {/* Кнопка отправки внутри строки: высота чуть меньше h-full для отступов */}
         <button className="h-[40px] px-5 btn-send-white flex items-center justify-center active:scale-90 transition-all shrink-0 rounded-full">
           <img src="/Icons/SendToAi.png?v=5" alt="Send" className="w-[16px] h-[16px]" />
         </button>
       </motion.div>
 
-      {/* Кнопка переключения режима: строго 48x48px (h-12 w-12) */}
       <motion.button
         layout
         onClick={handleToggle}
