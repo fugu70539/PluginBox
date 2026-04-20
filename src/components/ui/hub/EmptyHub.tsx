@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 export const EmptyHub = () => {
   return (
     <div className="flex-1 w-full flex flex-col items-center justify-center text-center">
-      <div className="flex flex-col items-center -mt-32"> 
+      {/* Смещение вверх для компенсации таббара и поднятого заголовка */}
+      <div className="flex flex-col items-center -mt-24"> 
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
