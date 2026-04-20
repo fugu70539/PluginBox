@@ -19,15 +19,15 @@ const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }
 const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: any) => (
   <div 
     onClick={onClick} 
-    className="w-full h-[64px] flex items-center justify-between px-5 active:bg-white/5 transition-colors cursor-pointer"
+    className="w-full h-[68px] flex items-center justify-between px-3 pr-5 active:bg-white/5 transition-colors cursor-pointer"
   >
-    <div className="flex items-center gap-4">
-      {/* Крупные иконки с закругленными углами */}
-      <div className="size-9 rounded-[10px] overflow-hidden flex items-center justify-center">
+    <div className="flex items-center gap-3">
+      {/* Иконки стали крупнее (40px) и углы более круглые */}
+      <div className="size-10 rounded-[12px] overflow-hidden flex items-center justify-center">
         <img 
           src={`/Icons/${icon}`} 
           alt="" 
-          className="size-full object-contain opacity-90"
+          className="size-full object-contain opacity-95"
         />
       </div>
       <span className="text-[17px] font-semibold tracking-tight text-white/90">{title}</span>
@@ -60,16 +60,15 @@ export default function Settings({ onBack }: { onBack: () => void }) {
     <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-7 font-display pb-10 select-none">
       <div className="space-y-8">
         
-        {/* Секция Аккаунт */}
         <section>
           <h3 className="text-[13px] font-semibold text-white/30 ml-0 mb-2.5">Аккаунт</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
             <SettingRow icon="Badge.WEBP" title="Бейдж" value={badge} />
-            <SettingRow icon="Language.WEBP" title="Язык" value="Русский" />
+            {/* Путь с твоей опечаткой (пробел перед расширением) */}
+            <SettingRow icon="Language .WEBP" title="Язык" value="Русский" />
           </div>
         </section>
 
-        {/* Секция Оформление */}
         <section>
           <h3 className="text-[13px] font-semibold text-white/30 ml-0 mb-2.5">Оформление</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
@@ -80,7 +79,6 @@ export default function Settings({ onBack }: { onBack: () => void }) {
           </div>
         </section>
 
-        {/* Секция Система */}
         <section>
           <h3 className="text-[13px] font-semibold text-white/30 ml-0 mb-2.5">Система</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
@@ -88,7 +86,6 @@ export default function Settings({ onBack }: { onBack: () => void }) {
           </div>
         </section>
 
-        {/* Футер */}
         <footer className="w-full pt-6 flex flex-col items-center gap-0.5 opacity-20">
           <span className="text-[13px] font-bold tracking-tight">PluginBox v1.0.4</span>
           <span className="text-[11px] font-medium tracking-tight">by @temkazavr</span>
