@@ -27,6 +27,7 @@ export const BadgeWindow = ({ currentBadge, onSave }: BadgeWindowProps) => {
     >
       <div className="flex flex-col items-start gap-4">
         
+        {/* Строка ввода */}
         <div className="relative w-full h-11 mt-glass rounded-full flex items-center px-5 border border-white/5 shadow-2xl">
           <input
             type="text"
@@ -41,8 +42,8 @@ export const BadgeWindow = ({ currentBadge, onSave }: BadgeWindowProps) => {
           </span>
         </div>
 
-        {/* Описание: выровнено по левому краю (items-start у родителя), с отступом справа */}
-        <p className="px-5 pr-10 text-[12px] font-bold text-white/30 leading-[1.3] text-left">
+        {/* Описание: начинается строго под краем плашки (px-0), шрифт обычный */}
+        <p className="px-0 pr-6 text-[12px] font-medium text-white/30 leading-[1.4] text-left">
           Бейдж будет показан возле вашего имени в профиле разработчика, комментариях и созданных вами плагинах
         </p>
 
