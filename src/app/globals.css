@@ -4,16 +4,20 @@
   --glass-blur: blur(40px) saturate(180%);
   --glass-border: 0.5px solid rgba(255, 255, 255, 0.12);
   --glass-bg: rgba(255, 255, 255, 0.1);
+  
+  /* Цвета Хаба */
+  --hub-bg: #0a0a0a;
+  --hub-panel-bg: #131313;
 }
 
 /* Скрываем скроллбары глобально */
 * {
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 *::-webkit-scrollbar {
-  display: none;             /* Chrome/Safari/Webkit */
+  display: none;
 }
 
 html, body {
@@ -23,13 +27,19 @@ html, body {
   height: 100vh;
   overflow: hidden; 
   position: fixed;
-  background-color: #0a0a0a;
+  background-color: var(--hub-bg);
   color: #fff;
   -webkit-font-smoothing: antialiased;
 }
 
 .font-display {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+}
+
+/* Новая плашка хаба */
+.hub-panel {
+  background-color: var(--hub-panel-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
 }
 
 .mt-glass {
