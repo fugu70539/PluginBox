@@ -21,7 +21,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
   <div className="flex flex-col w-full overflow-hidden">
     <div 
       onClick={onClick} 
-      className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer"
+      className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer z-10"
     >
       <div className="flex items-center gap-3">
         <div className="size-10 flex items-center justify-center">
@@ -51,21 +51,21 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
             height: "auto", 
             opacity: 1,
             transition: {
-              height: { type: "spring", stiffness: 400, damping: 35 },
-              opacity: { duration: 0.15 }
+              height: { type: "spring", stiffness: 400, damping: 40 },
+              opacity: { duration: 0.2 }
             }
           }}
           exit={{ 
             height: 0, 
             opacity: 0,
             transition: {
-              height: { duration: 0.25, ease: [0.4, 0, 0.2, 1] },
-              opacity: { duration: 0.15 }
+              height: { duration: 0.2, ease: [0.4, 0, 0.2, 1] },
+              opacity: { duration: 0.1 }
             }
           }}
-          className="bg-white/[0.03] px-2 pb-2 overflow-hidden"
+          className="overflow-hidden bg-white/[0.02]"
         >
-          <div className="flex flex-col gap-1 pt-1">
+          <div className="px-2 pb-3 flex flex-col gap-1 border-t border-white/[0.05] pt-2">
             {options.map((opt: string) => (
               <button
                 key={opt}
@@ -118,7 +118,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
             <div className="space-y-8">
               <section>
                 <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Аккаунт</h3>
-                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
+                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5 shadow-xl">
                   <SettingRow icon="Badge.WEBP" title="Бейдж" value={badge} onClick={() => setCurrentWindow('badge')} />
                   <SettingRow 
                     icon="Language .WEBP" title="Язык" value={lang} 
@@ -132,7 +132,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
 
               <section>
                 <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Оформление</h3>
-                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
+                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5 shadow-xl">
                   <SettingRow 
                     icon="AccentColor.WEBP" title="Акцент" value={accent} 
                     isOpen={openDropdown === 'accent'}
@@ -148,7 +148,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
 
               <section>
                 <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Система</h3>
-                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
+                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5 shadow-xl">
                   <SettingRow icon="Tech.WEBP" title="Поддержка" value="Перейти" />
                 </div>
               </section>
