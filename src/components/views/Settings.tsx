@@ -6,15 +6,12 @@ import { motion } from "framer-motion";
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
     onClick={onToggle} 
-    className={`relative w-[58px] h-[31px] rounded-full transition-colors duration-300 flex items-center px-[3px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
+    className={`relative w-[62px] h-[32px] rounded-[12px] transition-colors duration-300 flex items-center px-[4px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
   >
     <motion.div 
-      animate={{ 
-        x: isOn ? 26 : 0,
-        width: "28px"
-      }} 
+      animate={{ x: isOn ? 26 : 0 }} 
       transition={{ type: "spring", stiffness: 500, damping: 30 }} 
-      className="h-[25px] bg-white rounded-[10px] shadow-lg"
+      className="h-[24px] w-[28px] bg-white rounded-[9px] shadow-sm"
     />
   </button>
 );
