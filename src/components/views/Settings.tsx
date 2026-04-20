@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BadgeWindow } from "./Settings/Windows";
+import { SettingsBanner } from "@/components/ui/banners/SettingsBanner";
 
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
@@ -138,6 +139,8 @@ export default function Settings({ onBack }: { onBack: () => void }) {
                   />
                 </div>
               </section>
+
+              <SettingsBanner />
 
               <section>
                 <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Оформление</h3>
