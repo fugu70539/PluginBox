@@ -25,7 +25,6 @@ export default function Page() {
       tg.ready();
       tg.setHeaderColor("#0a0a0a");
       tg.setBackgroundColor("#0a0a0a");
-      if (tg.BackButton) tg.BackButton.hide();
     }
   }, []);
 
@@ -33,39 +32,30 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] select-none overflow-hidden font-display text-white">
-      <div className={isTabbarVisible ? "pb-32" : ""}>
-        <AnimatePresence mode="wait">
-          {showSettings ? (
-            <motion.div 
-              key="settings" 
-              initial={{ x: "100%" }} 
-              animate={{ x: 0 }} 
-              exit={{ x: "100%" }} 
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            >
-              <Settings onBack={() => setShowSettings(false)} />
-            </motion.div>
-          ) : (
-            <>
-              {activeTab === "hub" && (
-                <motion.div key="hub" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <Hub onSettings={() => setShowSettings(true)} />
-                </motion.div>
-              )}
-              {activeTab === "store" && (
-                <motion.div key="store" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <Store onBack={() => setActiveTab("hub")} onViewChange={setIsDevView} />
-                </motion.div>
-              )}
-              {activeTab === "socket" && (
-                <motion.div key="socket" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                  <Socket />
-                </motion.div>
-              )}
-            </>
-          )}
-        </AnimatePresence>
-      </div>
+      <AnimatePresence mode="wait">
+        {showSettings ? (
+          <motion.div 
+            key="settings" 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+          >
+            <Settings onBack={() => setShowSettings(false)} />
+          </motion.div>
+        ) : (
+          <motion.div 
+            key={activeTab}
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            className={isTabbarVisible ? "pb-32" : ""}
+          >
+            {activeTab === "hub" && <Hub onSettings={() => setShowSettings(true)} />}
+            {activeTab === "store" && <Store onBack={() => setActiveTab("hub")} onViewChange={setIsDevView} />}
+            {activeTab === "socket" && <Socket />}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {isTabbarVisible && (
