@@ -1,53 +1,121 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { BadgeWindow } from "./Settings/Windows";
 
-interface BadgeWindowProps {
-  currentBadge: string;
-  onSave: (newBadge: string) => void;
-  onBack: () => void;
-}
+const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
+  <button 
+    onClick={onToggle} 
+    className={`relative w-[66px] h-[32px] rounded-[16px] transition-colors duration-300 flex items-center px-[3.5px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
+  >
+    <motion.div 
+      animate={{ x: isOn ? 18.5 : 0 }} 
+      transition={{ type: "spring", stiffness: 500, damping: 35 }} 
+      className="h-[25px] w-[40.5px] bg-white rounded-[12px] shadow-sm"
+    />
+  </button>
+);
 
-export const BadgeWindow = ({ currentBadge, onSave, onBack }: BadgeWindowProps) => {
-  const [inputValue, setInputValue] = useState(currentBadge);
+const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: any) => (
+  <div 
+    onClick={onClick} 
+    className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer"
+  >
+    <div className="flex items-center gap-3">
+      <div className="size-10 flex items-center justify-center">
+        <img 
+          src={`/Icons/${icon}`} 
+          alt="" 
+          className="size-full object-cover rounded-[18px] opacity-95"
+          style={{ borderRadius: '18px' }}
+        />
+      </div>
+      <span className="text-[15px] font-semibold tracking-tight text-white/90">{title}</span>
+    </div>
+    <div className="flex items-center gap-2">
+      {value && <span className="text-[15px] font-medium text-white/30">{value}</span>}
+      {children}
+      {hasArrow && <img src="/Icons/ArrowRight.PNG" className="size-4 opacity-20 invert" alt="" />}
+    </div>
+  </div>
+);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 10) {
-      setInputValue(e.target.value);
+export default function Settings({ onBack }: { onBack: () => void }) {
+  const [currentWindow, setCurrentWindow] = useState<'main' | 'badge'>('main');
+  const [badge, setBadge] = useState("Юзер");
+  const [isAnimOn, setIsAnimOn] = useState(true);
+
+  useEffect(() => {
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg?.BackButton) {
+      if (currentWindow === 'main') {
+        tg.BackButton.show();
+        tg.BackButton.onClick(onBack);
+      } else {
+        // Если открыто подокно, кнопка "Назад" возвращает в главное меню настроек
+        tg.BackButton.show();
+        const goBackToMain = () => setCurrentWindow('main');
+        tg.BackButton.onClick(goBackToMain);
+        return () => tg.BackButton.offClick(goBackToMain);
+      }
+      return () => tg.BackButton.offClick(onBack);
     }
-  };
+  }, [onBack, currentWindow]);
+
+  if (currentWindow === 'badge') {
+    return (
+      <BadgeWindow 
+        currentBadge={badge} 
+        onSave={(val) => {
+          setBadge(val);
+          setCurrentWindow('main');
+        }} 
+        onBack={() => setCurrentWindow('main')} 
+      />
+    );
+  }
 
   return (
-    <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-6 font-display select-none">
-      <div className="flex flex-col items-center gap-4">
+    <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-6 font-display pb-10 select-none">
+      <div className="space-y-8">
         
-        {/* Строка ввода: параметры точно как в Hub */}
-        <div className="relative w-full h-[54px] mt-glass rounded-[22px] flex items-center px-5 border border-white/5 shadow-2xl">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={handleChange}
-            placeholder="Придумай и введи бейдж…"
-            className="w-full bg-transparent border-none outline-none text-[15px] font-semibold text-white/90 placeholder:text-white/20 pr-12"
-            autoFocus
-          />
-          {/* Лимит справа в строке */}
-          <span className="absolute right-5 text-[13px] font-medium text-white/20 tabular-nums">
-            {inputValue.length}/10
-          </span>
-        </div>
+        <section>
+          <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Аккаунт</h3>
+          <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
+            <SettingRow 
+              icon="Badge.WEBP" 
+              title="Бейдж" 
+              value={badge} 
+              onClick={() => setCurrentWindow('badge')}
+            />
+            <SettingRow icon="Language .WEBP" title="Язык" value="Русский" />
+          </div>
+        </section>
 
-        {/* Кнопка "Готово": Ярко-белая, в длину строки */}
-        <motion.button
-          whileTap={{ scale: 0.98 }}
-          onClick={() => onSave(inputValue.trim() || "Юзер")}
-          className="w-full h-[54px] bg-white rounded-[22px] flex items-center justify-center shadow-lg active:opacity-90 transition-opacity"
-        >
-          <span className="text-[16px] font-bold text-black tracking-tight">Готово</span>
-        </motion.button>
+        <section>
+          <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Оформление</h3>
+          <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
+            <SettingRow icon="AccentColor.WEBP" title="Акцент" value="Ч/Б" />
+            <SettingRow icon="Animations.WEBP" title="Анимации" hasArrow={false}>
+              <AppleSwitch isOn={isAnimOn} onToggle={() => setIsAnimOn(!isAnimOn)} />
+            </SettingRow>
+          </div>
+        </section>
+
+        <section>
+          <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Система</h3>
+          <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
+            <SettingRow icon="Tech.WEBP" title="Поддержка" value="Перейти" />
+          </div>
+        </section>
+
+        <footer className="w-full pt-6 flex flex-col items-center gap-0.5 opacity-20">
+          <span className="text-[13px] font-bold tracking-tight">PluginBox v1.0.4</span>
+          <span className="text-[11px] font-medium tracking-tight">by @temkazavr</span>
+        </footer>
 
       </div>
     </div>
   );
-};
+}
