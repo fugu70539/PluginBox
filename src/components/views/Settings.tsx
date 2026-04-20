@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { BadgeWindow } from "./Settings/Windows";
 
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
@@ -41,20 +42,39 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
 );
 
 export default function Settings({ onBack }: { onBack: () => void }) {
+  const [currentWindow, setCurrentWindow] = useState<'main' | 'badge'>('main');
   const [badge, setBadge] = useState("Юзер");
   const [isAnimOn, setIsAnimOn] = useState(true);
 
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
     if (tg?.BackButton) {
-      tg.BackButton.show();
-      tg.BackButton.onClick(onBack);
-      return () => {
-        tg.BackButton.offClick(onBack);
-        tg.BackButton.hide();
-      };
+      if (currentWindow === 'main') {
+        tg.BackButton.show();
+        tg.BackButton.onClick(onBack);
+      } else {
+        // Если открыто подокно, кнопка "Назад" возвращает в главное меню настроек
+        tg.BackButton.show();
+        const goBackToMain = () => setCurrentWindow('main');
+        tg.BackButton.onClick(goBackToMain);
+        return () => tg.BackButton.offClick(goBackToMain);
+      }
+      return () => tg.BackButton.offClick(onBack);
     }
-  }, [onBack]);
+  }, [onBack, currentWindow]);
+
+  if (currentWindow === 'badge') {
+    return (
+      <BadgeWindow 
+        currentBadge={badge} 
+        onSave={(val) => {
+          setBadge(val);
+          setCurrentWindow('main');
+        }} 
+        onBack={() => setCurrentWindow('main')} 
+      />
+    );
+  }
 
   return (
     <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-6 font-display pb-10 select-none">
@@ -63,7 +83,12 @@ export default function Settings({ onBack }: { onBack: () => void }) {
         <section>
           <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Аккаунт</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-            <SettingRow icon="Badge.WEBP" title="Бейдж" value={badge} />
+            <SettingRow 
+              icon="Badge.WEBP" 
+              title="Бейдж" 
+              value={badge} 
+              onClick={() => setCurrentWindow('badge')}
+            />
             <SettingRow icon="Language .WEBP" title="Язык" value="Русский" />
           </div>
         </section>
