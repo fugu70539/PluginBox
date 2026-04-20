@@ -3,15 +3,20 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
+// --- Вспомогательный компонент: Каноничный Apple Switch ---
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
     onClick={onToggle} 
-    className={`relative w-[51px] h-[31px] rounded-full transition-colors duration-300 flex items-center px-[2px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
+    // Компактные размеры и полностью круглые углы
+    className={`relative w-[51px] h-[31px] rounded-full transition-colors duration-300 flex items-center px-[2px] ${
+      isOn ? "bg-[#34C759]" : "bg-[#39393d]"
+    }`}
   >
     <motion.div 
       animate={{ x: isOn ? 20 : 0 }} 
       transition={{ type: "spring", stiffness: 500, damping: 30 }} 
-      className="h-[27px] w-[27px] bg-white rounded-full shadow-lg"
+      // Полностью круглый пузырек
+      className="w-[27px] h-[27px] bg-white rounded-full shadow-lg"
     />
   </button>
 );
@@ -22,7 +27,6 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
     className="w-full h-[56px] flex items-center justify-between px-5 active:bg-white/5 transition-colors cursor-pointer"
   >
     <div className="flex items-center gap-3">
-      {/* Путь строго с большой буквы Icons */}
       <img src={`/Icons/${icon}`} alt="" className="size-6 object-contain opacity-70" />
       <span className="text-[17px] font-semibold tracking-tight text-white/90">{title}</span>
     </div>
