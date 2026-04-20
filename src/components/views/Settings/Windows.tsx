@@ -41,8 +41,8 @@ export const BadgeWindow = ({ currentBadge, onSave }: BadgeWindowProps) => {
           </span>
         </div>
 
-        {/* Описание: центрирование "столбиком" с ограничением ширины */}
-        <p className="max-w-[280px] text-[12px] font-medium text-white/30 leading-[1.4] text-center">
+        {/* Описание: выравнивание по ширине (text-justify) */}
+        <p className="px-1 text-[12px] font-medium text-white/30 leading-[1.5] text-justify tracking-tight">
           Бейдж будет показан возле вашего имени в профиле разработчика, комментариях и созданных вами плагинах
         </p>
 
