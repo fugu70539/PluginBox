@@ -22,13 +22,12 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
     className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer"
   >
     <div className="flex items-center gap-3">
-      {/* Контейнер иконки */}
       <div className="size-10 flex items-center justify-center">
         <img 
           src={`/Icons/${icon}`} 
           alt="" 
-          {/* Добавил скругление напрямую на картинку и форсировал его через rounded-[18px] */}
           className="size-full object-cover rounded-[18px] opacity-95"
+          style={{ borderRadius: '18px' }}
         />
       </div>
       <span className="text-[15px] font-semibold tracking-tight text-white/90">{title}</span>
