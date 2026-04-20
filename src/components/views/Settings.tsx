@@ -22,12 +22,13 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
     className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer"
   >
     <div className="flex items-center gap-3">
-      {/* Углы иконок закруглены еще сильнее */}
-      <div className="size-10 rounded-[16px] overflow-hidden flex items-center justify-center">
+      {/* Контейнер иконки */}
+      <div className="size-10 flex items-center justify-center">
         <img 
           src={`/Icons/${icon}`} 
           alt="" 
-          className="size-full object-contain opacity-95"
+          {/* Добавил скругление напрямую на картинку и форсировал его через rounded-[18px] */}
+          className="size-full object-cover rounded-[18px] opacity-95"
         />
       </div>
       <span className="text-[15px] font-semibold tracking-tight text-white/90">{title}</span>
