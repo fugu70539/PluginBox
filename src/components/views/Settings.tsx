@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { BadgeWindow } from "./Settings/Windows";
 
+// Компонент переключателя в стиле iOS
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
     onClick={onToggle} 
@@ -17,6 +18,7 @@ const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }
   </button>
 );
 
+// Компонент строки настройки
 const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: any) => (
   <div 
     onClick={onClick} 
@@ -27,7 +29,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
         <img 
           src={`/Icons/${icon}`} 
           alt="" 
-          className="size-full object-cover rounded-[18px] opacity-95"
+          className="size-full object-cover opacity-95"
           style={{ borderRadius: '18px' }}
         />
       </div>
@@ -46,76 +48,90 @@ export default function Settings({ onBack }: { onBack: () => void }) {
   const [badge, setBadge] = useState("Юзер");
   const [isAnimOn, setIsAnimOn] = useState(true);
 
+  // Логика кнопки "Назад" в Telegram
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
     if (tg?.BackButton) {
-      if (currentWindow === 'main') {
-        tg.BackButton.show();
-        tg.BackButton.onClick(onBack);
-      } else {
-        // Если открыто подокно, кнопка "Назад" возвращает в главное меню настроек
-        tg.BackButton.show();
-        const goBackToMain = () => setCurrentWindow('main');
-        tg.BackButton.onClick(goBackToMain);
-        return () => tg.BackButton.offClick(goBackToMain);
-      }
-      return () => tg.BackButton.offClick(onBack);
+      tg.BackButton.show();
+      const handleClick = () => {
+        if (currentWindow === 'badge') {
+          setCurrentWindow('main');
+        } else {
+          onBack();
+        }
+      };
+      tg.BackButton.onClick(handleClick);
+      return () => tg.BackButton.offClick(handleClick);
     }
   }, [onBack, currentWindow]);
 
-  if (currentWindow === 'badge') {
-    return (
-      <BadgeWindow 
-        currentBadge={badge} 
-        onSave={(val) => {
-          setBadge(val);
-          setCurrentWindow('main');
-        }} 
-        onBack={() => setCurrentWindow('main')} 
-      />
-    );
-  }
-
   return (
-    <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-6 font-display pb-10 select-none">
-      <div className="space-y-8">
-        
-        <section>
-          <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Аккаунт</h3>
-          <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-            <SettingRow 
-              icon="Badge.WEBP" 
-              title="Бейдж" 
-              value={badge} 
-              onClick={() => setCurrentWindow('badge')}
-            />
-            <SettingRow icon="Language .WEBP" title="Язык" value="Русский" />
-          </div>
-        </section>
+    <div className="relative w-full min-h-screen bg-[#0a0a0a] font-display select-none overflow-x-hidden">
+      <AnimatePresence mode="wait">
+        {currentWindow === 'main' ? (
+          <motion.div
+            key="main"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="pt-16 px-6 pb-10"
+          >
+            <div className="space-y-8">
+              
+              {/* Секция Аккаунт */}
+              <section>
+                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Аккаунт</h3>
+                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
+                  <SettingRow 
+                    icon="Badge.WEBP" 
+                    title="Бейдж" 
+                    value={badge} 
+                    onClick={() => setCurrentWindow('badge')} 
+                  />
+                  <SettingRow icon="Language .WEBP" title="Язык" value="Русский" />
+                </div>
+              </section>
 
-        <section>
-          <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Оформление</h3>
-          <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-            <SettingRow icon="AccentColor.WEBP" title="Акцент" value="Ч/Б" />
-            <SettingRow icon="Animations.WEBP" title="Анимации" hasArrow={false}>
-              <AppleSwitch isOn={isAnimOn} onToggle={() => setIsAnimOn(!isAnimOn)} />
-            </SettingRow>
-          </div>
-        </section>
+              {/* Секция Оформление */}
+              <section>
+                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Оформление</h3>
+                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
+                  <SettingRow icon="AccentColor.WEBP" title="Акцент" value="Ч/Б" />
+                  <SettingRow icon="Animations.WEBP" title="Анимации" hasArrow={false}>
+                    <AppleSwitch isOn={isAnimOn} onToggle={() => setIsAnimOn(!isAnimOn)} />
+                  </SettingRow>
+                </div>
+              </section>
 
-        <section>
-          <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Система</h3>
-          <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-            <SettingRow icon="Tech.WEBP" title="Поддержка" value="Перейти" />
-          </div>
-        </section>
+              {/* Секция Система */}
+              <section>
+                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Система</h3>
+                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
+                  <SettingRow icon="Tech.WEBP" title="Поддержка" value="Перейти" />
+                </div>
+              </section>
 
-        <footer className="w-full pt-6 flex flex-col items-center gap-0.5 opacity-20">
-          <span className="text-[13px] font-bold tracking-tight">PluginBox v1.0.4</span>
-          <span className="text-[11px] font-medium tracking-tight">by @temkazavr</span>
-        </footer>
+              {/* Футер */}
+              <footer className="w-full pt-6 flex flex-col items-center gap-0.5 opacity-20">
+                <span className="text-[13px] font-bold tracking-tight">PluginBox v1.0.4</span>
+                <span className="text-[11px] font-medium tracking-tight">by @temkazavr</span>
+              </footer>
 
-      </div>
+            </div>
+          </motion.div>
+        ) : (
+          <BadgeWindow 
+            key="badge"
+            currentBadge={badge} 
+            onSave={(val) => {
+              setBadge(val);
+              setCurrentWindow('main');
+            }} 
+            onBack={() => setCurrentWindow('main')} 
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
