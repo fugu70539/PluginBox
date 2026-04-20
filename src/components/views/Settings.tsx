@@ -99,6 +99,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
   const [accent, setAccent] = useState("Ч/Б");
   const [lang, setLang] = useState("Русский");
   const [isAnimOn, setIsAnimOn] = useState(true);
+  const [isVibrationOn, setIsVibrationOn] = useState(true);
 
   const toggleDropdown = (name: string) => setOpenDropdown(openDropdown === name ? null : name);
   
@@ -113,6 +114,17 @@ export default function Settings({ onBack }: { onBack: () => void }) {
       return () => tg.BackButton.offClick(handleClick);
     }
   }, [onBack, currentWindow]);
+
+  const handleVibrationToggle = () => {
+    const nextState = !isVibrationOn;
+    setIsVibrationOn(nextState);
+    
+    // Вызываем легкую вибрацию при переключении, если она была включена
+    const tg = (window as any).Telegram?.WebApp;
+    if (nextState && tg?.HapticFeedback) {
+      tg.HapticFeedback.impactOccurred("light");
+    }
+  };
 
   return (
     <div className="relative w-full min-h-screen bg-[#0a0a0a] font-display select-none overflow-x-hidden">
@@ -154,6 +166,9 @@ export default function Settings({ onBack }: { onBack: () => void }) {
                   />
                   <SettingRow icon="Animations.WEBP" title="Анимации" hasArrow={false}>
                     <AppleSwitch isOn={isAnimOn} onToggle={() => setIsAnimOn(!isAnimOn)} />
+                  </SettingRow>
+                  <SettingRow icon="Vibration.WEBP" title="Вибрация" hasArrow={false}>
+                    <AppleSwitch isOn={isVibrationOn} onToggle={handleVibrationToggle} />
                   </SettingRow>
                 </div>
               </section>
