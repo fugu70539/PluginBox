@@ -22,6 +22,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
     className="w-full h-[56px] flex items-center justify-between px-5 active:bg-white/5 transition-colors cursor-pointer"
   >
     <div className="flex items-center gap-3">
+      {/* Используем Icons и расширение WEBP строго в верхнем регистре */}
       <img 
         src={`/Icons/${icon}`} 
         alt="" 
@@ -56,36 +57,41 @@ export default function Settings({ onBack }: { onBack: () => void }) {
   return (
     <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-7 font-display pb-10 select-none">
       <div className="space-y-8">
+        
+        {/* Секция Аккаунт */}
         <section>
-          {/* Заголовки без капса, выравнивание ml-0, чтобы быть на уровне начала плашки */}
           <h3 className="text-[13px] font-semibold text-white/30 ml-0 mb-2.5">Аккаунт</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-            <SettingRow icon="Badge.webp" title="Бейдж" value={badge} />
-            <SettingRow icon="Language.webp" title="Язык" value="Русский" />
+            <SettingRow icon="Badge.WEBP" title="Бейдж" value={badge} />
+            <SettingRow icon="Language.WEBP" title="Язык" value="Русский" />
           </div>
         </section>
 
+        {/* Секция Оформление */}
         <section>
           <h3 className="text-[13px] font-semibold text-white/30 ml-0 mb-2.5">Оформление</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-            <SettingRow icon="AccentColor.webp" title="Акцент" value="Ч/Б" />
-            <SettingRow icon="Animations.webp" title="Анимации" hasArrow={false}>
+            <SettingRow icon="AccentColor.WEBP" title="Акцент" value="Ч/Б" />
+            <SettingRow icon="Animations.WEBP" title="Анимации" hasArrow={false}>
               <AppleSwitch isOn={isAnimOn} onToggle={() => setIsAnimOn(!isAnimOn)} />
             </SettingRow>
           </div>
         </section>
 
+        {/* Секция Система */}
         <section>
           <h3 className="text-[13px] font-semibold text-white/30 ml-0 mb-2.5">Система</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-            <SettingRow icon="Tech.webp" title="Поддержка" value="Перейти" />
+            <SettingRow icon="Tech.WEBP" title="Поддержка" value="Перейти" />
           </div>
         </section>
 
+        {/* Футер */}
         <footer className="w-full pt-6 flex flex-col items-center gap-0.5 opacity-20">
           <span className="text-[13px] font-bold tracking-tight">PluginBox v1.0.4</span>
           <span className="text-[11px] font-medium tracking-tight">by @temkazavr</span>
         </footer>
+
       </div>
     </div>
   );
