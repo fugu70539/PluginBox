@@ -6,12 +6,12 @@ import { motion } from "framer-motion";
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
     onClick={onToggle} 
-    className={`relative w-[64px] h-[34px] rounded-[14px] transition-colors duration-300 flex items-center px-[5px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
+    className={`relative w-[72px] h-[36px] rounded-[14px] transition-colors duration-300 flex items-center px-[4px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
   >
     <motion.div 
-      animate={{ x: isOn ? 26 : 0 }} 
-      transition={{ type: "spring", stiffness: 500, damping: 32 }} 
-      className="h-[24px] w-[28px] bg-white rounded-[10px] shadow-sm"
+      animate={{ x: isOn ? 20 : 0 }} 
+      transition={{ type: "spring", stiffness: 500, damping: 35 }} 
+      className="h-[28px] w-[44px] bg-white rounded-[11px] shadow-sm"
     />
   </button>
 );
@@ -22,8 +22,12 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
     className="w-full h-[56px] flex items-center justify-between px-5 active:bg-white/5 transition-colors cursor-pointer"
   >
     <div className="flex items-center gap-3">
-      {/* Если иконки все еще не грузятся, проверь расширение в папке public/Icons */}
-      <img src={`/Icons/${icon}`} alt="" className="size-6 object-contain opacity-70" />
+      {/* Путь строго с большой буквы Icons */}
+      <img 
+        src={`/Icons/${icon}`} 
+        alt="" 
+        className="size-6 object-contain opacity-70"
+      />
       <span className="text-[17px] font-semibold tracking-tight text-white/90">{title}</span>
     </div>
     <div className="flex items-center gap-2">
