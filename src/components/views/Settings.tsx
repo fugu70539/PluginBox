@@ -19,11 +19,11 @@ const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }
 const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: any) => (
   <div 
     onClick={onClick} 
-    className="w-full h-[72px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer"
+    className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer"
   >
-    <div className="flex items-center gap-3.5">
-      {/* Иконки с еще более закругленными углами */}
-      <div className="size-10 rounded-[14px] overflow-hidden flex items-center justify-center">
+    <div className="flex items-center gap-3">
+      {/* Углы иконок закруглены еще сильнее */}
+      <div className="size-10 rounded-[16px] overflow-hidden flex items-center justify-center">
         <img 
           src={`/Icons/${icon}`} 
           alt="" 
