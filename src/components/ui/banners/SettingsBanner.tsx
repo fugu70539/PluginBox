@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
-// Выходим из banners -> ui -> components -> src и попадаем в public
 import sparklesAnimation from "../../../../public/Icons/Sparkles.json";
 
 export const SettingsBanner = () => {
@@ -10,22 +9,24 @@ export const SettingsBanner = () => {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className="relative w-full h-[100px] mt-glass overflow-hidden rounded-[30px] flex items-center px-6 border-white/[0.05] shrink-0"
+      className="relative w-full min-h-[110px] py-4 mt-glass overflow-hidden rounded-[32px] flex items-center border-white/[0.08] shrink-0"
       style={{ backgroundColor: "#7549F2" }}
     >
-      <div className="absolute left-[-10px] opacity-[0.85] size-28 pointer-events-none">
+      {/* Иконка: теперь она большая, белая (через фильтр) и служит фоном */}
+      <div className="absolute -left-6 top-1/2 -translate-y-1/2 opacity-40 size-40 pointer-events-none mix-blend-screen">
         <Lottie 
           animationData={sparklesAnimation} 
           loop={true} 
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: '100%', filter: 'brightness(0) invert(1)' }}
         />
       </div>
 
-      <div className="relative z-10 flex flex-col ml-16">
-        <h3 className="text-[17px] font-bold text-white tracking-tight leading-tight">
+      {/* Текстовый блок: свободное позиционирование с нормальными отступами */}
+      <div className="relative z-10 flex flex-col pl-24 pr-6 w-full">
+        <h3 className="text-[19px] font-bold text-white tracking-tight leading-tight">
           Настрой это!
         </h3>
-        <p className="text-[12px] font-medium text-white/80 mt-1 leading-snug max-w-[200px]">
+        <p className="text-[13px] font-medium text-white/90 mt-1.5 leading-[1.4] tracking-tight">
           Здесь вы можете настроить приложение так, как удобно вам, чтобы скачивать плагины стало не только удобно, но и приятно!
         </p>
       </div>
