@@ -28,29 +28,28 @@ export const BadgeWindow = ({ currentBadge, onSave, onBack }: BadgeWindowProps) 
     >
       <div className="flex flex-col items-center gap-4">
         
-        {/* Строка ввода: Один в один как SearchInput в Hub, без круга */}
-        <div className="relative w-full h-14 mt-glass rounded-[2rem] flex items-center px-6 border border-white/5 shadow-2xl">
+        {/* Строка ввода: Высота h-11 (44px) как у элементов в хедере Хаба */}
+        <div className="relative w-full h-11 mt-glass rounded-full flex items-center px-5 border border-white/5 shadow-2xl">
           <input
             type="text"
             value={inputValue}
             onChange={handleChange}
             placeholder="Придумай и введи бейдж…"
-            className="w-full bg-transparent border-none outline-none text-[15px] font-semibold text-white/90 placeholder:text-white/20 pr-14"
+            className="w-full bg-transparent border-none outline-none text-[14px] font-bold text-white/90 placeholder:text-white/20 pr-12"
             autoFocus
           />
-          {/* Лимит справа внутри строки */}
-          <span className="absolute right-6 text-[13px] font-bold text-white/15 tabular-nums">
+          <span className="absolute right-5 text-[12px] font-bold text-white/10 tabular-nums">
             {inputValue.length}/10
           </span>
         </div>
 
-        {/* Кнопка "Готово": Чисто белая, в ширину строки */}
+        {/* Кнопка: Белая, h-11, шрифт как у фильтра */}
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={() => onSave(inputValue.trim() || "Юзер")}
-          className="w-full h-14 bg-white rounded-[2rem] flex items-center justify-center shadow-xl active:opacity-90 transition-opacity"
+          className="w-full h-11 bg-white rounded-full flex items-center justify-center shadow-xl active:opacity-90 transition-opacity"
         >
-          <span className="text-[16px] font-bold text-black tracking-tight">Готово</span>
+          <span className="text-[14px] font-bold text-black tracking-tight">Готово</span>
         </motion.button>
 
       </div>
