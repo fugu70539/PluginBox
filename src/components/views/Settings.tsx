@@ -18,14 +18,14 @@ const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }
 );
 
 const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, isOpen, options, onSelect }: any) => (
-  <div className="flex flex-col w-full overflow-hidden transition-all">
+  <div className="flex flex-col w-full overflow-hidden">
     <div 
       onClick={onClick} 
       className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer"
     >
       <div className="flex items-center gap-3">
         <div className="size-10 flex items-center justify-center">
-          <img src={`/Icons/${icon}`} alt="" className="size-full object-cover rounded-[18px]" style={{ borderRadius: '18px' }} />
+          <img src={`/Icons/${icon}`} alt="" className="size-full object-cover" style={{ borderRadius: '18px' }} />
         </div>
         <span className="text-[15px] font-semibold tracking-tight text-white/90">{title}</span>
       </div>
@@ -43,15 +43,27 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
       </div>
     </div>
 
-    {/* Выпадающий список */}
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {isOpen && (
         <motion.div
           initial={{ height: 0, opacity: 0 }}
-          animate={{ height: "auto", opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 400, damping: 35 }}
-          className="bg-white/[0.03] px-2 pb-2"
+          animate={{ 
+            height: "auto", 
+            opacity: 1,
+            transition: {
+              height: { type: "spring", stiffness: 400, damping: 35 },
+              opacity: { duration: 0.15 }
+            }
+          }}
+          exit={{ 
+            height: 0, 
+            opacity: 0,
+            transition: {
+              height: { duration: 0.25, ease: [0.4, 0, 0.2, 1] },
+              opacity: { duration: 0.15 }
+            }
+          }}
+          className="bg-white/[0.03] px-2 pb-2 overflow-hidden"
         >
           <div className="flex flex-col gap-1 pt-1">
             {options.map((opt: string) => (
@@ -81,15 +93,12 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
 export default function Settings({ onBack }: { onBack: () => void }) {
   const [currentWindow, setCurrentWindow] = useState<'main' | 'badge'>('main');
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  
   const [badge, setBadge] = useState("Юзер");
   const [accent, setAccent] = useState("Ч/Б");
   const [lang, setLang] = useState("Русский");
   const [isAnimOn, setIsAnimOn] = useState(true);
 
-  const toggleDropdown = (name: string) => {
-    setOpenDropdown(openDropdown === name ? null : name);
-  };
+  const toggleDropdown = (name: string) => setOpenDropdown(openDropdown === name ? null : name);
 
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
@@ -107,7 +116,6 @@ export default function Settings({ onBack }: { onBack: () => void }) {
         {currentWindow === 'main' ? (
           <motion.div key="main" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-16 px-6 pb-10">
             <div className="space-y-8">
-              
               <section>
                 <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Аккаунт</h3>
                 <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
@@ -145,6 +153,10 @@ export default function Settings({ onBack }: { onBack: () => void }) {
                 </div>
               </section>
 
+              <footer className="w-full pt-6 flex flex-col items-center gap-0.5 opacity-20">
+                <span className="text-[13px] font-bold tracking-tight">PluginBox v1.0.4</span>
+                <span className="text-[11px] font-medium tracking-tight">by @temkazavr</span>
+              </footer>
             </div>
           </motion.div>
         ) : (
