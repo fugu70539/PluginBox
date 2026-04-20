@@ -6,12 +6,15 @@ import { motion } from "framer-motion";
 const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
   <button 
     onClick={onToggle} 
-    className={`relative w-[51px] h-[31px] rounded-full transition-colors duration-300 flex items-center px-[2px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
+    className={`relative w-[58px] h-[31px] rounded-full transition-colors duration-300 flex items-center px-[3px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
   >
     <motion.div 
-      animate={{ x: isOn ? 20 : 0 }} 
+      animate={{ 
+        x: isOn ? 26 : 0,
+        width: "28px"
+      }} 
       transition={{ type: "spring", stiffness: 500, damping: 30 }} 
-      className="w-[27px] h-[27px] bg-white rounded-full shadow-lg flex items-center justify-center"
+      className="h-[25px] bg-white rounded-[10px] shadow-lg"
     />
   </button>
 );
@@ -50,27 +53,34 @@ export default function Settings({ onBack }: { onBack: () => void }) {
   }, [onBack]);
 
   return (
-    <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-7 font-display">
+    <div className="w-full min-h-screen bg-[#0a0a0a] pt-16 px-7 font-display pb-10">
       <div className="space-y-8">
         <section>
           <h3 className="text-[11px] font-black text-white/20 uppercase tracking-[0.15em] ml-4 mb-3">Аккаунт</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-            <SettingRow icon="Badge.PNG" title="Бейдж" value={badge} />
-            <SettingRow icon="Language.PNG" title="Язык" value="Русский" />
+            <SettingRow icon="Badge.webp" title="Бейдж" value={badge} />
+            <SettingRow icon="Language.webp" title="Язык" value="Русский" />
+          </div>
+        </section>
+
+        <section>
+          <h3 className="text-[11px] font-black text-white/20 uppercase tracking-[0.15em] ml-4 mb-3">Оформление</h3>
+          <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
+            <SettingRow icon="AccentColor.webp" title="Акцент" value="Ч/Б" />
+            <SettingRow icon="Animations.webp" title="Анимации" hasArrow={false}>
+              <AppleSwitch isOn={isAnimOn} onToggle={() => setIsAnimOn(!isAnimOn)} />
+            </SettingRow>
           </div>
         </section>
 
         <section>
           <h3 className="text-[11px] font-black text-white/20 uppercase tracking-[0.15em] ml-4 mb-3">Система</h3>
           <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5">
-            <SettingRow icon="Animations.PNG" title="Анимации" hasArrow={false}>
-              <AppleSwitch isOn={isAnimOn} onToggle={() => setIsAnimOn(!isAnimOn)} />
-            </SettingRow>
-            <SettingRow icon="Tech.PNG" title="Поддержка" value="Перейти" />
+            <SettingRow icon="Tech.webp" title="Поддержка" value="Перейти" />
           </div>
         </section>
 
-        <footer className="w-full pt-10 flex flex-col items-center gap-1 opacity-20">
+        <footer className="w-full pt-6 flex flex-col items-center gap-1 opacity-20">
           <span className="text-[13px] font-bold tracking-[0.2em] uppercase">PluginBox v1.0.4</span>
           <span className="text-[11px] font-medium text-center uppercase tracking-widest">by @temkazavr</span>
         </footer>
