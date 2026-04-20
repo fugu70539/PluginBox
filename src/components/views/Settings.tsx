@@ -142,7 +142,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
                 <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
                   <SettingRow icon="Badge.WEBP" title="Бейдж" value={badge} onClick={() => setCurrentWindow('badge')} />
                   <SettingRow 
-                    icon="Language .WEBP" title="Язык" value={lang} 
+                    icon="Language.WEBP" title="Язык" value={lang} 
                     isOpen={openDropdown === 'lang'}
                     onClick={() => toggleDropdown('lang')}
                     options={["Русский", "Английский"]}
