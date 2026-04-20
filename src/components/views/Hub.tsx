@@ -28,8 +28,8 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
   };
 
   return (
-    <div className="w-full font-display min-h-screen bg-[#0a0a0a] overflow-x-hidden">
-      <div className="w-full bg-[#131313] rounded-b-[45px] px-7 pt-5 pb-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-b border-white/[0.02]">
+    <div className="w-full font-display min-h-screen bg-[#0a0a0a] overflow-x-hidden text-white">
+      <div className="w-full bg-[#131313] rounded-b-[45px] px-7 pt-5 pb-10 border-b border-white/[0.02]">
         <header className="flex items-center justify-between mb-6">
           <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 border-white/5">
             <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
@@ -50,7 +50,7 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
           </div>
         </header>
 
-        <div className="flex flex-col items-center justify-center text-center mb-8 gap-y-0.5 text-white">
+        <div className="flex flex-col items-center justify-center text-center mb-8 gap-y-0.5">
           <motion.h1 
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             className="text-[30px] font-bold tracking-tight leading-tight"
@@ -75,25 +75,25 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
           <div className="relative">
             <button 
               onClick={toggleFilter}
-              className="mt-glass h-11 px-5 rounded-full flex items-center gap-3 active:scale-95 transition-all border-white/5"
+              className="h-11 min-w-[95px] mt-glass rounded-full flex items-center justify-between px-5 active:scale-95 transition-all border-white/5"
             >
-              <span className="text-[14px] font-bold tracking-tight text-white/60">{activeFilter}</span>
+              <span className="text-[14px] font-bold tracking-tight text-white/60 mr-2">{activeFilter}</span>
               <motion.img 
                 src="/Icons/ArrowRight.PNG?v=3" 
                 alt="Filter" 
                 animate={{ rotate: isFilterOpen ? 90 : 0 }}
-                className="size-4 object-contain invert brightness-200 opacity-20" 
+                className="size-3.5 object-contain invert brightness-200 opacity-20" 
               />
             </button>
 
             <AnimatePresence>
               {isFilterOpen && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: -10 }}
+                  initial={{ opacity: 0, scale: 0.9, y: -20 }}
                   animate={{ opacity: 1, scale: 1, y: 8 }}
-                  exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                  exit={{ opacity: 0, scale: 0.9, y: -20 }}
                   transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                  className="mt-glass absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl border-white/5"
+                  className="absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl bg-[#161616]/70 backdrop-blur-[30px] border border-white/[0.08]"
                 >
                   <div className="flex flex-col gap-1">
                     {filterOptions.map((option) => (
@@ -104,12 +104,12 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
                       >
                         {activeFilter === option && (
                           <motion.div 
-                            layoutId="filter-bg"
+                            layoutId="filter-bg-hub"
                             className="absolute inset-0 bg-white/10 backdrop-blur-xl rounded-[20px] z-0"
                           />
                         )}
                         <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${
-                          activeFilter === option ? "text-white" : "text-white/20 group-active:text-white/60"
+                          activeFilter === option ? "text-white" : "text-white/30 group-active:text-white/60"
                         }`}>
                           {option}
                         </span>
