@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SearchInput } from "@/components/ui/SearchInput";
+import { EmptyHub } from "@/components/ui/hub/EmptyHub";
 
 const filterOptions = ["Все", "По имени", "По дате", "По рейтингу"];
 
@@ -11,6 +12,9 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
   const [userPhoto, setUserPhoto] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState("Все");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  
+  // Состояние плагинов (пока пустой массив)
+  const [plugins, setPlugins] = useState([]);
 
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
@@ -122,42 +126,14 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
           </div>
         </div>
 
-        {/* Секция Empty State точь-в-точь как в примере */}
-        <div className="flex-1 w-full flex flex-col items-center justify-center text-center">
-          <div className="flex flex-col items-center -mt-20"> 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="relative mb-3"
-            >
-              <img 
-                src="/Icons/None.PNG?v=3" 
-                alt="Nothing found" 
-                className="size-28 object-contain opacity-20 grayscale brightness-150"
-              />
-            </motion.div>
-            
-            <div className="flex flex-col">
-              <motion.h3 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-[17px] font-bold text-white/30 tracking-tight"
-              >
-                У вас нет плагинов
-              </motion.h3>
-              
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-[14px] font-medium text-white/10 mt-1 max-w-[220px]"
-              >
-                Возвращайтесь позже, мы уже готовим для вас что-то новое!
-              </motion.p>
-            </div>
+        {/* Условный рендеринг: плагины или Empty State */}
+        {plugins.length > 0 ? (
+          <div className="grid grid-cols-1 gap-4 pb-10">
+             {/* Список плагинов будет здесь */}
           </div>
-        </div>
+        ) : (
+          <EmptyHub />
+        )}
       </main>
     </div>
   );
