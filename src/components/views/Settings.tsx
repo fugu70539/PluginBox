@@ -119,7 +119,6 @@ export default function Settings({ onBack }: { onBack: () => void }) {
     const nextState = !isVibrationOn;
     setIsVibrationOn(nextState);
     
-    // Вызываем легкую вибрацию при переключении, если она была включена
     const tg = (window as any).Telegram?.WebApp;
     if (nextState && tg?.HapticFeedback) {
       tg.HapticFeedback.impactOccurred("light");
