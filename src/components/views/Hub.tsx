@@ -18,10 +18,6 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
       const userData = tg.initDataUnsafe?.user;
       if (userData?.first_name) setUserName(userData.first_name);
       if (userData?.photo_url) setUserPhoto(userData.photo_url);
-
-      // Принудительно ставим цвета при каждом рендере Хаба
-      tg.setHeaderColor("#131313");
-      tg.setBackgroundColor("#0a0a0a");
     }
   }, []);
 
@@ -33,7 +29,6 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
 
   return (
     <div className="w-full font-display min-h-screen bg-[#0a0a0a] overflow-x-hidden text-white flex flex-col">
-      {/* Верхняя панель */}
       <div className="w-full hub-panel rounded-b-[45px] px-7 pt-5 pb-10">
         <header className="flex items-center justify-between mb-6">
           <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 border-white/5">
@@ -73,7 +68,6 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
         <SearchInput />
       </div>
 
-      {/* Контентная часть */}
       <main className="px-7 pt-8 flex-1 flex flex-col">
         <div className="flex items-center justify-between mb-6 relative">
           <h3 className="text-[17px] font-bold text-white/90 tracking-tight">Рекомендуем</h3>
@@ -128,28 +122,41 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
           </div>
         </div>
 
-        {/* Empty State: Центрировано в свободном пространстве */}
-        <div className="flex-1 flex flex-col items-center justify-center pb-20">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col items-center text-center px-10"
-          >
-            <div className="size-20 bg-white/5 rounded-[2rem] flex items-center justify-center mb-6">
+        {/* Секция Empty State точь-в-точь как в примере */}
+        <div className="flex-1 w-full flex flex-col items-center justify-center text-center">
+          <div className="flex flex-col items-center -mt-20"> 
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="relative mb-3"
+            >
               <img 
-                src="/Icons/Box.PNG" 
-                alt="Empty" 
-                className="size-10 object-contain opacity-20 invert" 
+                src="/Icons/None.PNG?v=3" 
+                alt="Nothing found" 
+                className="size-28 object-contain opacity-20 grayscale brightness-150"
               />
+            </motion.div>
+            
+            <div className="flex flex-col">
+              <motion.h3 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="text-[17px] font-bold text-white/30 tracking-tight"
+              >
+                У вас нет плагинов
+              </motion.h3>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-[14px] font-medium text-white/10 mt-1 max-w-[220px]"
+              >
+                Возвращайтесь позже, мы уже готовим для вас что-то новое!
+              </motion.p>
             </div>
-            <h4 className="text-[19px] font-bold text-white/90 tracking-tight mb-2">
-              У вас нет плагинов
-            </h4>
-            <p className="text-[14px] font-medium text-white/20 leading-snug">
-              Возвращайтесь позже, мы уже готовим для вас что-то новое!
-            </p>
-          </motion.div>
+          </div>
         </div>
       </main>
     </div>
