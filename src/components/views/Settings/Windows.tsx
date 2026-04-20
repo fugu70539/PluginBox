@@ -28,7 +28,7 @@ export const BadgeWindow = ({ currentBadge, onSave, onBack }: BadgeWindowProps) 
     >
       <div className="flex flex-col items-center gap-4">
         
-        {/* Строка ввода: h-11, rounded-full, стиль как в Hub */}
+        {/* Строка ввода: остается h-11 (компактная, как в Hub) */}
         <div className="relative w-full h-11 mt-glass rounded-full flex items-center px-5 border border-white/5 shadow-2xl">
           <input
             type="text"
@@ -43,13 +43,13 @@ export const BadgeWindow = ({ currentBadge, onSave, onBack }: BadgeWindowProps) 
           </span>
         </div>
 
-        {/* Кнопка "Готово": Стеклянная (mt-glass), h-11, текст белый */}
+        {/* Кнопка "Готово": Возвращена к белому цвету и большой высоте (h-14 / 56px) */}
         <motion.button
-          whileTap={{ scale: 0.97 }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => onSave(inputValue.trim() || "Юзер")}
-          className="w-full h-11 mt-glass border border-white/10 rounded-full flex items-center justify-center shadow-xl active:bg-white/10 transition-all"
+          className="w-full h-14 bg-white rounded-[22px] flex items-center justify-center shadow-xl active:opacity-90 transition-opacity"
         >
-          <span className="text-[14px] font-bold text-white tracking-tight">Готово</span>
+          <span className="text-[16px] font-bold text-black tracking-tight">Готово</span>
         </motion.button>
 
       </div>
