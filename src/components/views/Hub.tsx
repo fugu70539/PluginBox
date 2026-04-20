@@ -19,6 +19,7 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
       if (userData?.first_name) setUserName(userData.first_name);
       if (userData?.photo_url) setUserPhoto(userData.photo_url);
 
+      // Принудительно ставим цвета при каждом рендере Хаба
       tg.setHeaderColor("#131313");
       tg.setBackgroundColor("#0a0a0a");
     }
@@ -32,7 +33,8 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
 
   return (
     <div className="w-full font-display min-h-screen bg-[#0a0a0a] overflow-x-hidden text-white flex flex-col">
-      <div className="w-full hub-panel rounded-b-[45px] px-7 pt-5 pb-10 border-b border-white/[0.02] shrink-0">
+      {/* Верхняя панель */}
+      <div className="w-full hub-panel rounded-b-[45px] px-7 pt-5 pb-10">
         <header className="flex items-center justify-between mb-6">
           <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 border-white/5">
             <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
@@ -71,8 +73,9 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
         <SearchInput />
       </div>
 
+      {/* Контентная часть */}
       <main className="px-7 pt-8 flex-1 flex flex-col">
-        <div className="flex items-center justify-between mb-6 relative shrink-0">
+        <div className="flex items-center justify-between mb-6 relative">
           <h3 className="text-[17px] font-bold text-white/90 tracking-tight">Рекомендуем</h3>
           
           <div className="relative">
@@ -107,7 +110,7 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
                       >
                         {activeFilter === option && (
                           <motion.div 
-                            layoutId="filter-bg-hub-new"
+                            layoutId="filter-bg-hub"
                             className="absolute inset-0 bg-white/10 backdrop-blur-xl rounded-[20px] z-0"
                           />
                         )}
@@ -125,24 +128,25 @@ export default function Hub({ onSettings }: { onSettings: () => void }) {
           </div>
         </div>
 
-        {/* Плейсхолдер при отсутствии плагинов */}
+        {/* Empty State: Центрировано в свободном пространстве */}
         <div className="flex-1 flex flex-col items-center justify-center pb-20">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="w-16 h-16 bg-white/5 rounded-[22px] mb-6 flex items-center justify-center border border-white/5"
+            transition={{ delay: 0.2 }}
+            className="flex flex-col items-center text-center px-10"
           >
-             <div className="w-6 h-6 bg-white/10 rounded-lg" />
-          </motion.div>
-          
-          <motion.div 
-             initial={{ opacity: 0, y: 10 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.1 }}
-             className="text-center space-y-1.5"
-          >
-            <h4 className="text-[18px] font-bold text-white tracking-tight">У вас нет плагинов</h4>
-            <p className="max-w-[240px] text-[14px] font-medium text-white/20 leading-snug">
+            <div className="size-20 bg-white/5 rounded-[2rem] flex items-center justify-center mb-6">
+              <img 
+                src="/Icons/Box.PNG" 
+                alt="Empty" 
+                className="size-10 object-contain opacity-20 invert" 
+              />
+            </div>
+            <h4 className="text-[19px] font-bold text-white/90 tracking-tight mb-2">
+              У вас нет плагинов
+            </h4>
+            <p className="text-[14px] font-medium text-white/20 leading-snug">
               Возвращайтесь позже, мы уже готовим для вас что-то новое!
             </p>
           </motion.div>
