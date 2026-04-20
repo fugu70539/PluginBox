@@ -27,7 +27,6 @@ export const BadgeWindow = ({ currentBadge, onSave }: BadgeWindowProps) => {
     >
       <div className="flex flex-col items-center gap-4">
         
-        {/* Компактная строка ввода h-11 */}
         <div className="relative w-full h-11 mt-glass rounded-full flex items-center px-5 border border-white/5 shadow-2xl">
           <input
             type="text"
@@ -37,17 +36,20 @@ export const BadgeWindow = ({ currentBadge, onSave }: BadgeWindowProps) => {
             className="w-full bg-transparent border-none outline-none text-[14px] font-bold text-white/90 placeholder:text-white/20 pr-12"
             autoFocus
           />
-          {/* Лимит символов справа */}
           <span className="absolute right-5 text-[12px] font-bold text-white/10 tabular-nums">
             {inputValue.length}/10
           </span>
         </div>
 
-        {/* Та самая белая кнопка: высокая (h-14) и полностью круглая */}
+        {/* Описание бейджа */}
+        <p className="px-2 text-[12px] font-bold text-white/30 leading-tight text-center">
+          Бейдж будет показан возле вашего имени в профиле разработчика, комментариях и созданных вами плагинах
+        </p>
+
         <motion.button
           whileTap={{ scale: 0.98 }}
           onClick={() => onSave(inputValue.trim() || "Юзер")}
-          className="w-full h-14 bg-white rounded-full flex items-center justify-center shadow-xl active:opacity-90 transition-opacity"
+          className="w-full h-14 bg-white rounded-full flex items-center justify-center shadow-xl active:opacity-90 transition-opacity mt-1"
         >
           <span className="text-[16px] font-bold text-black tracking-tight">Готово</span>
         </motion.button>
