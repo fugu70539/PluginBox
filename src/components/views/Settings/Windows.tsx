@@ -20,15 +20,15 @@ export const BadgeWindow = ({ currentBadge, onSave, onBack }: BadgeWindowProps) 
 
   return (
     <motion.div 
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
       className="fixed inset-0 z-[100] w-full min-h-screen bg-[#0a0a0a] pt-16 px-7 font-display select-none"
     >
       <div className="flex flex-col items-center gap-4">
         
-        {/* Строка ввода: Высота h-11 (44px) как у элементов в хедере Хаба */}
+        {/* Строка ввода: h-11 и rounded-full как в хедере Хаба */}
         <div className="relative w-full h-11 mt-glass rounded-full flex items-center px-5 border border-white/5 shadow-2xl">
           <input
             type="text"
@@ -43,7 +43,7 @@ export const BadgeWindow = ({ currentBadge, onSave, onBack }: BadgeWindowProps) 
           </span>
         </div>
 
-        {/* Кнопка: Белая, h-11, шрифт как у фильтра */}
+        {/* Кнопка "Готово": Белая, h-11, текст черный */}
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={() => onSave(inputValue.trim() || "Юзер")}
