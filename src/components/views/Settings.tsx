@@ -18,7 +18,7 @@ const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }
 );
 
 const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, isOpen, options, onSelect }: any) => (
-  <div className="flex flex-col w-full overflow-hidden">
+  <motion.div layout className="flex flex-col w-full overflow-hidden">
     <div 
       onClick={onClick} 
       className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer z-10"
@@ -35,6 +35,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
         {hasArrow && (
           <motion.img 
             animate={{ rotate: isOpen ? 90 : 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
             src="/Icons/ArrowRight.PNG" 
             className="size-4 opacity-20 invert" 
             alt="" 
@@ -43,7 +44,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
       </div>
     </div>
 
-    <AnimatePresence initial={false}>
+    <AnimatePresence initial={false} mode="popLayout">
       {isOpen && (
         <motion.div
           initial={{ height: 0, opacity: 0 }}
@@ -51,8 +52,8 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
             height: "auto", 
             opacity: 1,
             transition: {
-              height: { type: "spring", stiffness: 400, damping: 40 },
-              opacity: { duration: 0.2 }
+              height: { type: "spring", stiffness: 400, damping: 40, restDelta: 0.01 },
+              opacity: { duration: 0.15 }
             }
           }}
           exit={{ 
@@ -63,19 +64,20 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
               opacity: { duration: 0.1 }
             }
           }}
-          className="overflow-hidden bg-white/[0.02]"
+          className="overflow-hidden"
         >
-          <div className="px-2 pb-3 flex flex-col gap-1 border-t border-white/[0.05] pt-2">
+          <div className="px-2 pb-3 flex flex-col gap-1 border-t border-white/[0.03] pt-2 mx-2">
             {options.map((opt: string) => (
               <button
                 key={opt}
                 onClick={() => onSelect(opt)}
-                className="relative w-full h-11 px-4 flex items-center rounded-[18px] transition-all active:scale-[0.98]"
+                className="relative w-full h-10 px-4 flex items-center rounded-[16px] transition-all active:scale-[0.98]"
               >
                 {value === opt && (
                   <motion.div 
                     layoutId={`bg-${title}`}
-                    className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-[18px]"
+                    transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                    className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-[16px]"
                   />
                 )}
                 <span className={`relative z-10 text-[14px] font-bold ${value === opt ? "text-white" : "text-white/20"}`}>
@@ -87,7 +89,7 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, is
         </motion.div>
       )}
     </AnimatePresence>
-  </div>
+  </motion.div>
 );
 
 export default function Settings({ onBack }: { onBack: () => void }) {
@@ -99,6 +101,10 @@ export default function Settings({ onBack }: { onBack: () => void }) {
   const [isAnimOn, setIsAnimOn] = useState(true);
 
   const toggleDropdown = (name: string) => setOpenDropdown(openDropdown === name ? null : name);
+  
+  const openSupport = () => {
+    window.open("https://t.me/PluginBoxRequest_bot", "_blank");
+  };
 
   useEffect(() => {
     const tg = (window as any).Telegram?.WebApp;
@@ -114,10 +120,16 @@ export default function Settings({ onBack }: { onBack: () => void }) {
     <div className="relative w-full min-h-screen bg-[#0a0a0a] font-display select-none overflow-x-hidden">
       <AnimatePresence mode="wait">
         {currentWindow === 'main' ? (
-          <motion.div key="main" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-16 px-6 pb-10">
-            <div className="space-y-8">
+          <motion.div 
+            key="main" 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }} 
+            className="pt-4 px-6 pb-10"
+          >
+            <div className="space-y-6">
               <section>
-                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Аккаунт</h3>
+                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Аккаунт</h3>
                 <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5 shadow-xl">
                   <SettingRow icon="Badge.WEBP" title="Бейдж" value={badge} onClick={() => setCurrentWindow('badge')} />
                   <SettingRow 
@@ -131,7 +143,7 @@ export default function Settings({ onBack }: { onBack: () => void }) {
               </section>
 
               <section>
-                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Оформление</h3>
+                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Оформление</h3>
                 <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5 shadow-xl">
                   <SettingRow 
                     icon="AccentColor.WEBP" title="Акцент" value={accent} 
@@ -147,13 +159,13 @@ export default function Settings({ onBack }: { onBack: () => void }) {
               </section>
 
               <section>
-                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2.5">Система</h3>
+                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Система</h3>
                 <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5 shadow-xl">
-                  <SettingRow icon="Tech.WEBP" title="Поддержка" value="Перейти" />
+                  <SettingRow icon="Tech.WEBP" title="Поддержка" value="Перейти" onClick={openSupport} />
                 </div>
               </section>
 
-              <footer className="w-full pt-6 flex flex-col items-center gap-0.5 opacity-20">
+              <footer className="w-full pt-4 flex flex-col items-center gap-0.5 opacity-20">
                 <span className="text-[13px] font-bold tracking-tight">PluginBox v1.0.4</span>
                 <span className="text-[11px] font-medium tracking-tight">by @temkazavr</span>
               </footer>
