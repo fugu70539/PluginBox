@@ -11,11 +11,8 @@ const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }
     <motion.div 
       animate={{ x: isOn ? 18.5 : 0 }} 
       transition={{ type: "spring", stiffness: 500, damping: 35 }} 
-      className="h-[25px] w-[40.5px] bg-white rounded-[12px] shadow-sm flex items-center justify-center"
-    >
-        {/* Добавляем полоску 'I' внутри каретки, когда включено, для полного соответствия референсу */}
-        {isOn && <div className="h-3 w-[1.5px] bg-black/15 rounded-full" />}
-    </motion.div>
+      className="h-[25px] w-[40.5px] bg-white rounded-[12px] shadow-sm"
+    />
   </button>
 );
 
@@ -25,7 +22,6 @@ const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children }: 
     className="w-full h-[56px] flex items-center justify-between px-5 active:bg-white/5 transition-colors cursor-pointer"
   >
     <div className="flex items-center gap-3">
-      {/* Путь строго с большой буквы Icons */}
       <img 
         src={`/Icons/${icon}`} 
         alt="" 
