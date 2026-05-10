@@ -1,35 +1,32 @@
-import type { Metadata, Viewport } from "next";
-import Script from "next/script"; // Импортируем компонент для скриптов
+import type { Metadata } from "next";
+import { AppProvider } from "@/contexts/AppContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "PluginBox",
-  description: "Marketplace for plugins",
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  viewportFit: "cover",
+  description: "Telegram Mini App for discovering and managing plugins",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="ru" className="fixed-layout">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Подключаем основной скрипт Telegram API */}
-        <Script 
-          src="https://telegram.org/js/telegram-web-app.js" 
-          strategy="beforeInteractive" 
-        />
+        <meta name="theme-color" content="#0a0a0a" />
+        <script src="https://telegram.org/js/telegram-web-app.js"></script>
       </head>
-      <body>{children}</body>
+      <body>
+        <AppProvider>{children}</AppProvider>
+      </body>
     </html>
   );
 }

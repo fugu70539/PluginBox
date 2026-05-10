@@ -1,194 +1,155 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { BadgeWindow } from "./Settings/Windows";
-import { SettingsBanner } from "@/components/ui/banners/SettingsBanner";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useApp } from "@/contexts/AppContext";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { getCacheParam } from "@/lib/utils";
 
-const AppleSwitch = ({ isOn, onToggle }: { isOn: boolean; onToggle: () => void }) => (
-  <button 
-    onClick={onToggle} 
-    className={`relative w-[66px] h-[32px] rounded-[16px] transition-colors duration-300 flex items-center px-[3.5px] ${isOn ? "bg-[#34C759]" : "bg-[#39393d]"}`}
-  >
-    <motion.div 
-      animate={{ x: isOn ? 18.5 : 0 }} 
-      transition={{ type: "spring", stiffness: 500, damping: 35 }} 
-      className="h-[25px] w-[40.5px] bg-white rounded-[12px] shadow-sm"
-    />
-  </button>
-);
-
-const SettingRow = ({ icon, title, value, onClick, hasArrow = true, children, isOpen, options, onSelect }: any) => (
-  <div className="flex flex-col w-full overflow-hidden">
-    <div 
-      onClick={onClick} 
-      className="w-full h-[54px] flex items-center justify-between px-4 active:bg-white/5 transition-colors cursor-pointer z-10"
-    >
-      <div className="flex items-center gap-3">
-        <div className="size-10 flex items-center justify-center">
-          <img src={`/Icons/${icon}`} alt="" className="size-full object-cover" style={{ borderRadius: '18px' }} />
-        </div>
-        <span className="text-[15px] font-semibold tracking-tight text-white/90">{title}</span>
-      </div>
-      <div className="flex items-center gap-2">
-        {value && <span className="text-[15px] font-medium text-white/30">{value}</span>}
-        {children}
-        {hasArrow && (
-          <motion.img 
-            animate={{ rotate: isOpen ? 90 : 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            src="/Icons/ArrowRight.PNG" 
-            className="size-4 opacity-20 invert" 
-            alt="" 
-          />
-        )}
-      </div>
-    </div>
-
-    <AnimatePresence initial={false}>
-      {isOpen && (
-        <motion.div
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ 
-            height: "auto", 
-            opacity: 1,
-            transition: {
-              height: { type: "spring", stiffness: 450, damping: 40 },
-              opacity: { duration: 0.1 }
-            }
-          }}
-          exit={{ 
-            height: 0, 
-            opacity: 0,
-            transition: {
-              height: { duration: 0.2, ease: [0.4, 0, 0.2, 1] },
-              opacity: { duration: 0.1 }
-            }
-          }}
-          className="overflow-hidden"
-        >
-          <div className="px-2 pb-3 flex flex-col gap-1 border-t border-white/[0.03] pt-2 mx-2">
-            {options.map((opt: string) => (
-              <button
-                key={opt}
-                onClick={() => onSelect(opt)}
-                className="relative w-full h-10 px-4 flex items-center rounded-[16px] transition-all active:scale-[0.98]"
-              >
-                {value === opt && (
-                  <motion.div 
-                    layoutId={`bg-${title}`}
-                    className="absolute inset-0 bg-white/10 backdrop-blur-md rounded-[16px]"
-                  />
-                )}
-                <span className={`relative z-10 text-[14px] font-bold ${value === opt ? "text-white" : "text-white/20"}`}>
-                  {opt}
-                </span>
-              </button>
-            ))}
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </div>
-);
-
-export default function Settings({ onBack }: { onBack: () => void }) {
-  const [currentWindow, setCurrentWindow] = useState<'main' | 'badge'>('main');
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [badge, setBadge] = useState("Юзер");
-  const [accent, setAccent] = useState("Ч/Б");
-  const [lang, setLang] = useState("Русский");
-  const [isAnimOn, setIsAnimOn] = useState(true);
-  const [isVibrationOn, setIsVibrationOn] = useState(true);
-
-  const toggleDropdown = (name: string) => setOpenDropdown(openDropdown === name ? null : name);
-  
-  const openSupport = () => window.open("https://t.me/PluginBoxRequest_bot", "_blank");
-
-  useEffect(() => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg?.BackButton) {
-      tg.BackButton.show();
-      const handleClick = () => currentWindow === 'main' ? onBack() : setCurrentWindow('main');
-      tg.BackButton.onClick(handleClick);
-      return () => tg.BackButton.offClick(handleClick);
-    }
-  }, [onBack, currentWindow]);
-
-  const handleVibrationToggle = () => {
-    const nextState = !isVibrationOn;
-    setIsVibrationOn(nextState);
-    
-    const tg = (window as any).Telegram?.WebApp;
-    if (nextState && tg?.HapticFeedback) {
-      tg.HapticFeedback.impactOccurred("light");
-    }
-  };
+export const Settings = () => {
+  const { setShowSettings, userData } = useApp();
+  const [notifications, setNotifications] = useState(true);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   return (
-    <div className="relative w-full min-h-screen bg-[#0a0a0a] font-display select-none overflow-x-hidden">
-      <AnimatePresence mode="wait">
-        {currentWindow === 'main' ? (
-          <motion.div 
-            key="main" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }} 
-            className="pt-4 px-6 pb-10"
-          >
-            <div className="space-y-6">
-              <section>
-                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Аккаунт</h3>
-                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
-                  <SettingRow icon="Badge.WEBP" title="Бейдж" value={badge} onClick={() => setCurrentWindow('badge')} />
-                  <SettingRow 
-                    icon="Language.WEBP" title="Язык" value={lang} 
-                    isOpen={openDropdown === 'lang'}
-                    onClick={() => toggleDropdown('lang')}
-                    options={["Русский", "Английский"]}
-                    onSelect={(val: string) => { setLang(val); setOpenDropdown(null); }}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="w-full font-display min-h-screen bg-[#0a0a0a] text-white flex flex-col"
+    >
+      {/* Header */}
+      <div className="px-6 pt-4 pb-4 border-b border-white/[0.08] flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Параметры</h1>
+          <p className="text-xs text-white/40 mt-1">Управляйте вашими настройками</p>
+        </div>
+        <button
+          onClick={() => setShowSettings(false)}
+          className="size-9 flex items-center justify-center active:scale-90 transition-transform duration-200 hover:bg-white/5 rounded-full"
+          aria-label="Close"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M18 6L6 18M6 6l12 12"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="px-6 pt-6 pb-32 flex-1 flex flex-col gap-6 overflow-y-auto">
+        {/* Profile section */}
+        <div>
+          <h2 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">
+            Профиль
+          </h2>
+          <Card variant="glass">
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-gradient-to-br from-white/20 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden flex-shrink-0">
+                {userData.photoUrl ? (
+                  <img
+                    src={userData.photoUrl}
+                    alt="Avatar"
+                    className="size-full object-cover"
                   />
-                </div>
-              </section>
-
-              <SettingsBanner />
-
-              <section>
-                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Оформление</h3>
-                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
-                  <SettingRow 
-                    icon="AccentColor.WEBP" title="Акцент" value={accent} 
-                    isOpen={openDropdown === 'accent'}
-                    onClick={() => toggleDropdown('accent')}
-                    options={["Ч/Б", "Система"]}
-                    onSelect={(val: string) => { setAccent(val); setOpenDropdown(null); }}
-                  />
-                  <SettingRow icon="Animations.WEBP" title="Анимации" hasArrow={false}>
-                    <AppleSwitch isOn={isAnimOn} onToggle={() => setIsAnimOn(!isAnimOn)} />
-                  </SettingRow>
-                  <SettingRow icon="Vibration.WEBP" title="Вибрация" hasArrow={false}>
-                    <AppleSwitch isOn={isVibrationOn} onToggle={handleVibrationToggle} />
-                  </SettingRow>
-                </div>
-              </section>
-
-              <section>
-                <h3 className="text-[13px] font-semibold text-white/30 ml-1 mb-2">Система</h3>
-                <div className="mt-glass rounded-[28px] overflow-hidden divide-y divide-white/5 border border-white/5">
-                  <SettingRow icon="Tech.WEBP" title="Поддержка" value="Перейти" onClick={openSupport} />
-                </div>
-              </section>
-
-              <footer className="w-full pt-4 flex flex-col items-center gap-0.5 opacity-20">
-                <span className="text-[13px] font-bold tracking-tight">PluginBox v1.0.4</span>
-                <span className="text-[11px] font-medium tracking-tight">by @temkazavr</span>
-              </footer>
+                ) : (
+                  <span className="text-sm font-bold text-white/60 uppercase">
+                    {userData.firstName.charAt(0)}
+                  </span>
+                )}
+              </div>
+              <div className="flex-1">
+                <h3 className="font-bold text-white/90">
+                  {userData.firstName} {userData.lastName || ""}
+                </h3>
+                <p className="text-xs text-white/40">@username</p>
+              </div>
             </div>
-          </motion.div>
-        ) : (
-          <BadgeWindow key="badge" currentBadge={badge} onSave={(val) => { setBadge(val); setCurrentWindow('main'); }} />
-        )}
-      </AnimatePresence>
-    </div>
+          </Card>
+        </div>
+
+        {/* Preferences section */}
+        <div>
+          <h2 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">
+            Предпочтения
+          </h2>
+
+          {/* Notifications toggle */}
+          <Card variant="glass" className="mb-2">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <h3 className="font-bold text-white/90 text-sm">Уведомления</h3>
+                <p className="text-xs text-white/40 mt-0.5">Получайте обновления</p>
+              </div>
+              <button
+                onClick={() => setNotifications(!notifications)}
+                className={`relative w-12 h-7 rounded-full transition-all ${
+                  notifications ? "bg-green-500/70" : "bg-white/10"
+                }`}
+              >
+                <motion.div
+                  animate={{ x: notifications ? 24 : 4 }}
+                  className="absolute top-1 size-5 bg-white rounded-full"
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                />
+              </button>
+            </div>
+          </Card>
+
+          {/* Theme selector */}
+          <Card variant="glass">
+            <div className="flex flex-col gap-3">
+              <h3 className="font-bold text-white/90 text-sm">Тема</h3>
+              <div className="flex gap-2">
+                {["dark", "light"].map((t) => (
+                  <Button
+                    key={t}
+                    variant={theme === t ? "primary" : "secondary"}
+                    size="sm"
+                    onClick={() => setTheme(t as any)}
+                    className="flex-1"
+                  >
+                    {t === "dark" ? "Тёмная" : "Светлая"}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        {/* About section */}
+        <div>
+          <h2 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">
+            О приложении
+          </h2>
+          <Card variant="glass" className="flex flex-col gap-2 text-sm text-white/60">
+            <div className="flex justify-between">
+              <span>Версия</span>
+              <span className="font-mono">1.0.0</span>
+            </div>
+            <div className="h-px bg-white/10" />
+            <div className="flex justify-between">
+              <span>Статус</span>
+              <span className="text-green-400">Активно</span>
+            </div>
+          </Card>
+        </div>
+
+        {/* Danger zone */}
+        <div>
+          <h2 className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">
+            Опасная зона
+          </h2>
+          <Button variant="secondary" size="md" className="w-full border-red-500/30 text-red-400">
+            Выход из аккаунта
+          </Button>
+        </div>
+      </div>
+    </motion.div>
   );
-}
+};

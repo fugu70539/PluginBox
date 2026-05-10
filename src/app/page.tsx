@@ -1,82 +1,34 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Hub from "@/components/views/Hub";
-import Store from "@/components/views/Store";
-import Socket from "@/components/views/Socket";
-import Settings from "@/components/views/Settings";
-import { Tabbar } from "@/components/ui/TabBar";
-
-const tabsConfig = [
-  { id: "hub", icon: "/Icons/Hub.PNG", label: "Хаб" },
-  { id: "store", icon: "/Icons/Store.PNG", label: "Плагины" },
-  { id: "socket", icon: "/Icons/Socket.PNG", label: "Мастерская" },
-];
+import { AnimatePresence } from "framer-motion";
+import { useApp } from "@/contexts/AppContext";
+import { TabBar } from "@/components/ui/TabBar";
+import { Hub } from "@/components/views/Hub";
+import { Store } from "@/components/views/Store";
+import { Socket } from "@/components/views/Socket";
+import { Settings } from "@/components/views/Settings";
 
 export default function Page() {
-  const [activeTab, setActiveTab] = useState("hub");
-  const [isDevView, setIsDevView] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
+  const { activeTab, showSettings } = useApp();
 
-  useEffect(() => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg) {
-      tg.ready();
-      
-      // Логика смены цвета шапки
-      if (showSettings) {
-        tg.setHeaderColor("#0a0a0a"); // Цвет для настроек
-      } else if (activeTab === "hub") {
-        tg.setHeaderColor("#131313"); // Наш новый цвет для Хаба
-      } else {
-        tg.setHeaderColor("#0a0a0a"); // Стандартный цвет для других вкладок
-      }
-
-      tg.setBackgroundColor("#0a0a0a");
-    }
-  }, [activeTab, showSettings]); // Массив зависимостей: следим за табами и настройками
-
-  const isTabbarVisible = !showSettings && !(activeTab === "store" && isDevView);
+  const isTabbarVisible = !showSettings;
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] select-none overflow-hidden font-display text-white">
       <AnimatePresence mode="wait">
         {showSettings ? (
-          <motion.div 
-            key="settings" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }}
-          >
-            <Settings onBack={() => setShowSettings(false)} />
-          </motion.div>
+          <Settings />
         ) : (
-          <motion.div 
-            key={activeTab}
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }}
-            className={isTabbarVisible ? "pb-32" : ""}
-          >
-            {activeTab === "hub" && <Hub onSettings={() => setShowSettings(true)} />}
-            {activeTab === "store" && <Store onBack={() => setActiveTab("hub")} onViewChange={setIsDevView} />}
+          <>
+            {activeTab === "hub" && <Hub />}
+            {activeTab === "store" && <Store />}
             {activeTab === "socket" && <Socket />}
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
-        {isTabbarVisible && (
-          <motion.div
-            initial={{ y: 150, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 150, opacity: 0 }}
-            className="fixed bottom-0 left-0 right-0 z-[100]"
-          >
-            <Tabbar activeTab={activeTab} setActiveTab={setActiveTab} tabsConfig={tabsConfig} />
-          </motion.div>
-        )}
+        {isTabbarVisible && <TabBar />}
       </AnimatePresence>
     </div>
   );

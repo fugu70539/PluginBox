@@ -1,138 +1,131 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useApp } from "@/contexts/AppContext";
 import { SearchInput } from "@/components/ui/SearchInput";
-import { EmptyHub } from "@/components/ui/hub/EmptyHub";
+import { Dropdown } from "@/components/ui/Dropdown";
+import { Avatar } from "@/components/ui/Avatar";
+import { FILTER_OPTIONS, ANIMATION } from "@/constants";
+import { getCacheParam } from "@/lib/utils";
 
-const filterOptions = ["Все", "По имени", "По дате", "По рейтингу"];
-
-export default function Hub({ onSettings }: { onSettings: () => void }) {
-  const [userName, setUserName] = useState("Artem");
-  const [userPhoto, setUserPhoto] = useState<string | null>(null);
+export const Hub = () => {
+  const { userData, setShowSettings } = useApp();
   const [activeFilter, setActiveFilter] = useState("Все");
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [plugins, setPlugins] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg) {
-      const userData = tg.initDataUnsafe?.user;
-      if (userData?.first_name) setUserName(userData.first_name);
-      if (userData?.photo_url) setUserPhoto(userData.photo_url);
-    }
+    // Disable initial animations after first render
+    setIsInitialRender(false);
   }, []);
 
-  const toggleFilter = () => {
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
-    setIsFilterOpen(!isFilterOpen);
-  };
+  const filterOptions = FILTER_OPTIONS.map((opt) => ({
+    value: opt,
+    label: opt,
+  }));
 
   return (
     <div className="w-full font-display min-h-screen bg-[#0a0a0a] overflow-x-hidden text-white flex flex-col">
-      <div className="w-full hub-panel rounded-b-[45px] px-7 pt-5 pb-10">
+      {/* Header / Panel */}
+      <div className="w-full hub-panel rounded-b-[40px] px-6 pt-4 pb-8">
+        {/* Top bar with avatar and settings */}
         <header className="flex items-center justify-between mb-6">
-          <div className="mt-glass h-11 w-22 rounded-full flex items-center justify-between px-1.5 border-white/5">
-            <div className="size-8 rounded-full flex items-center justify-center overflow-hidden bg-white/10 ml-0.5">
-              {userPhoto ? (
-                <img src={userPhoto} alt="User" className="size-full rounded-full object-cover" />
-              ) : (
-                <div className="size-full rounded-full flex items-center justify-center text-white/40 text-[10px] font-bold uppercase">
-                  {userName[0]}
-                </div>
-              )}
-            </div>
-            <button 
-              onClick={onSettings}
-              className="size-8 flex items-center justify-center active:scale-90 transition-all"
-            >
-              <img src="/Icons/Settings.PNG?v=3" alt="Settings" className="size-7 object-contain opacity-40" />
-            </button>
-          </div>
+          <Avatar
+            src={userData.photoUrl}
+            fallback={userData.firstName}
+            size="md"
+            status="online"
+          />
+          <button
+            onClick={() => setShowSettings(true)}
+            className="size-9 flex items-center justify-center active:scale-90 transition-transform duration-200"
+            aria-label="Settings"
+          >
+            <img
+              src={`/Icons/Settings.PNG${getCacheParam("settings")}`}
+              alt="Settings"
+              className="size-7 object-contain opacity-40 hover:opacity-60 transition-opacity"
+            />
+          </button>
         </header>
 
-        <div className="flex flex-col items-center justify-center text-center mb-8 gap-y-0.5">
-          <motion.h1 
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-            className="text-[30px] font-bold tracking-tight leading-tight"
-          >
-            Привет, {userName}!
-          </motion.h1>
-          <motion.h2 
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-[30px] font-bold tracking-tight text-white/20 leading-tight"
-          >
-            Что бы ты хотел найти?
-          </motion.h2>
+        {/* Welcome section */}
+        <div className="flex flex-col items-center justify-center text-center mb-7 gap-0.5">
+          {isInitialRender ? (
+            <>
+              <motion.h1
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={ANIMATION.easing.spring}
+                className="text-[28px] font-bold tracking-tight leading-tight"
+              >
+                Привет, {userData.firstName}!
+              </motion.h1>
+              <motion.h2
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ ...ANIMATION.easing.spring, delay: 0.05 }}
+                className="text-[28px] font-bold tracking-tight text-white/20 leading-tight"
+              >
+                Что бы ты хотел найти?
+              </motion.h2>
+            </>
+          ) : (
+            <>
+              <h1 className="text-[28px] font-bold tracking-tight leading-tight">
+                Привет, {userData.firstName}!
+              </h1>
+              <h2 className="text-[28px] font-bold tracking-tight text-white/20 leading-tight">
+                Что бы ты хотел найти?
+              </h2>
+            </>
+          )}
         </div>
 
-        <SearchInput />
+        {/* Search input */}
+        <SearchInput
+          placeholder="Искать плагины..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
 
-      {/* Изменили pt-8 на pt-4, чтобы поднять заголовок выше */}
-      <main className="px-7 pt-4 flex-1 flex flex-col">
-        <div className="flex items-center justify-between mb-6 relative">
-          <h3 className="text-[17px] font-bold text-white/90 tracking-tight">Рекомендуем</h3>
-          
-          <div className="relative">
-            <button 
-              onClick={toggleFilter}
-              className="h-11 min-w-[95px] mt-glass rounded-full flex items-center justify-between px-5 active:scale-95 transition-all border-white/5"
-            >
-              <span className="text-[14px] font-bold tracking-tight text-white/60 mr-2">{activeFilter}</span>
-              <motion.img 
-                src="/Icons/ArrowRight.PNG?v=3" 
-                alt="Filter" 
-                animate={{ rotate: isFilterOpen ? 90 : 0 }}
-                className="size-3.5 object-contain invert brightness-200 opacity-20" 
-              />
-            </button>
+      {/* Main content */}
+      <main className="px-6 pt-6 flex-1 flex flex-col">
+        {/* Recommendations header with filter */}
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-base font-bold text-white/90 tracking-tight">
+            Рекомендуем
+          </h3>
 
-            <AnimatePresence>
-              {isFilterOpen && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9, y: -20 }}
-                  animate={{ opacity: 1, scale: 1, y: 8 }}
-                  exit={{ opacity: 0, scale: 0.9, y: -20 }}
-                  transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                  className="absolute top-full right-0 w-44 rounded-[28px] p-1.5 z-50 shadow-2xl bg-[#161616]/70 backdrop-blur-[30px] border border-white/[0.08]"
-                >
-                  <div className="flex flex-col gap-1">
-                    {filterOptions.map((option) => (
-                      <button
-                        key={option}
-                        onClick={() => { setActiveFilter(option); setIsFilterOpen(false); }}
-                        className="relative w-full px-4 py-3 text-left group"
-                      >
-                        {activeFilter === option && (
-                          <motion.div 
-                            layoutId="filter-bg-hub"
-                            className="absolute inset-0 bg-white/10 backdrop-blur-xl rounded-[20px] z-0"
-                          />
-                        )}
-                        <span className={`relative z-10 text-[14px] font-bold tracking-tight transition-colors duration-200 ${
-                          activeFilter === option ? "text-white" : "text-white/30 group-active:text-white/60"
-                        }`}>
-                          {option}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          <Dropdown
+            options={filterOptions}
+            value={activeFilter}
+            onChange={setActiveFilter}
+            label="Фильтр"
+          />
         </div>
 
-        {plugins.length > 0 ? (
-          <div className="grid grid-cols-1 gap-4 pb-10">
-             {/* Плагины */}
+        {/* Empty state or plugins grid */}
+        <div className="flex flex-col items-center justify-center py-12 text-center gap-3">
+          <div className="size-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              className="opacity-30"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm-1-13h2v6h-2z"
+                fill="currentColor"
+              />
+            </svg>
           </div>
-        ) : (
-          <EmptyHub />
-        )}
+          <p className="text-sm text-white/40">Нет плагинов для отображения</p>
+        </div>
       </main>
     </div>
   );
-}
+};

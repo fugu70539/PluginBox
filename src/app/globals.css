@@ -1,16 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --glass-blur: blur(40px) saturate(180%);
-  --glass-border: 0.5px solid rgba(255, 255, 255, 0.12);
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  
-  /* Цвета Хаба */
-  --hub-bg: #0a0a0a;
-  --hub-panel-bg: #131313;
+  /* Glass morphism */
+  --glass-blur: blur(30px) saturate(200%);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.08);
+
+  /* Colors */
+  --bg-primary: #0a0a0a;
+  --bg-surface: #131313;
+  --bg-surface-secondary: #1a1a1a;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  /* Font */
+  --font-family-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", "Inter", sans-serif;
 }
 
-/* Скрываем скроллбары глобально */
+/* Base styles */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: fixed;
+  background-color: var(--bg-primary);
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Remove scrollbars globally */
 * {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -20,51 +44,52 @@
   display: none;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden; 
-  position: fixed;
-  background-color: var(--hub-bg);
-  color: #fff;
-  -webkit-font-smoothing: antialiased;
-}
-
+/* Typography */
 .font-display {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", sans-serif;
+  font-family: var(--font-family-display);
 }
 
-/* Новая плашка хаба */
+/* Hub panel */
 .hub-panel {
-  background-color: var(--hub-panel-bg);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.mt-glass {
+/* Glass effect utility */
+.glass-effect {
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: var(--glass-border);
 }
 
+/* Tabbar styles */
 .tabbar-glass {
-  background: rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(30px) saturate(200%);
   -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.btn-send-white {
-  background-color: #ffffff !important;
-  opacity: 1 !important;
-  display: flex !important;
-  visibility: visible !important;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+/* Smooth scrolling for scrollable areas */
+@supports (scroll-behavior: smooth) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
-.btn-send-white img {
-  filter: brightness(0) !important;
-  opacity: 1 !important;
+/* System font stack fallback */
+@supports (font-feature-settings: "ss01") {
+  .font-display {
+    font-feature-settings: "ss01";
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
